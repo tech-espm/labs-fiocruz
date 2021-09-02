@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES2017",
+		"lib": ["ES2017", "DOM"],
+		"outDir": "src",
+		"sourceMap": true,
+		"experimentalDecorators": true
+	},
+	"exclude": [
+		"node_modules",
+		"public",
+		"src",
+		"sql",
+		"views"
+	]
+}

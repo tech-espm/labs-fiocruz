@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="457bf273-24a3-4fd8-a857-e9b918267d6a" width="698" height="698" data-name="Layer 1" version="1.1" viewBox="0 0 698 698" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>profile pic</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <title>profile pic</title>
+ <g fill="#bfbfbf" opacity=".5">
+  <circle cx="349" cy="349" r="349" fill="#bfbfbf"/>
+ </g>
+ <path transform="translate(-251 -101)" d="M601,790.76a340,340,0,0,0,187.79-56.2c-12.59-68.8-60.5-72.72-60.5-72.72H464.09s-45.21,3.71-59.33,67A340.07,340.07,0,0,0,601,790.76Z" fill="#6c63ff"/>
+ <path d="m293.15 476.92h105.66v84.53a52.83 52.83 0 0 1-52.81 52.83 52.83 52.83 0 0 1-52.83-52.83v-84.53z" fill-opacity=".99" opacity=".3"/>
+ <g>
+  <path d="m296.5 473h99a3.35 3.35 0 0 1 3.35 3.35v81.18a52.83 52.83 0 0 1-52.85 52.84 52.83 52.83 0 0 1-52.83-52.83v-81.19a3.35 3.35 0 0 1 3.33-3.35z" fill="#808080"/>
+  <path transform="translate(-251 -101)" d="M544.34,617.82a152.07,152.07,0,0,0,105.66.29v-13H544.34Z" opacity=".4"/>
+  <circle cx="346.37" cy="348.44" r="172.23" fill="#808080" stroke-width="1.1372"/>
+ </g>
+</svg>

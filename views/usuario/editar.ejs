@@ -1,0 +1,114 @@
+﻿<form id="form" class="card shadow mb-5" action="#">
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Informações do Usuário</h6>
+	</div>
+	<div class="card-body">
+		<input type="hidden" id="id" name="id" value="<%=(item ? item.id : 0) %>" />
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="email">E-mail</label>
+					<input id="email" name="email" maxlength="85" class="form-control" type="email" spellcheck="false" value="<%=(item ? item.email : '') %>" <%=(item ? 'readonly="readonly"' : '') %> />
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="nome">Nome</label>
+					<input id="nome" name="nome" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.nome : '') %>" />
+				</div>
+			</div>
+		</div>
+
+		<% if (!item) { %>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="senha">Senha</label>
+					<input id="senha" name="senha" maxlength="20" class="form-control" type="password" />
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="senha2">Confirme a senha</label>
+					<input id="senha2" name="senha2" maxlength="20" class="form-control" type="password" />
+				</div>
+			</div>
+		</div>
+		<% } %>
+
+		<div class="form-group mb-0">
+			<label for="idperfil">Perfil</label>
+			<select id="idperfil" name="idperfil" class="form-control" size="1">
+				<option value="">Selecione...</option>
+				<% for (let i = 0; i < perfis.length; i++) { %>
+				<option value="<%= perfis[i].id %>" <%-((item && item.idperfil === perfis[i].id) ? 'selected="selected"' : '') %>><%= perfis[i].nome %></option>
+				<% } %>
+			</select>
+		</div>
+	</div>
+	<div class="card-footer">
+		<input value="<%=(item ? 'Salvar Alterações' : 'Criar Usuário') %>" class="btn btn-primary btn-lg btn-block" type="submit" />
+	</div>
+</form>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	$("#form").validate({
+		rules: {
+			email: {
+				required: true
+			},
+			nome: {
+				required: true
+			},
+			//<% if (!item) { %>
+			senha: {
+				required: true,
+				minlength: 6
+			},
+			senha2: {
+				equalTo: "#senha"
+			},
+			//<% } %>
+			idperfil: {
+				required: true
+			}
+		},
+
+		submitHandler: function (form) {
+			if (JsonWebApi.active)
+				return;
+
+			Swal.wait();
+
+			//<% if (item) { %>
+
+			JsonWebApi.postFormData("<%- root %>/api/usuario/editar", form, function (response) {
+				if (response.success)
+					Swal.success("Usuário alterado com sucesso! " + emoji.happy);
+				else
+					Swal.error(response.value + " " + emoji.sad);
+			});
+
+			//<% } else { %>
+
+			JsonWebApi.postFormData("<%- root %>/api/usuario/criar", form, function (response) {
+				if (response.success) {
+					resetForm("#form");
+					Swal.success("Usuário criado com sucesso! " + emoji.happy);
+				} else {
+					Swal.error(response.value + " " + emoji.sad);
+				}
+			});
+
+			//<% } %>
+		}
+	});
+	//]]>
+</script>

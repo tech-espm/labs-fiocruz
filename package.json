@@ -1,0 +1,25 @@
+{
+  "name": "fiocruz",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/app",
+    "sass": "sass scss/sb-admin-2.scss public/css/style.min.css --style=compressed"
+  },
+  "description": "fiocruz",
+  "author": {
+    "name": "fiocruz"
+  },
+  "main": "src/app.js",
+  "dependencies": {
+    "teem": "0.0.21"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.13",
+    "@types/express-serve-static-core": "4.17.24",
+    "@types/node": "14.14.21"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

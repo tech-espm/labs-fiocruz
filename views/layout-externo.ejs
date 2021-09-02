@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : (titulo + " - Plataforma Ágora")) %></title>
+
+	<%- include("cabecalho") %>
+
+	<%- defineContent("styles") %>
+</head>
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+
+						<%- body %>
+
+					</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+	<%- include("rodape") %>
+
+	<%- defineContent("scripts") %>
+
+</body>
+</html>

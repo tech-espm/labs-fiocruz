@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : (titulo + " - Plataforma Ágora")) %></title>
+
+	<%- include("cabecalho") %>
+
+	<%- defineContent("styles") %>
+</head>
+<body>
+	<div id="wrapper">
+
+		<%- include("sidebar") %>
+
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<div id="content">
+
+				<%- include("topbar") %>
+
+				<div class="container-fluid">
+
+					<h1 class="mb-4 text-gray-800"><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : titulo) %></h1>
+
+					<%- body %>
+
+				</div>
+
+			</div>
+
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Fiocruz 2021</span>
+					</div>
+				</div>
+			</footer>
+		</div>
+
+	</div>
+
+	<%- include("rodape") %>
+
+	<%- defineContent("scripts") %>
+</body>
+</html>

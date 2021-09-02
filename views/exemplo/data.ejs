@@ -1,0 +1,58 @@
+<div class="card shadow mb-5">
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Exemplo de Controle de Data</h6>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group mb-sm-0">
+					<label for="campoData">Data</label>
+					<input id="campoData" name="campoData" class="form-control" type="text" spellcheck="false" />
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="mb-3">
+					<button type="button" class="btn btn-primary" onclick="alterarValorViaCodigo()">
+						Alterar Valor Via Código
+					</button>
+				</div>
+		
+				<div>
+					<button type="button" class="btn btn-primary" onclick="exibirValor()">
+						Exibir Valor
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	prepareDatePicker("#campoData");
+
+	function alterarValorViaCodigo() {
+		setDatePickerValue("#campoData", "25/12/2000");
+	}
+
+	function exibirValor() {
+		var dataPtBr = $("#campoData").val();
+
+		var dataISO = converterDataISO(dataPtBr);
+
+		if (!dataISO) {
+			Swal.error("Data inválida! " + emoji.sad);
+			return;
+		}
+
+		var html = "Data (pt-BR): " + dataPtBr + "<br/>Data (ISO): " + dataISO;
+
+		Swal.info({ html: html });
+	}
+
+	//]]>
+</script>

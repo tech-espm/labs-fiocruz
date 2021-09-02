@@ -1,0 +1,11 @@
+label.error {
+  color: $red;
+}
+
+.form-control.error {
+  border-color: $red;
+}
+
+.form-control.error:focus {
+  box-shadow: 0 0 0 0.2rem rgba($red, .25);
+}
