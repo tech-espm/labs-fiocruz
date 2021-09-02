@@ -194,7 +194,7 @@ class Usuario {
 
 		await app.sql.connect(async (sql) => {
 			try {
-				await sql.query("insert into usuario (email, nome, idperfil, senha, criacao) values (?, ?, ?, ?, now())", [usuario.email, usuario.nome, usuario.idperfil, appsettings.usuarioHashSenhaPadrao]);
+				await sql.query("insert into usuario (email, nome, idperfil, senha, criacao) values (?, ?, ?, ?, now())", [usuario.email, usuario.nome, usuario.idperfil, await GeradorHash.criarHash(usuario.senha)]);
 			} catch (e) {
 				if (e.code) {
 					switch (e.code) {
