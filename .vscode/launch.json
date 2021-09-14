@@ -5,20 +5,20 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "node",
+			"type": "pwa-node",
 			"request": "launch",
 			"name": "Launch Program",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
 			"windows": {
-				"type": "node",
+				"type": "pwa-node",
 				"request": "launch",
 				"name": "Launch Program",
 				"program": "${workspaceFolder}\\src\\app.js"
 			},
 			"linux": {
-				"type": "node",
+				"type": "pwa-node",
 				"request": "launch",
 				"name": "Launch Program",
 				"program": "${workspaceFolder}/src/app.js"
