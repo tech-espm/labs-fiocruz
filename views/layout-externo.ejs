@@ -8,7 +8,7 @@
 
 	<title><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : (titulo + " - Plataforma Ágora")) %></title>
 
-	<%- include("cabecalho") %>
+	<%- include("partials/cabecalho") %>
 
 	<%- defineContent("styles") %>
 </head>
@@ -35,7 +35,7 @@
 
     </div>
 
-	<%- include("rodape") %>
+	<%- include("partials/rodape") %>
 
 	<%- defineContent("scripts") %>
 

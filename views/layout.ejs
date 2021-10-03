@@ -8,20 +8,20 @@
 
 	<title><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : (titulo + " - Plataforma Ágora")) %></title>
 
-	<%- include("cabecalho") %>
+	<%- include("partials/cabecalho") %>
 
 	<%- defineContent("styles") %>
 </head>
 <body>
 	<div id="wrapper">
 
-		<%- include("sidebar") %>
+		<%- include("partials/sidebar") %>
 
 		<div id="content-wrapper" class="d-flex flex-column">
 
 			<div id="content">
 
-				<%- include("topbar") %>
+				<%- include("partials/topbar") %>
 
 				<div class="container-fluid">
 
@@ -44,7 +44,7 @@
 
 	</div>
 
-	<%- include("rodape") %>
+	<%- include("partials/rodape") %>
 
 	<%- defineContent("scripts") %>
 </body>

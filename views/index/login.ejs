@@ -1,28 +1,120 @@
-﻿<div class="row">
-	<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-	<div class="col-lg-6">
-		<div class="p-5">
-			<div class="text-center">
-				<h1 class="h4 text-gray-900 mb-4">Plataforma Ágora</h1>
-			</div>
-			<form class="user" method="POST" action="<%- root %>/login">
-				<% if (mensagem) { %>
-				<div class="alert alert-danger"><%= mensagem %></div>
-				<% } %>
-				<div class="form-group">
-					<input type="email" class="form-control form-control-user" id="email" name="email" placeholder="E-mail" spellcheck="false" />
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control form-control-user" id="senha" name="senha" placeholder="Senha" />
-				</div>
-				<button type="submit" class="btn btn-primary btn-user btn-block">
-					Login
-				</button>
-			</form>
-			<hr />
-			<div class="text-center">
-				<a class="small" href="<%- root %>/exemplo/registro">Criar nova conta!</a>
-			</div>
+﻿<div class="row login-bg login-text">
+	<!-- Logo && Separator -->
+	<div class="col-sm-4 d-flex flex-row justify-content-center">
+		<div class="col-sm-11 d-flex flex-column align-items-end justify-content-center">
+			<img class="login-logo mr-4" src="../../public/img/logoBranco.png" alt="floresta"/>
+		</div>
+		<div class="col-sm-1 d-flex flex-row align-items-center justify-content-center">
+			<div class="login-separator"></div>
 		</div>
 	</div>
+
+	<!-- Frase -->
+	<div class="col-md-3 d-flex flex-row align-items-center justify-content-center">
+		<h3 class="login-title">ninguém será deixado para trás.</h3>
+	</div>
+
+	<!-- Card Login -->
+	<div class="col-sm-5 d-flex flex-column align-items-center justify-content-center">
+		<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5 px-4 py-5">
+			<form class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
+
+				<% if (mensagem) { %>
+					<div class="alert alert-danger w-100"><%= mensagem %></div>
+				<% } %>
+
+				<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user login-card-input py-4" spellcheck="false">
+
+				<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user login-card-input py-4">
+
+				<div class="d-flex flex-row justify-content-between mb-3 w-100 small">
+					<div class="d-flex flex-row align-items-center">
+						<input type="checkbox" name="lembrar" class="ml-2 mr-1"> 
+						<label for="lembrar" class="m-0">Lembrar de mim</label>
+					</div>
+					
+					<!-- Esqueci a senha -->
+					<a class="m-0" href="<%- root %>/exemplo/esqueci">Esqueci minha senha</a>
+				</div>
+				<button type="submit" class="btn btn-primary login-card-btn">Login</button>
+			</form>
+			
+			<div class="login-card-separator my-4"></div>
+
+			<!-- Criar nova conta -->
+			<a href="<%- root %>/exemplo/registro">Criar nova conta!</a>
+
+		</div>
+		
+	</div>
 </div>
+
+<!-- Style CSS -->
+<%- contentFor("styles") %>
+
+<style type="text/css">
+
+	.login-bg{
+		background: linear-gradient(#00610d8c, #00595c7a), url("../../public/img/floresta.jpg") ;
+		width: 100vw;
+		height: 100vh;
+		margin: 0;
+		background-position: center; 
+  		background-repeat: no-repeat; 
+ 		background-size: cover; /* A imagem se adapta exatamente ao tamanho do conteiner inserido */
+	}
+
+	.login-logo{
+		width: 50%;
+	}
+
+	.login-separator{
+		background-color: white;
+		width: 4px;
+		height: 30%;
+	}
+
+	.login-title {
+		font-family: 'Public Sans', sans-serif;
+		font-size: 54px;
+		font-weight: bold;
+		color: white
+	}
+
+	.login-text{
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.login-card{
+		min-width: 55%;
+		min-height: 45%;
+		background-color: white;
+		border-radius: 15px;
+	}
+
+	.login-card-input{
+		border-radius: 30px;
+		border: 2px solid #cecece;
+		padding: 10px 15px;
+		width: 100%
+	}
+
+	.login-card-input:focus{
+		border: 2px solid var(--blue);
+		padding: 10px 15px;
+	}
+
+	.login-card-btn{
+		border-radius: 30px;
+		width: 100%
+	}
+
+	.login-card-separator{
+		background-color: #cecece;
+		width: 90%;
+		height: 2px;
+
+	}
+</style>
+
+
