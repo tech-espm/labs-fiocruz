@@ -1,29 +1,62 @@
-<div class="row">
-	<div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-	<div class="col-lg-6">
-		<div class="p-5">
+<div class="row redef-bg">
+	<div class="col-lg redef-card card">
+		<div class="p-5 card-body">
 			<div class="text-center">
-				<h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
-				<p class="mb-4">We get it, stuff happens. Just enter your email address below
-					and we'll send you a link to reset your password!</p>
+				<h1 class="h4 text-gray-900 mb-2 redef-title">Esqueceu sua Senha?</h1>
 			</div>
 			<form class="user" method="POST">
 				<div class="form-group">
-					<input type="email" class="form-control form-control-user"
+					<input type="email" class="form-control form-control-user redef-txt" 
 						id="exampleInputEmail" aria-describedby="emailHelp"
-						placeholder="Enter Email Address" />
+						placeholder="Insira seu endereço de E-Mail" />
 				</div>
-				<button type="submit" class="btn btn-primary btn-user btn-block">
-					Reset Password
+				<button type="submit" class="btn btn-primary btn-user btn-block redef-btn redef-txt">
+					Redefinir Senha
 				</button>
 			</form>
 			<hr />
 			<div class="text-center">
-				<a class="small" href="<%- root %>/exemplo/registro">Create an Account!</a>
+				<a class="small sm-txt" href="<%- root %>/exemplo/registro">Criar uma conta Ágora!</a>
 			</div>
 			<div class="text-center">
-				<a class="small" href="<%- root %>/login">Already have an account? Login!</a>
+				<a class="small sm-txt" href="<%- root %>/login">Já possui acesso? Login!</a>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+<%- contentFor("styles") %>
+
+<style type="text/css">
+
+	body{
+		background: linear-gradient(#00610d8c, #00595c7a), url("../../public/img/floresta.jpg") !important; 
+		width: 100vw !important;
+		height: 100vh !important;
+		margin: 0 !important;
+		background-position: center !important; 
+  		background-repeat: no-repeat !important; 
+ 		background-size: cover !important; /* A imagem se adapta exatamente ao tamanho do conteiner inserido */
+	}
+
+	.redef-card{
+		height: 50vh;
+	}
+
+	.redef-title{
+		font-family: 'Public Sans', sans-serif;
+	}
+
+	.redef-btn{
+		background-color: #4C9F38;
+	}
+
+	.redef-text{
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.sm-txt{
+		font-family: 'Open Sans', sans-serif;
+	}
+</style>
