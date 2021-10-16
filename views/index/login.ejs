@@ -1,22 +1,22 @@
 ﻿<div class="row login-bg login-text">
 	<!-- Logo && Separator -->
-	<div class="col-sm-4 d-flex flex-row justify-content-center">
-		<div class="col-sm-11 d-flex flex-column align-items-end justify-content-center">
-			<img class="login-logo mr-4" src="../../public/img/logoBranco.png" alt="floresta"/>
+	<div class="col-lg-4 d-flex flex-row justify-content-center">
+		<div class="col-sm-11 d-flex flex-column login-logo-div justify-content-center">
+			<img class="login-logo " src="../../public/img/logoBranco.png" alt="floresta"/>
 		</div>
-		<div class="col-sm-1 d-flex flex-row align-items-center justify-content-center">
+		<div class="col-sm-1 d-flex flex-row align-items-center justify-content-center login-separator-div">
 			<div class="login-separator"></div>
 		</div>
 	</div>
 
 	<!-- Frase -->
-	<div class="col-md-3 d-flex flex-row align-items-center justify-content-center">
+	<div class="col-lg-3 d-flex flex-row align-items-center justify-content-center">
 		<h3 class="login-title">ninguém será deixado para trás.</h3>
 	</div>
 
 	<!-- Card Login -->
-	<div class="col-sm-5 d-flex flex-column align-items-center justify-content-center">
-		<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5 px-4 py-5">
+	<div class="col-lg-5 d-flex flex-column align-items-center justify-content-center">
+		<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5">
 			<form class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
 
 				<% if (mensagem) { %>
@@ -27,8 +27,8 @@
 
 				<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user login-card-input py-4">
 
-				<div class="d-flex flex-row justify-content-between mb-3 w-100 small">
-					<div class="d-flex flex-row align-items-center">
+				<div class="d-flex flex-row justify-content-between mb-3 w-100 small form-text">
+					<div class="d-flex flex-row align-items-center ">
 						<input type="checkbox" name="lembrar" class="ml-2 mr-1"> 
 						<label for="lembrar" class="m-0">Lembrar de mim</label>
 					</div>
@@ -64,8 +64,13 @@
  		background-size: cover; /* A imagem se adapta exatamente ao tamanho do conteiner inserido */
 	}
 
+	.login-logo-div{
+		align-items: flex-end;
+	}
+
 	.login-logo{
 		width: 50%;
+		margin-right: 15px;
 	}
 
 	.login-separator{
@@ -90,6 +95,7 @@
 		min-height: 45%;
 		background-color: white;
 		border-radius: 15px;
+		padding: 0 20px
 	}
 
 	.login-card-input{
@@ -114,6 +120,76 @@
 		width: 90%;
 		height: 2px;
 
+	}
+
+	/* RESPONSIVENESS */
+	@media only screen and (max-width: 1280px) {
+		.login-title {
+			font-family: 'Public Sans', sans-serif;
+			font-size: 42px;
+			font-weight: bold;
+			color: white
+		}
+
+		.form-text{
+			font-size: 11px
+		}
+
+		.login-card{
+			min-width: 55%;
+			min-height: 50%;
+			padding: 30px 20px
+		}
+	}
+	@media only screen and (max-width: 992px) {
+		.login-logo-div{
+			align-items: center;
+			
+		}
+
+		.login-logo{
+			margin: 0;
+			width: 25%;
+		}
+
+		.login-title {
+			font-family: 'Public Sans', sans-serif;
+			font-size: 34px;
+			font-weight: bold;
+			color: white
+		}
+
+		.login-separator-div{
+			display: none !important;
+		}
+
+		.login-separator{
+			display: none ;
+		}
+
+		.login-card{
+			margin: 0 !important;
+		}
+
+		.login-card{
+			padding: 50px 20px
+		}
+	}
+	@media only screen and (max-width: 768px) {
+		.login-title {
+			font-family: 'Public Sans', sans-serif;
+			font-size: 30px;
+			font-weight: bold;
+			color: white
+		}
+	}
+	@media only screen and (max-width: 576px) {
+		.login-title {
+			font-family: 'Public Sans', sans-serif;
+			font-size: 26px;
+			font-weight: bold;
+			color: white
+		}
 	}
 </style>
 
