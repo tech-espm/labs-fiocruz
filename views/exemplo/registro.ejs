@@ -1,53 +1,32 @@
-<div class="row">
-	<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-	<div class="col-lg-7">
-		<div class="p-5">
-			<div class="mb-4 text-center">
-				<img style="width: 100%; max-width: 250px;" alt="Logo Fiocruz" src="<%- staticRoot %>/img/logo.png" />
-			</div>
-			<form method="POST">
-				<div class="form-group row">
-					<div class="col-sm-6 mb-3 mb-sm-0">
-						<input type="text" class="form-control" id="exampleFirstName"
-							placeholder="First Name">
-					</div>
-					<div class="col-sm-6">
-						<input type="text" class="form-control" id="exampleLastName"
-							placeholder="Last Name">
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="email" class="form-control" id="exampleInputEmail"
-						placeholder="Email Address">
-				</div>
-				<div class="form-group row">
-					<div class="col-sm-6 mb-3 mb-sm-0">
-						<input type="password" class="form-control"
-							id="exampleInputPassword" placeholder="Password">
-					</div>
-					<div class="col-sm-6">
-						<input type="password" class="form-control"
-							id="exampleRepeatPassword" placeholder="Repeat Password">
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary btn-user btn-block">
-					Register Account
-				</button>
-				<hr />
-				<a href="#" class="btn btn-google btn-user btn-block">
-					<i class="fab fa-google fa-fw"></i> Register with Google
-				</a>
-				<a href="#" class="btn btn-facebook btn-user btn-block">
-					<i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-				</a>
-			</form>
-			<hr />
-			<div class="text-center">
-				<a class="small" href="<%- root %>/exemplo/esqueci">Forgot Password?</a>
-			</div>
-			<div class="text-center">
-				<a class="small" href="<%- root %>/login">Already have an account? Login!</a>
-			</div>
-		</div>
-	</div>
-</div>
+<div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row bg-white rounded-bottom rounded" style="border-radius:15px;">
+            <div class="mx-auto col-lg-9 col-10 offset-md-1 py-4" style="border-radius: 15px;">
+              <form class="text-left">
+                <h1 class="text-center py-2">Cadastro de Usuário</h1>
+                <div class="form-group"> <label>Nome Completo</label> <input type="text" class="form-control" placeholder="Seu Nome"> </div>
+                <div class="form-group"> <label>E-mail</label> <input type="email" class="form-control" placeholder="email@exemplo.com"> </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12"> <label>Senha</label> <input type="password" class="form-control" placeholder="••••••••"> </div>
+                  <div class="form-group col-md-12"> <label >Confirme sua Senha</label> <input type="password" class="form-control" placeholder="••••••••"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-check"> <input class="form-check-input" type="checkbox" value="on"> <label class="form-check-label">Eu aceito os Termos de Condição de Uso</label> </div>
+                </div> <button type="submit" class="btn" style="background-color: #4C9F38; color: white;">Sign in</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+	  body{
+		background: linear-gradient(#00610d8c, #00595c7a), url("../../public/img/floresta.jpg") !important; 
+		background-position: top left !important;	
+		background-size: 100% !important;	
+		background-repeat: no-repeat !important;
+		font-family: 'Open Sans', sans-serif !important;}
+  </style>

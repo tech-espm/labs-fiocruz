@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
 <head>
-	<%- include("cabecalho") %>
+	<%- include("partials/cabecalho") %>
 
 	<%- defineContent("styles") %>
 </head>
 <body>
 	<div id="wrapper">
 
-		<%- include("sidebar") %>
+		<%- include("partials/sidebar") %>
 
 		<div id="content-wrapper" class="d-flex flex-column">
 
 			<div id="content">
 
-				<%- include("topbar") %>
+				<%- include("partials/topbar") %>
 
 				<div class="container-fluid">
 
@@ -51,12 +51,12 @@
 
 			</div>
 
-			<%- include("footer") %>
+			<%- include("partials/footer") %>
 		</div>
 
 	</div>
 
-	<%- include("rodape") %>
+	<%- include("partials/rodape") %>
 
 	<%- defineContent("scripts") %>
 </body>
