@@ -16,8 +16,7 @@ $gray-800: #5a5c69 !default;
 $gray-900: #3a3b45 !default;
 $black: #000 !default;
 
-//$blue: #4e73df !default;
-$blue: #4c9f38 !default;
+$blue: #4e73df !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
@@ -27,6 +26,16 @@ $yellow: #f6c23e !default;
 $green: #1cc88a !default;
 $teal: #20c9a6 !default;
 $cyan: #36b9cc !default;
+
+// scss/bootstrap/_variables.scss
+$bs-primary: #4c9f38 !default;
+$bs-secondary: $gray-600 !default;
+$bs-success: $green !default;
+$bs-info: $cyan !default;
+$bs-warning: $yellow !default;
+$bs-danger: $red !default;
+$bs-light: $gray-100 !default;
+$bs-dark: $gray-800 !default;
 
 // Custom Colors
 $brand-google: #ea4335 !default;

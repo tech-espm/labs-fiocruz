@@ -1,55 +1,45 @@
-﻿<form id="form" class="card shadow mb-5" action="#">
-	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Informações do Perfil</h6>
-	</div>
-	<div class="card-body">
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group mb-sm-0">
-					<label for="email">E-mail</label>
-					<input id="email" name="email" class="form-control" type="email" spellcheck="false" readonly="readonly" value="<%=usuario.email %>" />
-				</div>
-			</div>
-
-			<div class="col-sm-6">
-				<div class="form-group mb-0">
-					<label for="nome">Nome</label>
-					<input id="nome" name="nome" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=usuario.nome %>" />
-				</div>
-			</div>
-		</div>
-
-		<hr />
-
-		<p>Para alterar a senha atual, por favor, preencha todos os campos abaixo:</p>
-
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="form-group mb-sm-0">
-					<label for="senhaAtual">Senha atual</label>
-					<input id="senhaAtual" name="senhaAtual" maxlength="20" class="form-control" type="password" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group mb-sm-0">
-					<label for="novaSenha">Nova senha</label>
-					<input id="novaSenha" name="novaSenha" maxlength="20" class="form-control" type="password" />
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group mb-0">
-					<label for="novaSenha2">Confirme a nova senha</label>
-					<input id="novaSenha2" name="novaSenha2" maxlength="20" class="form-control" type="password" />
-				</div>
-			</div>
+﻿<div class="row">
+	<div class="col-sm-6">
+		<div class="form-group mb-sm-0">
+			<label for="email">E-mail</label>
+			<input id="email" name="email" class="form-control" type="email" spellcheck="false" readonly="readonly" value="<%=usuario.email %>" />
 		</div>
 	</div>
-	<div class="card-footer">
-		<input value="Salvar Alterações" class="btn btn-primary btn-lg btn-block" type="submit" />
+
+	<div class="col-sm-6">
+		<div class="form-group mb-0">
+			<label for="nome">Nome</label>
+			<input id="nome" name="nome" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=usuario.nome %>" />
+		</div>
 	</div>
-</form>
+</div>
+
+<hr />
+
+<p>Para alterar a senha atual, por favor, preencha todos os campos abaixo:</p>
+
+<div class="row">
+	<div class="col-sm-4">
+		<div class="form-group mb-sm-0">
+			<label for="senhaAtual">Senha atual</label>
+			<input id="senhaAtual" name="senhaAtual" maxlength="20" class="form-control" type="password" />
+		</div>
+	</div>
+
+	<div class="col-sm-4">
+		<div class="form-group mb-sm-0">
+			<label for="novaSenha">Nova senha</label>
+			<input id="novaSenha" name="novaSenha" maxlength="20" class="form-control" type="password" />
+		</div>
+	</div>
+
+	<div class="col-sm-4">
+		<div class="form-group mb-0">
+			<label for="novaSenha2">Confirme a nova senha</label>
+			<input id="novaSenha2" name="novaSenha2" maxlength="20" class="form-control" type="password" />
+		</div>
+	</div>
+</div>
 
 <%- contentFor("scripts") %>
 <script type="text/javascript">

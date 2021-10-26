@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<%- include("cabecalho") %>
+
+	<%- defineContent("styles") %>
+</head>
+<body>
+	<div id="wrapper">
+
+		<%- include("sidebar") %>
+
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<div id="content">
+
+				<%- include("topbar") %>
+
+				<div class="container-fluid">
+
+					<h1 class="mb-4 text-gray-800"><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : titulo) %></h1>
+
+					<%- body %>
+
+				</div>
+
+			</div>
+
+			<%- include("footer") %>
+		</div>
+
+	</div>
+
+	<%- include("rodape") %>
+
+	<%- defineContent("scripts") %>
+</body>
+</html>

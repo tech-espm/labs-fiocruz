@@ -237,11 +237,11 @@ class Usuario {
 			return "Não é possível excluir o usuário administrador principal";
 
 		return app.sql.connect(async (sql) => {
-			const agora = DataUtil.hojeISOComHorario();
+			const agora = DataUtil.horarioDeBrasiliaISOComHorario();
 
 			// Utilizar substr(email, instr(email, ':') + 1) para remover o prefixo, caso precise desfazer a exclusão (caso
 			// não exista o prefixo, instr() vai retornar 0, que, com o + 1, faz o substr() retornar a própria string inteira)
-			await sql.query("update usuario set email = concat('@', id, ':', email), token = null, exclusao = ? where id = ?", [DataUtil.hojeISOComHorario(), id]);
+			await sql.query("update usuario set email = concat('@', id, ':', email), token = null, exclusao = ? where id = ?", [agora, id]);
 
 			return (sql.affectedRows ? null : "Usuário não encontrado");
 		});
