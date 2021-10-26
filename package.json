@@ -12,7 +12,8 @@
   },
   "main": "src/app.js",
   "dependencies": {
-    "teem": "0.0.21"
+    "teem": "0.0.21",
+    "ts": "^0.2.2"
   },
   "devDependencies": {
     "@types/express": "4.17.13",
