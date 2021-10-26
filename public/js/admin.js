@@ -4,7 +4,6 @@
 		sidebarSmall = false,
 		sidebarShouldBeSmall = false,
 		sidebarForcedVisible = false,
-		$window = $(window),
 		$body = $(document.body),
 		$sidebar = $(".sidebar"),
 		$sidebarcollapse = $(".sidebar .collapse");
@@ -48,26 +47,26 @@
 	// Close any open menu accordions when window is resized below 768px
 	function windowResize() {
 		if (!sidebarCollapseHidden) {
-			if ($window.width() < 768) {
+			if (window.innerWidth < 768) {
 				sidebarCollapseHidden = true;
 				$sidebarcollapse.collapse("hide");
 			}
 		} else {
-			if ($window.width() >= 768) {
+			if (window.innerWidth >= 768) {
 				sidebarCollapseHidden = false;
 			}
 		}
 
 		if (sidebarSmall) {
-			if ($window.width() < 768)
+			if (window.innerWidth < 768)
 				makeSidebarNormal();
 		} else if (sidebarShouldBeSmall) {
-			if ($window.width() >= 768)
+			if (window.innerWidth >= 768)
 				makeSidebarSmall();
 		}
 	}
 
-	$window.resize(windowResize);
+	$(window).resize(windowResize);
 
 	// Prevent the content wrapper from scrolling when the fixed side navigation hovered over
 	$("body.fixed-nav .sidebar").on("mousewheel DOMMouseScroll wheel", function(e) {
