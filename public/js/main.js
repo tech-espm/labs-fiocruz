@@ -1810,6 +1810,7 @@ window.BlobDownloader = {
 		data.menu.style.right = "auto";
 		data.menu.style.bottom = "auto";
 		data.menu.style.display = "block";
+		data.menu.style.zIndex = "9999999";
 
 		button.appendChild(i);
 		span.appendChild(button);
@@ -2130,6 +2131,45 @@ Swal.okcancel = function (message, title, danger) {
 
 		if (!options.customClass.confirmButton)
 			options.customClass.confirmButton = (danger ? "btn btn-danger" : "btn btn-primary");
+
+		if (!options.customClass.cancelButton)
+			options.customClass.cancelButton = "btn btn-secondary ml-2";
+	}
+
+	if (!options.confirmButtonText)
+		options.confirmButtonText = "OK";
+
+	if (!options.cancelButtonText)
+		options.cancelButtonText = "Cancelar";
+
+	if (!("focusCancel" in options))
+		options.focusCancel = true;
+
+	return Swal.fire(options);
+};
+
+Swal.okcancelNoIcon = function (message, title) {
+	var options = message;
+
+	if (!options)
+		options = {};
+
+	if (typeof message === "string")
+		options = { text: message };
+
+	if (!options.title)
+		options.title = title || "Confirmação";
+
+	options.showCancelButton = true;
+
+	if (!options.buttonsStyling) {
+		options.buttonsStyling = false;
+
+		if (!options.customClass)
+			options.customClass = {};
+
+		if (!options.customClass.confirmButton)
+			options.customClass.confirmButton = "btn btn-primary";
 
 		if (!options.customClass.cancelButton)
 			options.customClass.cancelButton = "btn btn-secondary ml-2";
