@@ -20,16 +20,11 @@
 
 					<h1 class="mb-4 text-gray-800"><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : titulo) %></h1>
 
-					<form class="card shadow mb-4" id="form">
-						<div class="card-header">
-							<div class="row align-items-center">
-								<div class="col">
-									<h6 class="m-0 font-weight-bold text-primary"><%=((typeof subtitulo === "undefined" || !subtitulo) ? "Informações" : subtitulo) %></h6>
-								</div>
-							</div>
-						</div>
+					<%- defineContent("topcontent") %>
 
-						<div class="card-body">
+					<div class="card shadow mb-4" id="form">
+						<%- defineContent("cardheader") %>
+						<div class="card-body px-0">
 
 							<%- body %>
 
@@ -37,15 +32,12 @@
 
 						<div class="card-footer">
 							<div class="row align-items-center">
-								<div class="col-md-6 text-center text-md-left pb-3 pb-md-0">
-									<button type="submit" class="btn btn-primary"><i class="fa fa14 fa-fw fa-check"></i> <%=((typeof textoSubmit === "undefined" || !textoSubmit) ? "Salvar" : textoSubmit) %></button>
-								</div>
-								<div class="col-md-6 text-center text-md-right">
+								<div class="col-md-6 offset-md-6 text-center text-md-right">
 									<button type="button" class="btn btn-light" onclick="if (window.history.length > 1) { window.history.back(); } else { window.close() }">Voltar</button>
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 
 				</div>
 

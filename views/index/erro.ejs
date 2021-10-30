@@ -1,8 +1,8 @@
 <div class="p-4 text-center">
-	<h1 class="h2 m-0"><%=((typeof mensagem === "undefined" || !mensagem) ? "A página que você está tentando acessar não foi encontrada" : mensagem) %> 😢</h1>
-	<!--
-		<%= erro.status %>
-		
-		<%= erro.stack %>
-	-->
+	<div class="mb-4"><a href="<%- root %>/"><img style="width: 100%; max-width: 250px;" alt="Logo Plataforma Ágora" src="<%- staticRoot %>/img/logo.png" /></a></div>
+	<h1 class="h2 my-4">Oops... 😳</h1>
+	<%=((typeof mensagem === "undefined" || !mensagem) ? "A página que você está tentando acessar não foi encontrada" : mensagem) %> 😢
+	<br/>
+	<br/>
+	<button type="button" class="btn btn-primary" onclick="if (window.history.length > 1) { window.history.back(); } else { window.close() }">Voltar</button>
 </div>

@@ -10,6 +10,7 @@ class UsuarioRoute {
 		else
 			res.render("usuario/editar", {
 				titulo: "Criar Usuário",
+				textoSubmit: "Criar",
 				usuario: u,
 				item: null,
 				perfis: perfis.lista
@@ -24,7 +25,10 @@ class UsuarioRoute {
 			let id = parseInt(req.query["id"] as string);
 			let item: Usuario = null;
 			if (isNaN(id) || !(item = await Usuario.obter(id)))
-				res.render("index/nao-encontrado", { usuario: u });
+				res.render("index/nao-encontrado", {
+					layout: "layout-sem-form",
+					usuario: u
+				});
 			else
 				res.render("usuario/editar", {
 					titulo: "Editar Usuário",
@@ -41,6 +45,7 @@ class UsuarioRoute {
 			res.redirect(app.root + "/acesso");
 		else
 			res.render("usuario/listar", {
+				layout: "layout-tabela",
 				titulo: "Gerenciar Usuários",
 				datatables: true,
 				usuario: u,

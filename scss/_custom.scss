@@ -1,11 +1,181 @@
 // Nossas customizações :)
 
+.table td, .table th {
+    font-size: .8125rem;
+    white-space: nowrap;
+    padding: 0.5rem;
+    vertical-align: middle;
+}
+
 .swal2-html-container {
 	margin: 0.5rem 0.75rem 0;
 	padding: 0.5rem 0.75rem;
 	font-size: 1rem;
 }
 
+<<<<<<< HEAD
 .bg-main{
     background-color: #eee;
+=======
+select.form-control[size="1"], select.form-control:not([size]), .select-arrow {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAUCAAAAAA/s+ULAAAAAnRSTlMAAHaTzTgAAABNSURBVHjarcwBDQAgEAAhS9rMPl/Ni+AmBGDNfnLWs8FfI/4a8deIv0b8NeKvEX+N+GvEXyP+GvHXiL9G/DXirxF/jfhrxF8j/hp/vgv3fJip4oGwmgAAAABJRU5ErkJggg==');
+	background-repeat: no-repeat;
+	-webkit-background-size: 16px 4px;
+	background-size: 16px 4px;
+	background-position: right center;
+	cursor: pointer;
+	padding-right: 25px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+}
+
+	select.form-control[size="1"]::-ms-expand, select.form-control:not([size])::-ms-expand {
+		display: none;
+	}
+
+select.form-control.input-sm {
+	line-height: 1.5;
+}
+
+.cb-search > .dropdown {
+	display: block;
+}
+
+.cb-search .input-group-btn {
+	display: inline-block;
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+	background: $bs-primary;
+	color: color-yiq($bs-primary);
+	border-radius: $input-border-radius 0 0 $input-border-radius;
+	//height: add(100%, $input-height-border);
+}
+
+.cb-search .btn-default {
+	background: transparent;
+	color: inherit;
+	border: none;
+	/*border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-color: #dee2e6;*/
+	height: 100%;
+	margin-right: -1px;
+	box-shadow: none;
+	padding: .625rem 1rem;
+}
+
+ul.dropdown-menu > li > a {
+	color: inherit;
+	display: block;
+	padding: .25rem .5rem;
+}
+
+.form-control.error, .focused .form-control.error, .form-control.error:focus,
+.cb-search select.error + label + .form-group > input {
+	border-color: $bs-danger;
+}
+
+.cb-search select.error + label + .form-group > input:focus {
+	box-shadow: 0 0 0 0.2rem rgba($bs-danger, .25);
+}
+
+.cb-search select.error + label + .form-group > .input-group-btn {
+	background: $bs-danger;
+}
+
+.fa14 {
+	font-size: 13px;
+}
+
+.col-h {
+	color: $bs-danger;
+}
+
+.col-max {
+	width: 99%;
+}
+
+.col-min {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.col-25 {
+	width: 25%;
+}
+
+.col-50 {
+	width: 50%;
+}
+
+.col-75 {
+	width: 75%;
+}
+
+.col-33 {
+	width: 33%;
+}
+
+.col-66 {
+	width: 66%;
+}
+
+.card {
+	overflow: hidden;
+}
+
+table.dataTable {
+	border-bottom: $table-border-width solid $table-border-color;
+}
+
+.op-0 {
+	opacity: 0 !important;
+}
+
+.op-10 {
+	opacity: 0.1 !important;
+}
+
+.op-20 {
+	opacity: 0.2 !important;
+}
+
+.op-30 {
+	opacity: 0.3 !important;
+}
+
+.op-40 {
+	opacity: 0.4 !important;
+}
+
+.op-50 {
+	opacity: 0.5 !important;
+}
+
+.op-60 {
+	opacity: 0.6 !important;
+}
+
+.op-70 {
+	opacity: 0.7 !important;
+}
+
+.op-80 {
+	opacity: 0.8 !important;
+}
+
+.op-90 {
+	opacity: 0.9 !important;
+}
+
+.op-100 {
+	opacity: 1 !important;
+}
+
+.hidden {
+	display: none !important;
+>>>>>>> 9d1de95583ff26199d87688a9503a5f744f3a6e5
 }

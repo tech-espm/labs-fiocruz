@@ -1,11 +1,4 @@
-﻿
-<div class="card shadow">
-	<div class="card-body">
-
-		<table class="table table-flush table-striped table-hover" id="tabela"></table>
-
-	</div>
-</div>
+﻿<table class="table table-flush table-striped table-hover" id="tabela"></table>
 
 <%- contentFor("scripts") %>
 <script type="text/javascript">
@@ -16,11 +9,11 @@
 		order: [[1, "asc"]],
 		deferRender: true,
 		columns: [
-			{ title: "", "class": "text-nowrap", searchable: false, orderable: false, data: "id", render: function (v, type, row) { return '<a target="_blank" title="Editar" href="<%- root %>/usuario/editar?id=' + row.id + '" class="btn btn-sm btn-outline-primary"><i class="fa fa-fw fa-edit"></i></a> <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa-fw fa-times"></i></button>'; } },
+			{ title: "", "class": "col-min", searchable: false, orderable: false, data: "id", render: function (v, type, row) { return '<a target="_blank" title="Editar" href="<%- root %>/usuario/editar?id=' + row.id + '" class="btn btn-sm btn-outline-primary"><i class="fa fa-fw fa-edit"></i></a> <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa-fw fa-times"></i></button>'; } },
 			{ title: "E-mail", render: encode, data: "email" },
 			{ title: "Nome", render: encode, data: "nome" },
 			{ title: "Perfil", render: encode, data: "perfil" },
-			{ title: "Criação", "class": "text-nowrap text-right", "type": "customdateint", data: "criacao" }
+			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" }
 		],
 		data: <%- JSON.stringify(lista) %>,
 		export: { title: "Usuários" }

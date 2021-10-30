@@ -64,14 +64,14 @@ $colors: map-merge(
   $colors
 );
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$primary:       $bs-primary !default;
+$secondary:     $bs-secondary !default;
+$success:       $bs-success !default;
+$info:          $bs-info !default;
+$warning:       $bs-warning !default;
+$danger:        $bs-danger !default;
+$light:         $bs-light !default;
+$dark:          $bs-dark !default;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
@@ -384,7 +384,7 @@ $table-border-level:          -6 !default;
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
-$input-btn-padding-y:         .375rem !default;
+$input-btn-padding-y:         .625rem !default;
 $input-btn-padding-x:         .75rem !default;
 $input-btn-font-family:       null !default;
 $input-btn-font-size:         $font-size-base !default;

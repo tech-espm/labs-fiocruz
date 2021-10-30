@@ -1636,10 +1636,10 @@ window.BlobDownloader = {
 			this.selection = this.menu.childNodes.length - 1;
 		var i, c;
 		for (i = this.menu.childNodes.length - 1; i >= 0; i--)
-			this.menu.childNodes[i].style.background = "";
+			this.menu.childNodes[i].firstChild.style.background = "";
 		c = this.menu.childNodes[this.selection];
 		this.menu.scrollTop = c.offsetTop - 5;
-		c.style.background = "rgba(102,175,233,.75)";
+		c.firstChild.style.background = "rgba(102,175,233,.75)";
 	}
 
 	function cbSearch_DataOpen(normalized) {
@@ -1662,9 +1662,10 @@ window.BlobDownloader = {
 				li = document.createElement("li");
 				if (value)
 					li.cbSearchValue = value;
-				if (!ok)
-					li.style.background = "rgba(102,175,233,.75)";
 				a = document.createElement("a");
+				if (!ok)
+					a.style.background = "rgba(102,175,233,.75)";
+				a.className = "dropdown-item";
 				a.setAttribute("href", "#");
 				a.cbSearchData = this;
 				a.onclick = cbSearch_AClick;
@@ -1771,6 +1772,7 @@ window.BlobDownloader = {
 		select.onmousedown = cbSearch_MouseDown;
 		select.addEventListener("change", cbSearch_Change);
 		select.cbSearchChange = cbSearch_Change;
+		select.setAttribute("tabindex", "-1");
 		outerdiv.className = "dropdown";
 		groupdiv.className = "form-group input-group";
 		groupdiv.style.position = "absolute";
@@ -1790,7 +1792,6 @@ window.BlobDownloader = {
 			input.className = "form-control upper select-arrow";
 		input.setAttribute("type", "text");
 		input.setAttribute("spellcheck", "false");
-		input.setAttribute("tabindex", "-1");
 		// In order to disable address autofill/autocomplete
 		// https://stackoverflow.com/a/30976223
 		input.setAttribute("autocomplete", "new-password");
@@ -1810,6 +1811,7 @@ window.BlobDownloader = {
 		data.menu.style.right = "auto";
 		data.menu.style.bottom = "auto";
 		data.menu.style.display = "block";
+		data.menu.style.zIndex = "9999999";
 
 		button.appendChild(i);
 		span.appendChild(button);
@@ -1818,8 +1820,6 @@ window.BlobDownloader = {
 
 		parent.removeChild(select);
 		select.style.borderColor = "transparent";
-		select.style.webkitBoxShadow = "none";
-		select.style.boxShadow = "none";
 
 		outerdiv.appendChild(select);
 		outerdiv.appendChild(groupdiv);
@@ -1861,7 +1861,74 @@ window.BlobDownloader = {
 		});
 	};
 })();
-
+window.prepareFilteredCbState = function (cbState, cbCity, callback) {
+	if (cbCity) {
+		var i, j, tmp, cities;
+		for (i = 0; i < cbState.options.length; i++) {
+			tmp = cbState.options[i].getAttribute("data-cities");
+			cbState.options[i].removeAttribute("data-cities");
+			if (tmp && tmp.length) {
+				tmp = tmp.split("|");
+				if (tmp.length >= 2) {
+					cities = [];
+					for (j = 0; j < tmp.length; j += 2)
+						cities.push([tmp[j], tmp[j + 1]]);
+					cbState.options[i].dataCities = cities;
+				} else {
+					cbState.options[i].dataCities = [];
+				}
+			} else {
+				cbState.options[i].dataCities = [];
+			}
+		}
+		cbState.onchange = function () {
+			var i, opt, cities = cbState.options[cbState.options.selectedIndex].dataCities;
+			while (cbCity.childNodes.length > 1)
+				cbCity.removeChild(cbCity.childNodes[1]);
+			cbCity.value = "0";
+			if (cbCity.cbSearchInput)
+				cbCity.cbSearchInput.value = "";
+			if (cities && cities.length) {
+				for (i = 0; i < cities.length; i++) {
+					opt = document.createElement("option");
+					opt.setAttribute("value", cities[i][1]);
+					opt.textContent = cities[i][0];
+					cbCity.appendChild(opt);
+				}
+			}
+			if (callback)
+				callback();
+		};
+	}
+};
+window.prepareCbState = function (cbState, cbCity, callback) {
+	if (cbCity) {
+		cbState.onchange = function () {
+			var i, id, opt, s = parseInt(cbState.value);
+			s = ((!isNaN(s) && s > 0) ? window.cidades[s] : null);
+			while (cbCity.childNodes.length > 1)
+				cbCity.removeChild(cbCity.childNodes[1]);
+			cbCity.value = "0";
+			if (cbCity.cbSearchInput)
+				cbCity.cbSearchInput.value = "";
+			if (s && s.c && s.c.length) {
+				id = s.i;
+				s = s.c;
+				for (i = 0; i < s.length; i++) {
+					opt = document.createElement("option");
+					opt.setAttribute("value", id + i);
+					opt.textContent = s[i];
+					cbCity.appendChild(opt);
+				}
+			}
+			if (callback)
+				callback();
+		};
+		cbState.onchange();
+		if (cbState.cbSearchChange)
+			cbState.cbSearchChange();
+	}
+};
 window.converterDataISO = function (data, formatoBr) {
 	if (!data || !(data = trim(data)) || data.length < 10)
 		return null;
@@ -2065,6 +2132,45 @@ Swal.okcancel = function (message, title, danger) {
 
 		if (!options.customClass.confirmButton)
 			options.customClass.confirmButton = (danger ? "btn btn-danger" : "btn btn-primary");
+
+		if (!options.customClass.cancelButton)
+			options.customClass.cancelButton = "btn btn-secondary ml-2";
+	}
+
+	if (!options.confirmButtonText)
+		options.confirmButtonText = "OK";
+
+	if (!options.cancelButtonText)
+		options.cancelButtonText = "Cancelar";
+
+	if (!("focusCancel" in options))
+		options.focusCancel = true;
+
+	return Swal.fire(options);
+};
+
+Swal.okcancelNoIcon = function (message, title) {
+	var options = message;
+
+	if (!options)
+		options = {};
+
+	if (typeof message === "string")
+		options = { text: message };
+
+	if (!options.title)
+		options.title = title || "Confirmação";
+
+	options.showCancelButton = true;
+
+	if (!options.buttonsStyling) {
+		options.buttonsStyling = false;
+
+		if (!options.customClass)
+			options.customClass = {};
+
+		if (!options.customClass.confirmButton)
+			options.customClass.confirmButton = "btn btn-primary";
 
 		if (!options.customClass.cancelButton)
 			options.customClass.cancelButton = "btn btn-secondary ml-2";

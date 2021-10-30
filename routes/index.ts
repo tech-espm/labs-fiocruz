@@ -7,7 +7,11 @@ class IndexRoute {
 		if (!u)
 			res.redirect(app.root + "/login");
 		else
-			res.render("index/index", { layout:"layout-basico", titulo: "Dashboard", usuario: u });
+			res.render("index/index", {
+				layout: "layout-sem-form",
+				titulo: "Dashboard",
+				usuario: u
+			});
 	}
 
 	@app.http.all()
@@ -35,7 +39,11 @@ class IndexRoute {
 		if (!u)
 			res.redirect(app.root + "/login");
 		else
-			res.render("index/acesso", { titulo: "Sem Permissão", usuario: u });
+			res.render("index/acesso", {
+				layout: "layout-sem-form",
+				titulo: "Sem Permissão",
+				usuario: u
+			});
 	}
 
 	public static async perfil(req: app.Request, res: app.Response) {
@@ -43,7 +51,10 @@ class IndexRoute {
 		if (!u)
 			res.redirect(app.root + "/");
 		else
-			res.render("index/perfil", { titulo: "Meu Perfil", usuario: u });
+			res.render("index/perfil", {
+				titulo: "Meu Perfil",
+				usuario: u
+			});
 	}
 
 	public static async logout(req: app.Request, res: app.Response) {
