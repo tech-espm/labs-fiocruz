@@ -8,11 +8,11 @@
 
 	<title><%=((typeof titulo === "undefined" || !titulo) ? "Plataforma Ágora" : (titulo + " - Plataforma Ágora")) %></title>
 
-	<%- include("partials/cabecalho") %>
+	<%- include("partials/cabecalho") %> <!-- fonts && bootstrap -->
 
-	<%- defineContent("styles") %>
+	<%- defineContent("styles") %> <!-- Customized style -->
 </head>
-<body class="bg-gradient-primary">
+<body style="background-color: #fff;">
 	<%- body %>
     
 </body>

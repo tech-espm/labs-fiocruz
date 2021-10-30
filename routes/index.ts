@@ -7,7 +7,7 @@ class IndexRoute {
 		if (!u)
 			res.redirect(app.root + "/login");
 		else
-			res.render("index/index", { titulo: "Dashboard", usuario: u });
+			res.render("index/index", { layout:"layout-basico", titulo: "Dashboard", usuario: u });
 	}
 
 	@app.http.all()
@@ -19,11 +19,11 @@ class IndexRoute {
 			if (req.body.email || req.body.senha) {
 				[mensagem, u] = await Usuario.efetuarLogin(req.body.email as string, req.body.senha as string, res);
 				if (mensagem)
-					res.render("index/login", { layout: "layout-login", mensagem: mensagem });
+					res.render("index/login", { layout: "layout-basico", mensagem: mensagem });
 				else
 					res.redirect(app.root + "/");
 			} else {
-				res.render("index/login", { layout: "layout-login", mensagem: null });
+				res.render("index/login", { layout: "layout-basico", mensagem: null });
 			}
 		} else {
 			res.redirect(app.root + "/");

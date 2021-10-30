@@ -12,6 +12,7 @@
   },
   "main": "src/app.js",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "teem": "0.0.21",
     "ts": "^0.2.2"
   },
