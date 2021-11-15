@@ -1,17 +1,23 @@
 ﻿
 <!-- Filtros -->
 <div class="row d-flex justify-content-center pt-5">
-	<div class="col-lg-8 d-flex flex-column align-items-center" >
-		<div class="d-flex">
-			<input type="text" class="main-input mr-3" placeholder="Título">
-			<div>
-				<select class="custom-select main-input mr-3">
+	<div class="col-lg-8 d-flex flex-column flex-lg-row">
+		<div class="col-lg-4">
+			<div class="input-group mr-4 mb-3 d-flex flex-row align-items-center justify-content-center">
+				<input type="text" class="form-control main-input p-3" placeholder="Título">
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="input-group mr-4 mb-3">
+				<select class="custom-select main-input ">
 					<option selected disabled>Localização</option>
 					<option value="1">São Paulo</option>
 					<option value="2">Rio</option>
 				</select>
 			</div>
-			<div>
+		</div>
+		<div class="col-lg-4">
+			<div class="input-group mb-3">
 				<select class="custom-select main-input">
 					<option selected disabled>Objetivos (ODS)</option>
 					<option value="1">Erradicação da Pobreza</option>
@@ -34,25 +40,30 @@
 				</select>
 			</div>
 		</div>
-		<div class="d-flex align-items-center justify-content-center pt-3" >
-			<button class="main-btn-load d-flex align-items-center" style="color: #6e707e">Carregar mais<i class="fas fa-chevron-down ml-2"></i></button>
-		</div>
 	</div>
+
 </div>
 
-<!-- Mapa -->
+<div class="row d-flex justify-content-center">
+	<div class="d-flex align-items-center justify-content-center pt-2" >
+		<button class="main-btn-load d-flex align-items-center" style="color: #6e707e">Carregar mais<i class="fas fa-chevron-down ml-2"></i></button>
+	</div>
+	
+</div>
+
+<!-- Mapa 
 <div class="row d-flex justify-content-center pt-4">
 	<div class="col-lg-8 bg-primary shadow" >
 		Mapa
 	</div>
 	
-</div>
+</div> -->
 
 <!-- Carousel -->
 <div class="row d-flex justify-content-center pt-5">
-	<div class="col-lg-8">
-		<h2>PROJETOS DA SEMANA</h2>
-		<div id="carouselExampleIndicators" class="carousel slide shadow mt-3" data-ride="carousel">
+	<div class="col-lg-8 ">
+		<h3>PROJETOS DA SEMANA</h3>
+		<div id="carouselExampleIndicators" class="carousel slide shadow mt-3 " data-ride="carousel">
 			<ol class="carousel-indicators">
 			  	<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 			  	<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -135,132 +146,130 @@
 			</button>
 		  </div>
 		  <div class="modal-body main-modal">
-			  <div class="d-flex mb-3">
-				  <!-- Img -->
-				  <div class="d-flex flex-column mr-4 justify-content-between">
-					  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" alt="ODS 1" class="main-modal-img"/>
-					  <div class="d-flex justify-content-center align-items-center">
-						<p class="main-modal-sign d-flex align-items-center"><i class="fas fa-chevron-down mr-2"></i>Mais informações<i class="fas fa-chevron-down ml-2"></i></>
-					  </div>
-				  </div>
-
-				  <!-- Info principal -->
-				  <div class="d-flex flex-column">
-					<div class="d-flex align-items-center">
-						<i class="fas fa-map-marker-alt mr-1"></i>
-						<p class="m-0"><b>São Paulo - SP</b></p>
-					</div>
-					<h4 class="main-modal-project-name">TEMA DO PROJETO</h4>
-					<h5 class="main-modal-org-name">Nome da Organização</h5>
-					<p class="main-modal-p-head">OBJETIVOS - ODS</p>
-					<div class="d-flex flex-wrap">
-						<img src="https://lh3.googleusercontent.com/proxy/HAY-FW0oUt32-XT7vDs6RipEKXoFPd4z96d69w8yiRGNtEzaURv5dwDd0RroWWARrh8NZIFJUVz-y5PYXOZ3wSo7O6uIg_-a-22ylYtQK76-y2yro3LX" alt="ODS 1" class="main-modal-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/HAY-FW0oUt32-XT7vDs6RipEKXoFPd4z96d69w8yiRGNtEzaURv5dwDd0RroWWARrh8NZIFJUVz-y5PYXOZ3wSo7O6uIg_-a-22ylYtQK76-y2yro3LX" alt="ODS 1" class="main-modal-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/HAY-FW0oUt32-XT7vDs6RipEKXoFPd4z96d69w8yiRGNtEzaURv5dwDd0RroWWARrh8NZIFJUVz-y5PYXOZ3wSo7O6uIg_-a-22ylYtQK76-y2yro3LX" alt="ODS 1" class="main-modal-ods"/>
-					</div>
-
-					<p class="main-modal-p-head">RESUMO DO PROJETO</p>
-					<p class="main-modal-p-body">
-						Lorem ipsum dolor sit amet. Est culpa enim et debitis
-						tempora sit laudantium quia et architecto eaque. Enim
-						corrupti et deleniti velit aut fuga illum et voluptatum
-						accusamus et iure inventore. Et autem nostrum qui sunt
-						quibusdam quo fuga laborum est similique veniam nam
-						molestiae assumenda cum ipsum nostrum.
-					</p>
-				  </div>
-			  </div>
-
-			  <!-- Mais Info - Green deco -->
-			  <div class="mb-4 d-flex flex-column">
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">AUTOR</label>
-						<h4 class="main-modal-label-header">Nome do Autor</h4>
-					</div>
-				</div>
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">ÁREAS DE ATUAÇÃO</label>
-						<h4 class="main-modal-label-header">Nome das Áreas de Atuação</h4>
-					</div>
-				</div>
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">PÚBLICO ALVO</label>
-						<h4 class="main-modal-label-header">Tipo de Público Alvo</h4>
-					</div>
-				</div>
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">LOCAL DE IMPLEMENTAÇÃO DA SOLUÇÃO</label>
-						<h4 class="main-modal-label-header">Local da Implementação da solução feita por ongs nacionais</h4>
-					</div>
-				</div>
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">ABRANGÊNCIA</label>
-						<h4 class="main-modal-label-header">Tipo de Abrangência</h4>
-					</div>
-				</div>
-				<div class="d-flex mb-4">
-					<div class="main-modal-deco"></div>
-					<div>
-						<label class="main-modal-label">PARCEIROS</label>
-						<h4 class="main-modal-label-header">Nome dos Parceiros</h4>
-					</div>
-				</div>
-
-			  </div>
-
-			  <!-- Lista Info - Green check -->
-			  <div class="d-flex mb-4">
-					<div class="d-flex flex-column main-modal-info">
-						<div class="mr-2">
-							<h4 class="mb-2">INFORMAÇÕES SOBRE A SOLUÇÃO</h4>
-							<div>
-								<div class="d-flex align-items-center text-justify justify-content-between">
-									<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing</p>
-									<i class="fas fa-check main-modal-check"></i>
-								</div>
-								<div class="d-flex align-items-center text-justify justify-content-between">
-									<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-									<i class="fas fa-check main-modal-check"></i>
-								</div>
-								<div class="d-flex align-items-center text-justify justify-content-between">
-									<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-									<i class="fas fa-check main-modal-check"></i>
-								</div>
-								
-							</div>
-						</div>
-  
-					</div>
-
-					<!-- Contato -->
-					<div class="d-flex flex-column align-items-center main-modal-contato">
-						<div>
-							<h4>CONTATO</h4>
-							<p class="main-modal-contact-p">TEL: 00 1234 5678</p>
-							<p class="main-modal-contact-p">EMAIL: ABCD@HOTMAIL.COM</p>
-							<p class="main-modal-contact-p">FACEBOOK: ABCDEFG</p>
-							<p class="main-modal-contact-p">TWITTER: ABCDEFG</p>
-						</div>
+				<div class="row d-flex flex-column flex-lg-row">
+					<div class="col d-flex flex-column justify-content-center align-items-center">
+						<!-- Img -->
+						<img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" alt="ODS 1" class="main-modal-img"/>
+						
+						<h5 class="main-modal-sign d-flex align-items-center mt-3 mb-4"><i class="fas fa-chevron-down mr-2"></i>Mais informações<i class="fas fa-chevron-down ml-2"></i></h5>
 						
 					</div>
-			  </div>
+					<div class="col">
+						<!-- Info principal -->
+						<div class="d-flex flex-column">
+							<div class="d-flex align-items-center">
+								<i class="fas fa-map-marker-alt mr-1"></i>
+								<p class="m-0"><b>São Paulo - SP</b></p>
+							</div>
+							<h4 class="main-modal-project-name">TEMA DO PROJETO</h4>
+							<h5 class="main-modal-org-name">Nome da Organização</h5>
+							<p class="main-modal-p-head">OBJETIVOS - ODS</p>
+							<div class="d-flex flex-wrap">
+								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
+								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
+								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
+							</div>
 
-			  <!-- Comentarios -->
-			  <div class="">
-				  <h4>COMENTÁRIOS</h4>
-				  <textarea class="main-modal-textarea"></textarea>
-			  </div>
-			  
+							<p class="main-modal-p-head">RESUMO DO PROJETO</p>
+							<p class="main-modal-p-body">
+								Lorem ipsum dolor sit amet. Est culpa enim et debitis
+								tempora sit laudantium quia et architecto eaque. Enim
+								corrupti et deleniti velit aut fuga illum et voluptatum
+								accusamus et iure inventore. Et autem nostrum qui sunt
+								quibusdam quo fuga laborum est similique veniam nam
+								molestiae assumenda cum ipsum nostrum.
+							</p>
+						</div>
+					
+					</div>
+				</div>
+				<div class="row mt-4">
+					<!-- Mais Info - Green deco -->
+					<div class="d-flex flex-column mb-2 px-2">
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">AUTOR</label>
+								<h4 class="main-modal-label-header">Nome do Autor</h4>
+							</div>
+						</div>
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">ÁREAS DE ATUAÇÃO</label>
+								<h4 class="main-modal-label-header">Nome das Áreas de Atuação</h4>
+							</div>
+						</div>
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">PÚBLICO ALVO</label>
+								<h4 class="main-modal-label-header">Tipo de Público Alvo</h4>
+							</div>
+						</div>
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">LOCAL DE IMPLEMENTAÇÃO DA SOLUÇÃO</label>
+								<h4 class="main-modal-label-header">Local da Implementação da solução feita por ongs nacionais</h4>
+							</div>
+						</div>
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">ABRANGÊNCIA</label>
+								<h4 class="main-modal-label-header">Tipo de Abrangência</h4>
+							</div>
+						</div>
+						<div class="d-flex mb-4">
+							<div class="main-modal-deco"></div>
+							<div>
+								<label class="main-modal-label">PARCEIROS</label>
+								<h4 class="main-modal-label-header">Nome dos Parceiros</h4>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="row d-flex flex-column flex-lg-row">
+					<!-- Lista Info - Green check -->
+					<div class="col-lg-8 d-flex flex-column mb-4">
+						<h4 class="mb-2">INFORMAÇÕES SOBRE A SOLUÇÃO</h4>
+						<div>
+							<div class="d-flex align-items-center text-justify justify-content-between">
+								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing</p>
+								<i class="fas fa-check main-modal-check"></i>
+							</div>
+							<div class="d-flex align-items-center text-justify justify-content-between">
+								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+								<i class="fas fa-check main-modal-check"></i>
+							</div>
+							<div class="d-flex align-items-center text-justify justify-content-between">
+								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+								<i class="fas fa-check main-modal-check"></i>
+							</div>
+						</div>
+					</div>
+					<!-- Contato -->
+					<div class="col-lg-4 mb-4">
+						<h4>CONTATO</h4>
+						<p class="main-modal-contact-p">TEL: 00 1234 5678</p>
+						<p class="main-modal-contact-p">EMAIL: ABCD@HOTMAIL.COM</p>
+						<p class="main-modal-contact-p">FACEBOOK: ABCDEFG</p>
+						<p class="main-modal-contact-p">TWITTER: ABCDEFG</p>
+					</div>
+
+				</div>
+
+				<!-- Comentarios -->
+				<div class="row">
+					<div class="col">
+						<h4>COMENTÁRIOS</h4>
+						<textarea class="main-modal-textarea"></textarea>
+					</div>
+				</div>
 		</div>
 	  </div>
 	</div>
@@ -269,7 +278,7 @@
   <!-- Cards -->
 <div class="row d-flex justify-content-center mt-4">
 	<div class="col-lg-8 d-flex align-items-center justify-content-between">
-		<div class="row row-cols-1 row-cols-md-4">
+		<div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
 			<div class="col mb-4">
 				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
 				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
@@ -311,16 +320,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
 					  </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;">
+			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
 				<div class="card-body d-flex" >
 					<div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -344,17 +353,14 @@
 
 					</div>
 					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						
+
 					</div>
 				</div>
 			  </div>
 			</div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex" >
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -378,17 +384,15 @@
   
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						  
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			  </div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex">
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -410,16 +414,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
 				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex" style="min-height: 150px">
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -459,16 +463,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
 					  </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;">
+			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
 				<div class="card-body d-flex" >
 					<div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -492,17 +496,14 @@
 
 					</div>
 					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						
+
 					</div>
 				</div>
 			  </div>
 			</div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex" >
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -526,17 +527,15 @@
   
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						  
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			  </div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex">
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -558,16 +557,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
 				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex" style="min-height: 150px">
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -607,16 +606,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
 					  </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;">
+			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
 				<div class="card-body d-flex" >
 					<div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -640,17 +639,14 @@
 
 					</div>
 					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						
+
 					</div>
 				</div>
 			  </div>
 			</div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex" >
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -674,165 +670,15 @@
   
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						  
-					  </div>
-				  </div>
-				</div>
-			  </div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
-				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Plantar árvores no parque</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
-				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" style="min-height: 150px">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Doação de arroz</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;">
-				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
-				<div class="card-body d-flex" >
-					<div class="d-flex flex-column pr-2" style="width: 70%;">
-						<h6>Ensinando economia da água</h6>
-						<div class="d-flex align-items-center main-card-sm-text">
-							<i class="fas fa-map-marker-alt mr-1"></i>
-							<p class="m-0"><b>São Paulo - SP</b></p>
-						</div>
-						<div class="d-flex align-items-center flex-wrap pt-3" >
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
 						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						<img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						
-					</div>
-				</div>
-			  </div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
-				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" >
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Marcha pelos direitos das mulheres</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-  
-						  </div>
-  
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
-						  
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			  </div>
 			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;">
+				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
 				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
 				  <div class="card-body d-flex">
 					  <div class="d-flex flex-column pr-2" style="width: 70%;">
@@ -854,24 +700,16 @@
 						  </div>
 					  </div>
 					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://lh3.googleusercontent.com/proxy/2z6KKx98DYREnOiSo2UMYVJAcoSl43OTA3n6Kv9G8xmPCP9rQAfkBfymoVV6avOq40t1oClfzwYAANbl0yXjNt65iuFV8_Xk0EFRxcPsK5gMuMwq0R8M" alt="ODS 1" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/8ly6c2sYtypOl3pVoM1I6av23Eu_-Sp8psMvV6SeXlUkdfznu7xlczN8xaZcqN_kxa5WncFNOmlwLpZvURyJ5ce9DC5-E_wrPydjBx9q0MGQpbQlkHoj" alt="ODS 3" class="main-card-ods"/>
-						  <img src="https://lh3.googleusercontent.com/proxy/mJwT7dS0ch9a8WJpN87ME-6ptGHQxYpya3uAKY2yt7n-foWLjTpFyYX7qY4s8iD0sN0YpqYSYV5uMpYXRnwoZZNw_l5w34b8Y9loMiZl2CPU-guhaO2v" alt="ODS 8" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
+
 					  </div>
 				  </div>
 				</div>
 			</div>
-			
-			
-			
-			
-			
-		</div>
-		
-			
+		</div>			
 	</div>
-	
 </div>
 <div class="row d-flex justify-content-center mt-3 mb-5">
 	<button class="main-btn-load d-flex align-items-center"><i class="fas fa-plus mr-2"></i>Carregar mais</button>
@@ -893,10 +731,8 @@
 		margin: 0;
 	}
 	.main-input{
-		width: 300px;
 		border-radius: 30px;
 		border: 2px solid #cecece;
-		padding: 5px 15px;
 	}
 
 	.main-input:focus{
@@ -1077,9 +913,30 @@
 			height: 500px;
 		}
 	}
-	@media only screen and (max-width: 992px) {}
-	@media only screen and (max-width: 768px) {}
-	@media only screen and (max-width: 576px) {}
+	@media only screen and (max-width: 992px) {
+		.main-slider-img{
+			width: 100%;
+			height: 450px;
+		}
+	}
+	@media only screen and (max-width: 768px) {
+		.main-slider-img{
+			width: 100%;
+			height: 400px;
+		}
+		.main-modal-textarea{
+			width: 100%;
+			border-radius: 20px;
+			padding: 15px;
+			height: 150px;
+		}
+	}
+	@media only screen and (max-width: 576px) {
+		.main-slider-img{
+			width: 100%;
+			height: 300px;
+		}
+	}
 
 </style>
 
