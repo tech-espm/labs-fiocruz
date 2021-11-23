@@ -1,0 +1,190 @@
+
+    <div class="row" style="margin: 25px;"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>CADASTRAR PROJETO</h1><label style="border-color: var(--red);color: var(--red);">* informações obrigatórias</label>
+            </div>
+            <div class="col-md-6" style="width: 566px;height: 86px;margin: 0px;padding: 0px;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: 96px;"></div>
+    </div>
+    <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+        <div class="multisteps-form__progress"><a class="btn multisteps-form__progress-btn js-active" role="button" title="User Info">Informações de Contato</a><a class="btn multisteps-form__progress-btn js-active" role="button" title="User Info">Informações do Evento</a><a class="btn multisteps-form__progress-btn" role="button" title="User Info">Registro Completo</a></div>
+    </div>
+    <div class="row" style="margin: 19px;"></div>
+    <form>
+        <div class="form-group">
+            <div class="container">
+                <div class="form-row">
+                    <div class="col-md-12"><label>Com quais ODSs a Solução está relacionada? (1 a 17, podendo escolher mais de um)<br></label>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">ODS 01 - Erradicação da pobreza<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">ODS 02 - Fome zero e agricultura sustentável<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-12"><label class="form-check-label" for="formCheck-12">ODS 03 - Saúde e bem-estar<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">ODS 04 - Educação de qualidade<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-16"><label class="form-check-label" for="formCheck-16">ODS 05 - Igualdade de gênero<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-15"><label class="form-check-label" for="formCheck-15">ODS 06 - Água limpa e saneamento<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-17"><label class="form-check-label" for="formCheck-17">ODS 07 - Energia limpa e acessível<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-14"><label class="form-check-label" for="formCheck-14">ODS 08 - Trabalho decente e crescimento econômico<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11"><label class="form-check-label" for="formCheck-11">ODS 09 - Indústria, Inovação e infraestrutura<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-13"><label class="form-check-label" for="formCheck-13">ODS 10 - Redução das desigualdades<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10"><label class="form-check-label" for="formCheck-10">ODS 11 - Cidades e comunidades sustentáveis<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-9">ODS 12 - Consumo e produção responsáveis<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">ODS 13 - Ação contra a mudança global do clima<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-5">ODS 14 - Vida na água<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">ODS 15 - Vida terrestre<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">ODS 16 - Paz, justiça e instituições eficazes<br></label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">ODS 17 - Parcerias e meios de implementação<br></label></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-row">
+                    <div class="col-md-6"><label class="col-form-label">Como ocorre/ocorreu a divulgação da tecnologia? ( Pode mais de 1 opção)<br></label></div>
+                    <div class="col-md-6"><label class="col-form-label">A tecnologia aborda o uso sustentável de recursos, as áreas naturais <br>e o conhecimento tradicional?<br></label></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.multisteps-form__progress {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+
+.form-check .macro {
+  padding-top: 15px;
+}
+
+.multisteps-form__progress-btn {
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  position: relative;
+  padding-top: 20px;
+  color: rgba(108, 117, 125, 0.7);
+  text-indent: -9999px;
+  border: none;
+  background-color: transparent;
+  outline: none !important;
+  cursor: pointer;
+}
+
+@media (min-width: 500px) {
+  .multisteps-form__progress-btn {
+    text-indent: 0;
+  }
+}
+
+.multisteps-form__progress-btn:before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  width: 13px;
+  height: 13px;
+  content: '';
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  transition: all 0.15s linear 0s, -webkit-transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
+  transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
+  transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s, -webkit-transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background-color: #fff;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.multisteps-form__progress-btn:after {
+  position: absolute;
+  top: 5px;
+  left: calc(-50% - 13px / 2);
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  display: block;
+  width: 100%;
+  height: 2px;
+  content: '';
+  background-color: currentColor;
+  z-index: 1;
+}
+
+.multisteps-form__progress-btn:first-child:after {
+  display: none;
+}
+
+.multisteps-form__progress-btn.js-active {
+  color: #007bff;
+}
+
+.multisteps-form__progress-btn.js-active:before {
+  -webkit-transform: translateX(-50%) scale(1.2);
+  transform: translateX(-50%) scale(1.2);
+  background-color: currentColor;
+}
+
+.multisteps-form__form {
+  position: relative;
+}
+
+.multisteps-form__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.multisteps-form__panel.js-active {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.multisteps-form__panel[data-animation="scaleIn"] {
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+.multisteps-form__panel[data-animation="scaleIn"].js-active {
+  transition-property: all;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+#next {
+  margin: 0 auto;
+}
+
+.col-md-12 #next {
+  margin: 0 auto;
+}
+
+
+</style>
+</html>

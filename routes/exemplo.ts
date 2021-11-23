@@ -54,6 +54,18 @@ class ExemploRoute {
 		res.render("exemplo/esqueci", { layout: "layout-externo", titulo: "Esqueci minha senha" });
 	}
 
+	public static async cadastroProjeto(req: app.Request, res: app.Response) {
+		res.render("exemplo/cadastro-projeto", { layout: "layout-externo", titulo: "Cadastro de Projeto" });
+	}
+
+	public static async cadastroTec(req: app.Request, res: app.Response) {
+		res.render("exemplo/cadastro-projeto2", { layout: "layout-externo", titulo: "Cadastro de Projeto" });
+	}
+
+	public static async cadastroContato(req: app.Request, res: app.Response) {
+		res.render("exemplo/cadastro-projeto3", { layout: "layout-externo", titulo: "Cadastro de Projeto" });
+	}
+
 	public static async graficos(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
