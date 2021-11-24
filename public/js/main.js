@@ -656,6 +656,20 @@ window.resetForm = function (f) {
 		validator.formSubmitted = false;
 	}
 };
+window.validateColor = function (color) {
+	if (!color || color.length !== 7 || color.charCodeAt(0) !== 0x23)
+		return false;
+
+	var i, c;
+
+	for (i = 1; i < 7; i++) {
+		c = color.charCodeAt(i);
+		if (!((c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x46) || (c >= 0x61 && c <= 0x66)))
+			return false;
+	}
+
+	return true;
+}
 window.validateCNPJ = function (cnpj) {
 	if (!cnpj || !(cnpj = trim(cnpj.replace(/\./g, "").replace(/\-/g, "").replace(/\//g, ""))) || cnpj.length !== 14)
 		return false;

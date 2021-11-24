@@ -1,0 +1,64 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<div class="card my-5">
+				<div class="card-body">
+					<div class="text-center">
+						<div class="mb-4"><img style="width: 100%; max-width: 250px;" alt="Logo TERRA 2030" src="<%- staticRoot %>/img/logo.png" /></div>
+						<h1 class="h4 text-gray-900 mb-4">Redefina sua senha!</h1>
+					</div>
+					<form id="form">
+						<div class="form-group row">
+							<div class="col-sm-6 mb-3 mb-sm-0">
+								<input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" />
+							</div>
+							<div class="col-sm-6">
+								<input type="password" class="form-control" id="senha2" name="senha2" placeholder="Confirme a senha" />
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary btn-user btn-block">
+							Redefinir minha senha!
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	$("#form").validate({
+		rules: {
+			senha: {
+				required: true,
+				minlength: 6,
+				maxlength: 20
+			},
+			senha2: {
+				required: true,
+				equalTo: "#senha"
+			}
+		},
+
+		submitHandler: function (form) {
+			if (JsonWebApi.active)
+				return;
+
+			Swal.wait();
+
+			JsonWebApi.post("<%- root %>/api/usuario/redefinirSenhaToken", null, function (response) {
+				if (response.success)
+					Swal.success("Senha redefinida com sucesso! " + emoji.happy).then(function () {
+						location.href = "<%- root %>/login";
+					});
+				else
+					Swal.error(response.value + " " + emoji.sad);
+			}, "token", "<%- token %>", "senha", $("#senha").val());
+		}
+	});
+	//]]>
+</script>

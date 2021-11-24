@@ -82,10 +82,6 @@ class ExemploRoute {
 			res.render("exemplo/outros", { layout: "layout-sem-form", titulo: "Outros", usuario: u });
 	}
 
-	public static async registro(req: app.Request, res: app.Response) {
-		res.render("exemplo/registro", { layout: "layout-externo", titulo: "Registro" });
-	}
-
 	public static async tabelas(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)

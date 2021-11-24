@@ -2,9 +2,11 @@
 import { randomBytes } from "crypto";
 import appsettings = require("../appsettings");
 import DataUtil = require("../utils/dataUtil");
+import Email = require("../utils/email");
 import GeradorHash = require("../utils/geradorHash");
 import intToHex = require("../utils/intToHex");
 import Perfil = require("../enums/perfil");
+import SafeBase64 = require("../utils/safeBase64");
 import Validacao = require("../utils/validacao");
 
 interface Usuario {
@@ -13,6 +15,7 @@ interface Usuario {
 	nome: string;
 	idperfil: Perfil;
 	senha: string;
+	confirmado: number;
 	criacao: string;
 
 	// Utilizados apenas através do cookie
@@ -79,11 +82,14 @@ class Usuario {
 		return await app.sql.connect(async (sql) => {
 			email = email.normalize().trim().toLowerCase();
 
-			const usuarios: Usuario[] = await sql.query("select id, nome, idperfil, senha from usuario where email = ? and exclusao is null", [email]);
+			const usuarios: Usuario[] = await sql.query("select id, nome, idperfil, senha, confirmado from usuario where email = ? and exclusao is null", [email]);
 			let usuario: Usuario;
 
 			if (!usuarios || !usuarios.length || !(usuario = usuarios[0]) || !(await GeradorHash.validarSenha(senha.normalize(), usuario.senha as string)))
 				return ["Usuário ou senha inválidos", null];
+
+			if (!usuarios[0].confirmado)
+				return ["Por favor, siga as instruções enviadas para o e-mail " + email + " para confirmar a criação de sua conta", null];
 
 			let [token, cookieStr] = Usuario.gerarTokenCookie(usuario.id);
 
@@ -187,14 +193,16 @@ class Usuario {
 		return ((lista && lista[0]) || null);
 	}
 
-	public static async criar(usuario: Usuario): Promise<string> {
+	public static async criar(usuario: Usuario, confirmado: number): Promise<string> {
 		let res: string;
 		if ((res = Usuario.validar(usuario, true)))
 			return res;
 
 		await app.sql.connect(async (sql) => {
 			try {
-				await sql.query("insert into usuario (email, nome, idperfil, senha, criacao) values (?, ?, ?, ?, now())", [usuario.email, usuario.nome, usuario.idperfil, await GeradorHash.criarHash(usuario.senha)]);
+				await sql.query("insert into usuario (email, nome, idperfil, senha, confirmado, criacao) values (?, ?, ?, ?, ?, now())", [usuario.email, usuario.nome, usuario.idperfil, await GeradorHash.criarHash(usuario.senha), confirmado]);
+
+				usuario.id = await sql.scalar("select last_insert_id()");
 			} catch (e) {
 				if (e.code) {
 					switch (e.code) {
@@ -215,6 +223,79 @@ class Usuario {
 		});
 
 		return res;
+	}
+
+	public static async criarExterno(usuario: Usuario): Promise<string | null> {
+		if (usuario)
+			usuario.idperfil = Perfil.Comum;
+
+		return await Usuario.criar(usuario, 0) || await app.sql.connect(async (sql) => {
+			const tokenreset = randomBytes(32).toString("hex"),
+				id = "0000000" + (usuario.id ^ appsettings.usuarioHashId).toString(16),
+				buffer = Buffer.from(id.substr(id.length - 8) + tokenreset, "utf-8");
+
+			for (let i = buffer.length - 1; i >= 0; i--)
+				buffer[i] ^= 0x55;
+
+			await sql.query("update usuario set tokenreset = ? where id = ?", [tokenreset, usuario.id]);
+
+			const link = appsettings.urlSite + app.root + "/confirmacao?" + SafeBase64.encode(buffer),
+				html = `
+					<p>Olá, ${usuario.nome}!</p>
+					<p>Por favor, confirme seu e-mail clicando no link <a target="_blank" href="${link}">${link}</a></p>
+				`;
+
+			await Email.enviar({
+				to: usuario.email,
+				subject: "TERRA 2030 - Confirmação de e-mail",
+				html: html
+			});
+
+			return null;
+		});
+	}
+
+	public static async confirmarEmail(safeBase64Hash: string | null): Promise<string | null> {
+		if (!safeBase64Hash)
+			return "Informações inválidas";
+
+		let id: number, tokenreset: string;
+
+		try {
+			const buffer = SafeBase64.decode(safeBase64Hash);
+			for (let i = buffer.length - 1; i >= 0; i--)
+				buffer[i] ^= 0x55;
+
+			const idTokenreset = buffer.toString("utf-8");
+			if (idTokenreset.length < 32)
+				return "Informações de confirmação de e-mail inválidas";
+
+			id = parseInt(idTokenreset.substr(0, 8), 16);
+			if (isNaN(id))
+				return "Informações de confirmação de e-mail inválidas";
+
+			id ^= appsettings.usuarioHashId;
+			tokenreset = idTokenreset.substr(8);
+		} catch (ex: any) {
+			return "Informações de confirmação de e-mail inválidas";
+		}
+
+		return app.sql.connect(async (sql) => {
+			const usuarios: { id: number, confirmado: number, tokenreset: string }[] = await sql.query("select id, confirmado, tokenreset from usuario where id = ?", [id]);
+
+			if (!usuarios || !usuarios.length)
+				return "Usuário não encontrado";
+
+			if (usuarios[0].confirmado)
+				return "E-mail já confirmado";
+
+			if (!tokenreset || !usuarios[0].tokenreset || usuarios[0].tokenreset !== tokenreset)
+				return "Código de confirmação inválido";
+
+			await sql.query("update usuario set confirmado = 1, tokenreset = null where id = ?", [id]);
+
+			return null;
+		});
 	}
 
 	public static async editar(usuario: Usuario): Promise<string> {
@@ -244,6 +325,102 @@ class Usuario {
 			await sql.query("update usuario set email = concat('@', id, ':', email), token = null, exclusao = ? where id = ?", [agora, id]);
 
 			return (sql.affectedRows ? null : "Usuário não encontrado");
+		});
+	}
+
+	public static async redefinirSenhaExterno(email: string): Promise<string | null> {
+		if (!email || !(email = email.normalize().trim()))
+			return "E-mail inválido";
+
+		return app.sql.connect(async (sql) => {
+			const usuarios: { id: number, nome: string, confirmado: number }[] = await sql.query("select id, nome, confirmado from usuario where email = ?", [email]);
+
+			if (!usuarios || !usuarios.length)
+				return "Usuário não encontrado";
+
+			if (!usuarios[0].confirmado)
+				return "Por favor, siga as instruções enviadas para o e-mail " + email + " para confirmar seu pedido de cadastro";
+
+			const tokenreset = randomBytes(32).toString("hex"),
+				id = "0000000" + (usuarios[0].id ^ appsettings.usuarioHashId).toString(16),
+				buffer = Buffer.from(id.substr(id.length - 8) + tokenreset, "utf-8");
+
+			for (let i = buffer.length - 1; i >= 0; i--)
+				buffer[i] ^= 0x55;
+
+			const agora = new Date(),
+				limite = new Date(agora.getTime() + (2 * 24 * 60 * 60 * 1000));
+
+			await sql.query("update usuario set tokenreset = ?, datalimitereset = ? where id = ?", [tokenreset, limite.getTime().toString(), usuarios[0].id]);
+
+			const link = appsettings.urlSite + app.root + "/redefinirSenha?" + SafeBase64.encode(buffer),
+				html = `
+					<p>Olá, ${usuarios[0].nome}!</p>
+					<p>Recebemos um pedido para redefinir sua senha em ${agora.toLocaleString("pt-BR")}.</p>
+					<p>Por favor, acesse o link <a target="_blank" href="${link}">${link}</a> até ${limite.toLocaleString("pt-BR")} para redefinir sua senha.</p>
+				`;
+
+			await Email.enviar({
+				from: appsettings.mailFromGeral,
+				to: email,
+				subject: "TERRA 2030 - Redefinição de senha",
+				html: html
+			});
+
+			return null;
+		});
+	}
+
+	public static async redefinirSenhaToken(safeBase64Token: string, novaSenha: string): Promise<string | null> {
+		if (!safeBase64Token)
+			return "Informações de redefinição de senha inválidas";
+
+		if ((novaSenha = novaSenha.normalize()).length < 6 || novaSenha.length > 20)
+			return "Nova senha inválida";
+
+		let id: number, tokenreset: string;
+
+		try {
+			const buffer = SafeBase64.decode(safeBase64Token);
+			for (let i = buffer.length - 1; i >= 0; i--)
+				buffer[i] ^= 0x55;
+
+			const idTokenreset = buffer.toString("utf-8");
+			if (idTokenreset.length < 32)
+				return "Informações de redefinição de senha inválidas";
+
+			id = parseInt(idTokenreset.substr(0, 8), 16);
+			if (isNaN(id))
+				return "Informações de redefinição de senha inválidas";
+
+			id ^= appsettings.usuarioHashId;
+			tokenreset = idTokenreset.substr(8);
+		} catch (ex: any) {
+			return "Informações de redefinição de senha inválidas";
+		}
+
+		return app.sql.connect(async (sql) => {
+			const usuarios: { id: number, email: string, confirmado: number, tokenreset: string, datalimitereset: string }[] = await sql.query("select id, email, confirmado, tokenreset, datalimitereset from usuario where id = ? and exclusao is null", [id]);
+
+			if (!usuarios || !usuarios.length)
+				return "Usuário não encontrado";
+
+			if (!usuarios[0].confirmado)
+				return "Por favor, siga as instruções enviadas para o e-mail " + usuarios[0].email + " para confirmar a criação de sua conta";
+	
+			const datalimitereset = parseInt(usuarios[0].datalimitereset);
+
+			if (!tokenreset || !usuarios[0].tokenreset || usuarios[0].tokenreset !== tokenreset || isNaN(datalimitereset))
+				return "Código de redefinição inválido";
+
+			if ((new Date()).getTime() > datalimitereset)
+				return "Código de redefinição expirado";
+
+			const hash = await GeradorHash.criarHash(novaSenha);
+
+			await sql.query("update usuario set senha = ?, token = null, tokenreset = null, datalimitereset = null where id = ?", [hash, id]);
+
+			return null;
 		});
 	}
 }

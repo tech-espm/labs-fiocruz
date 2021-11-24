@@ -34,6 +34,26 @@ class IndexRoute {
 		}
 	}
 
+	public static async registro(req: app.Request, res: app.Response) {
+		res.render("index/registro", { layout: "layout-basico", titulo: "Registro" });
+	}
+
+	public static async redefinirSenha(req: app.Request, res: app.Response) {
+		const i = req.url.indexOf("?");
+		res.render("index/redefinirSenha", {
+			layout: "layout-basico",
+			token: ((i >= 0) ? req.url.substr(i + 1) : null)
+		});
+	}
+
+	public static async confirmacao(req: app.Request, res: app.Response) {
+		const i = req.url.indexOf("?");
+		res.render("index/confirmacao", {
+			layout: "layout-basico",
+			mensagem: await Usuario.confirmarEmail((i >= 0) ? req.url.substr(i + 1) : null)
+		});
+	}
+
 	public static async acesso(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)

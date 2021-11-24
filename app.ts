@@ -5,7 +5,7 @@ import Perfil = require("./enums/perfil");
 app.run({
 	root: appsettings.root,
 	port: appsettings.port,
-	sqlConfig: appsettings.sqlPool,
+	sqlConfig: appsettings.sqlConfig,
 
 	onInit: function () {
 		app.express.locals.Perfil = Perfil;

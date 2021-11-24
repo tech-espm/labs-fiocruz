@@ -28,15 +28,12 @@ class UsuarioApiRoute {
 	}
 
 	@app.http.post()
-	public static async criarExterno(req: app.Request, res: app.Response) {
-		const usuario: Usuario = req.body;
+	public static async criar(req: app.Request, res: app.Response) {
+		const u = await Usuario.cookie(req, res, true);
+		if (!u)
+			return;
 
-		if (usuario) {
-			// Usuários criados externamente só podem ser usuários comuns
-			usuario.idperfil = Perfil.Comum;
-		}
-
-		const erro = await Usuario.criar(usuario);
+		const erro = await Usuario.criar(req.body, 1);
 
 		if (erro) {
 			res.status(400).json(erro);
@@ -47,12 +44,10 @@ class UsuarioApiRoute {
 	}
 
 	@app.http.post()
-	public static async criar(req: app.Request, res: app.Response) {
-		const u = await Usuario.cookie(req, res, true);
-		if (!u)
-			return;
+	public static async criarExterno(req: app.Request, res: app.Response) {
+		const usuario: Usuario = req.body;
 
-		const erro = await Usuario.criar(req.body);
+		const erro = await Usuario.criarExterno(usuario);
 
 		if (erro) {
 			res.status(400).json(erro);
@@ -106,6 +101,42 @@ class UsuarioApiRoute {
 		}
 
 		const erro = await Usuario.excluir(id);
+
+		if (erro) {
+			res.status(400).json(erro);
+			return;
+		}
+
+		res.sendStatus(204);
+	}
+
+	@app.http.post()
+	public static async redefinirSenhaExterno(req: app.Request, res: app.Response) {
+		const u = await Usuario.cookie(req);
+		if (u) {
+			res.status(400).json("Um usuário não pode redefinir sua senha estando conectado ao sistema");
+			return;
+		}
+
+		const erro = await Usuario.redefinirSenhaExterno(req.query["email"] as string);
+
+		if (erro) {
+			res.status(400).json(erro);
+			return;
+		}
+
+		res.sendStatus(204);
+	}
+
+	@app.http.post()
+	public static async redefinirSenhaToken(req: app.Request, res: app.Response) {
+		const u = await Usuario.cookie(req);
+		if (u) {
+			res.status(400).json("Um usuário não pode redefinir sua senha estando conectado ao sistema");
+			return;
+		}
+
+		const erro = await Usuario.redefinirSenhaToken(req.query["token"] as string, req.query["senha"] as string);
 
 		if (erro) {
 			res.status(400).json(erro);

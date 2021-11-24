@@ -1,0 +1,85 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<div class="card my-5">
+				<div class="card-body">
+					<div class="text-center">
+						<div class="mb-4"><img style="width: 100%; max-width: 250px;" alt="Logo TERRA 2030" src="<%- staticRoot %>/img/logo.png" /></div>
+						<h1 class="h4 text-gray-900 mb-4">Crie sua conta!</h1>
+					</div>
+					<form id="form">
+						<div class="form-group">
+							<input type="text" class="form-control" id="nome" name="nome" maxlength="100" spellcheck="false" placeholder="Nome completo" />
+						</div>
+						<div class="form-group">
+							<input type="email" class="form-control" id="email" name="email" maxlength="85" spellcheck="false" placeholder="E-mail" />
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6 mb-3 mb-sm-0">
+								<input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" />
+							</div>
+							<div class="col-sm-6">
+								<input type="password" class="form-control" id="senha2" name="senha2" placeholder="Confirme a senha" />
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary btn-user btn-block">
+							Criar minha conta!
+						</button>
+					</form>
+					<hr />
+					<div class="text-center">
+						<a class="small" href="<%- root %>/login">Já tem uma conta? Faça login!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	$("#form").validate({
+		rules: {
+			nome: {
+				required: true
+			},
+			email: {
+				required: true,
+				emailCustom: true
+			},
+			senha: {
+				required: true,
+				minlength: 6,
+				maxlength: 20
+			},
+			senha2: {
+				required: true,
+				equalTo: "#senha"
+			}
+		},
+
+		submitHandler: function (form) {
+			if (JsonWebApi.active)
+				return;
+
+			var email = $("#email").val().toLowerCase();
+
+			Swal.wait();
+
+			JsonWebApi.postFormData("<%- root %>/api/usuario/criarExterno", form, function (response) {
+				if (response.success) {
+					resetForm("#form");
+					Swal.success({ html: 'Por favor, siga as instruções da mensagem que acabou de ser enviada para endereço de e-mail ' + email + ' para confirmar a criação de sua conta! ' + emoji.happy + '<br/><br/><b>Caso não consiga encontrar a mensagem, por favor, não se esqueça de procurar na pasta "Spam" ou "Lixo eletrônico"!</b>' }).then(function () {
+						location.href = "<%- root %>/";
+					});
+				} else {
+					Swal.error(response.value + " " + emoji.sad);
+				}
+			});
+		}
+	});
+	//]]>
+</script>

@@ -11,38 +11,37 @@
 
 	<!-- Frase -->
 	<div class="col-lg-3 d-flex flex-row align-items-center justify-content-center">
-		<h3 class="login-title">ninguém será deixado para trás.</h3>
+		<h3 class="login-title text-center text-lg-left">ninguém será deixado para trás.</h3>
 	</div>
 
 	<!-- Card Login -->
 	<div class="col-lg-5 d-flex flex-column align-items-center justify-content-center">
 		<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5">
-			<form class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
+			<form id="form" class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
 
 				<% if (mensagem) { %>
 					<div class="alert alert-danger w-100"><%= mensagem %></div>
 				<% } %>
 
-				<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user login-card-input py-4" spellcheck="false">
+				<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user py-4" spellcheck="false">
 
-				<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user login-card-input py-4">
+				<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user py-4">
 
 				<div class="d-flex flex-row justify-content-between mb-3 w-100 small form-text">
-					<div class="d-flex flex-row align-items-center ">
-						<input type="checkbox" name="lembrar" class="ml-2 mr-1"> 
-						<label for="lembrar" class="m-0">Lembrar de mim</label>
+					<div class="d-flex">
 					</div>
-					
-					<!-- Esqueci a senha -->
-					<a class="m-0" href="<%- root %>/exemplo/esqueci">Esqueci minha senha</a>
+
+					<a href="#" onclick="recuperarSenha(); return false;">
+						Esqueci Minha Senha!
+					</a>
 				</div>
-				<button type="submit" class="btn btn-primary login-card-btn">Login</button>
+				<button type="submit" class="btn btn-primary btn-block">Login</button>
 			</form>
 			
-			<div class="login-card-separator my-4"></div>
+			<hr style="width: 100%;" />
 
 			<!-- Criar nova conta -->
-			<a href="<%- root %>/exemplo/registro">Criar nova conta!</a>
+			<a href="<%- root %>/registro">Criar nova conta!</a>
 
 		</div>
 		
@@ -53,18 +52,12 @@
 <%- contentFor("styles") %>
 
 <style type="text/css">
-
-	.login-bg{
-		background: linear-gradient(#00610d8c, #00595c7a), url("../../public/img/floresta.jpg") ;
+	.login-bg {
 		width: 100vw;
 		height: 100vh;
-		margin: 0;
-		background-position: center; 
-  		background-repeat: no-repeat; 
- 		background-size: cover; /* A imagem se adapta exatamente ao tamanho do conteiner inserido */
 	}
 
-	.login-logo-div{
+	.login-logo-div {
 		align-items: flex-end;
 	}
 
@@ -73,46 +66,24 @@
 		margin-right: 15px;
 	}
 
-	.login-separator{
+	.login-separator {
 		background-color: white;
 		width: 4px;
 		height: 30%;
 	}
 
 	.login-title {
-		font-family: 'Public Sans', sans-serif;
 		font-size: 54px;
 		font-weight: bold;
 		color: white
-	}
-
-	.login-text{
-		font-family: 'Open Sans', sans-serif;
 	}
 
 	.login-card{
 		min-width: 55%;
 		min-height: 45%;
 		background-color: white;
-		border-radius: 15px;
-		padding: 0 20px
-	}
-
-	.login-card-input{
-		border-radius: 30px;
-		border: 2px solid #cecece;
-		padding: 10px 15px;
-		width: 100%
-	}
-
-	.login-card-input:focus{
-		border: 2px solid var(--blue);
-		padding: 10px 15px;
-	}
-
-	.login-card-btn{
-		border-radius: 30px;
-		width: 100%
+		border-radius: 0.35rem;
+		padding: 0 20px;
 	}
 
 	.login-card-separator{
@@ -125,7 +96,6 @@
 	/* RESPONSIVENESS */
 	@media only screen and (max-width: 1280px) {
 		.login-title {
-			font-family: 'Public Sans', sans-serif;
 			font-size: 42px;
 			font-weight: bold;
 			color: white
@@ -141,6 +111,7 @@
 			padding: 30px 20px
 		}
 	}
+
 	@media only screen and (max-width: 992px) {
 		.login-logo-div{
 			align-items: center;
@@ -153,7 +124,6 @@
 		}
 
 		.login-title {
-			font-family: 'Public Sans', sans-serif;
 			font-size: 34px;
 			font-weight: bold;
 			color: white
@@ -175,17 +145,17 @@
 			padding: 50px 20px
 		}
 	}
+
 	@media only screen and (max-width: 768px) {
 		.login-title {
-			font-family: 'Public Sans', sans-serif;
 			font-size: 30px;
 			font-weight: bold;
 			color: white
 		}
 	}
+
 	@media only screen and (max-width: 576px) {
 		.login-title {
-			font-family: 'Public Sans', sans-serif;
 			font-size: 26px;
 			font-weight: bold;
 			color: white
@@ -193,4 +163,43 @@
 	}
 </style>
 
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
 
+	$("#form").validate({
+		rules: {
+			email: {
+				required: true,
+				emailCustom: true
+			},
+			senha: {
+				required: true
+			}
+		}
+	});
+
+	function recuperarSenha() {
+		if (JsonWebApi.active)
+			return;
+
+		var email = $("#email").val().toLowerCase();
+
+		if (!email || email.indexOf("@") <= 0) {
+			Swal.error("Por favor, preencha seu e-mail " + emoji.sad);
+			return;
+		}
+
+		Swal.wait();
+
+		JsonWebApi.post("<%- root %>/api/usuario/redefinirSenhaExterno", null, function (response) {
+			if (response.success)
+				Swal.success({ html: 'Você receberá uma mensagem no e-mail ' + email + ', com instruções de como redefinir sua senha! ' + emoji.happy + '<br/><br/><b>Caso não consiga encontrar a mensagem, por favor, não se esqueça de procurar na pasta "Spam" ou "Lixo eletrônico"!</b>' });
+			else
+				Swal.error(response.value + " " + emoji.sad);
+		}, "email", email);
+	}
+
+	//]]>
+</script>

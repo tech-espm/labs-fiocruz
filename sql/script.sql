@@ -20,8 +20,11 @@ CREATE TABLE usuario (
   idperfil int NOT NULL,
   senha varchar(100) NOT NULL,
   token char(32) DEFAULT NULL,
+  confirmado tinyint NOT NULL,
   exclusao datetime NULL,
   criacao datetime NOT NULL,
+  tokenreset tinytext NULL,
+  datalimitereset tinytext NULL, -- Armazena como tinytext, e não como datetime, para não ocupar RAM do servidor
   PRIMARY KEY (id),
   UNIQUE KEY usuario_email_UN (email),
   KEY usuario_exclusao_IX (exclusao),
@@ -29,7 +32,7 @@ CREATE TABLE usuario (
   CONSTRAINT usuario_idperfil_FK FOREIGN KEY (idperfil) REFERENCES perfil (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
-INSERT INTO usuario (email, nome, idperfil, senha, token, criacao) VALUES ('admin@fiocruz.br', 'Administrador', 1, 'peTcC99vkvvLqGQL7mdhGuJZIvL2iMEqvCNvZw3475PJ:JVyo1Pg2HyDyw9aSOd3gNPT30KdEyiUYCjs7RUzSoYGN', NULL, NOW());
+INSERT INTO usuario (email, nome, idperfil, senha, confirmado, criacao) VALUES ('admin@fiocruz.br', 'Administrador', 1, 'NsSzgX9AXd2G85aiCOrUwAFkiEHrHYljYWpJBCfqOvKr:WD+jsEW/Dswcivs42EZBZREfm+4WaPcZHRPG5LJpD8yr', 1, NOW());
 
 -- DROP TABLE IF EXISTS projeto;
 CREATE TABLE projeto (
