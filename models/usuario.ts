@@ -247,7 +247,7 @@ class Usuario {
 
 			await Email.enviar({
 				to: usuario.email,
-				subject: "TERRA 2030 - Confirmação de e-mail",
+				subject: "terra 2030 - Confirmação de e-mail",
 				html: html
 			});
 
@@ -363,7 +363,7 @@ class Usuario {
 			await Email.enviar({
 				from: appsettings.mailFromGeral,
 				to: email,
-				subject: "TERRA 2030 - Redefinição de senha",
+				subject: "terra 2030 - Redefinição de senha",
 				html: html
 			});
 
