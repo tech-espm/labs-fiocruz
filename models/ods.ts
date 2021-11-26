@@ -20,7 +20,7 @@ const ods = new ListaNomeada([
 	new ItemNomeado(ODS.VidaAgua, "Vida na água"),
 	new ItemNomeado(ODS.VidaTerrestre, "Vida terrestre"),
 	new ItemNomeado(ODS.PazJusticaInstituicoesEficazes, "Paz, justiça e instituições eficazes"),
-	new ItemNomeado(ODS.ParceriasMeiosImplementacao, "Parcerias e meios de implementação"),
+	new ItemNomeado(ODS.ParceriasMeiosImplementacao, "Parcerias e meios de implementação")
 ]);
 
 export = ods;
