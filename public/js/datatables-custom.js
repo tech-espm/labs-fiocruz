@@ -452,7 +452,11 @@ window.prepareDataTable = function (id, opt) {
 
 window.DataTableExporter = {
 	alertNothingToExport: function () {
-		Notification.error(window.currentLanguageId === 1 ? "There is no data available to export \uD83D\uDE22" : "Não há dados disponíveis para exportação \uD83D\uDE22", true);
+		var msg = ((window.currentLanguageId === 1) ? "There is no data available to export \uD83D\uDE22" : "Não há dados disponíveis para exportação \uD83D\uDE22");
+		if (window.Swal)
+			Swal.error(msg);
+		else
+			Notification.error(msg, true);
 		return false;
 	},
 

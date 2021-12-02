@@ -1,6 +1,7 @@
 ﻿import app = require("teem");
 import appsettings = require("./appsettings");
 import Perfil = require("./enums/perfil");
+import Projeto = require("./models/projeto");
 
 app.run({
 	root: appsettings.root,
@@ -9,6 +10,8 @@ app.run({
 
 	onInit: function () {
 		app.express.locals.Perfil = Perfil;
+		app.express.locals.PrefixoAbsolutoIcone = Projeto.PrefixoAbsolutoIcone;
+		app.express.locals.PrefixoAbsolutoImagem = Projeto.PrefixoAbsolutoImagem;
 	},
 
 	htmlErrorHandler: function (err: any, req: app.Request, res: app.Response, next: app.NextFunction) {

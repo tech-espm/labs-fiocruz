@@ -1,0 +1,818 @@
+﻿<input type="hidden" id="id" name="id" value="<%=(item ? item.id : 0) %>" />
+<input type="hidden" id="idusuario" name="idusuario" value="<%=(item ? item.idusuario : usuario.id) %>" />
+<input type="hidden" id="latitude" name="latitude" value="<%=(item ? item.latitude : 0) %>" />
+<input type="hidden" id="longitude" name="longitude" value="<%=(item ? item.longitude : 0) %>" />
+<input type="hidden" id="arquivoIcone" name="arquivoIcone" value="" />
+<input type="hidden" id="arquivoImagem" name="arquivoImagem" value="" />
+<input type="hidden" id="info" name="info" value="" />
+
+<%
+	let info = null;
+	if (item && item.info) {
+		try {
+			info = JSON.parse(item.info);
+		} catch (ex) {
+			// Apenas ignora...
+		}
+	}
+%>
+
+<% if (!usuario.admin && item && item.aprovado) { %>
+<div class="alert alert-danger text-center">
+	<b>Cuidado!</b>
+	<br/>
+	<br/>
+	Caso você clique no botão "Salvar", o projeto precisará ser aprovado de novo antes de ser exibido publicamente!
+</div>
+<% } %>
+
+<div class="row">
+	<div class="col-md-4 form-group">
+		<label for="aprovado">Aprovado</label>
+		<select id="aprovado" name="aprovado" class="form-control" <%- (!usuario.admin ? 'disabled="disabled"' : '') %>>
+			<option value="0">Não</option>
+			<option value="1" <%-((item && item.aprovado) ? 'selected="selected"' : '') %>>Sim</option>
+		</select>
+	</div>
+</div>
+
+<h2 class="mt-5">Informações de Contato</h2>
+<p class="mb-5 aviso">* informações obrigatórias</p>
+
+<div class="form-row">
+	<div class="col-md-4 form-group">
+		<label for="banco">Banco de tecnologias <b>*</b></label>
+		<div class="cb-search">
+			<select id="banco" name="banco" class="form-control">
+				<option value="">Selecione...</option>
+				<% for (let i = 0, banco = (item && item.banco) || 0; i < bancosTecnologia.length; i++) { %>
+					<option value="<%- bancosTecnologia[i].id %>" <%- (banco === bancosTecnologia[i].id ? 'selected="selected"' : '') %>><%- bancosTecnologia[i].nome %></option>
+				<% } %>
+			</select>
+		</div>
+		<script type="text/javascript">
+			//<![CDATA[
+			"use strict";
+			prepareCbSearch(_("banco"));
+			//]]>
+		</script>
+	</div>
+
+	<div class="col-md-4 form-group">
+		<label for="autor">Autor <b>*</b></label>
+		<input id="autor" name="autor" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.autor : '') %>" />
+	</div>
+
+	<div class="col-md-4 form-group">
+		<label for="telefone">Telefone de contato <b>*</b></label>
+		<input id="telefone" name="telefone" maxlength="15" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.telefone : '') %>" />
+	</div>
+</div>
+
+<div class="form-row">
+	<div class="col-md-6 form-group">
+		<label for="email">E-mail de contato <b>*</b></label>
+		<input id="email" name="email" maxlength="100" class="form-control" type="email" spellcheck="false" value="<%=(item ? item.email : '') %>" />
+	</div>
+
+	<div class="col-md-6 form-group">
+		<label for="logradouro">Logradouro <b>*</b></label>
+		<input id="logradouro" name="logradouro" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.logradouro : '') %>" />
+	</div>
+</div>
+
+<div class="form-row">
+	<div class="col-md-3 form-group">
+		<label for="numero">Número <b>*</b></label>
+		<input id="numero" name="numero" maxlength="20" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.numero : '') %>" />
+	</div>
+
+	<div class="col-md-3 form-group">
+		<label for="complemento">Complemento</label>
+		<input id="complemento" name="complemento" maxlength="50" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.complemento : '') %>" />
+	</div>
+
+	<div class="col-md-3 form-group">
+		<label for="bairro">Bairro <b>*</b></label>
+		<input id="bairro" name="bairro" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.bairro : '') %>" />
+	</div>
+
+	<div class="col-md-3 form-group">
+		<label for="cep">CEP <b>*</b></label>
+		<input id="cep" name="cep" maxlength="9" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.cep : '') %>" />
+	</div>
+</div>
+
+<div class="form-row">
+	<div class="col-md-4 form-group">
+		<label for="idestado">UF <b>*</b></label>
+		<div class="cb-search">
+			<select id="idestado" name="idestado" class="form-control">
+				<option value="">Selecione...</option>
+				<% for (let i = 1, idestado = (item && item.idestado) || 0; i <= estados.length; i++) { %>
+					<option value="<%- i %>" <%- (idestado === i ? 'selected="selected"' : '') %>><%- estados[i - 1].nome %></option>
+				<% } %>
+			</select>
+		</div>
+		<script type="text/javascript">
+			//<![CDATA[
+			"use strict";
+			prepareCbSearch(_("idestado"));
+			//]]>
+		</script>
+	</div>
+
+	<div class="col-md-8 form-group">
+		<label for="idcidade">Cidade <b>*</b></label>
+		<div class="cb-search">
+			<select id="idcidade" name="idcidade" class="form-control"><option value="" selected="selected">Selecione...</option></select>
+		</div>
+		<script type="text/javascript">
+			//<![CDATA[
+			"use strict";
+			prepareCbSearch(_("idcidade"));
+			//]]>
+		</script>
+	</div>
+</div>
+
+<hr class="my-5" />
+
+<h2 class="mt-5">Localização do Projeto</h2>
+<p class="mb-5">Caso deseje, é possível exibir a localização geográfica do projeto. Para isso, basta indicar a localização no mapa abaixo.</p>
+
+<div id="mapa"></div>
+
+<div class="text-center my-3" id="divObterLocalizacao">
+	<button type="button" onclick="obterLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização Atual</button>
+</div>
+
+<div class="text-center mt-3">
+	<button type="button" onclick="limparLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-times"></i> Limpar Localização</button>
+</div>
+
+<hr class="my-5" />
+
+<h2 class="mt-5">Informações sobre o Projeto</h2>
+<p class="mb-5 aviso">* informações obrigatórias</p>
+
+<div class="form-row">
+	<div class="col-md-6 form-group">
+		<label for="nome">Nome do projeto<b>*</b></label>
+		<input id="nome" name="nome" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(item ? item.nome : '') %>" />
+	</div>
+
+	<div class="col-md-6 form-group">
+		<label for="publico">Público-alvo do projeto</label>
+		<input id="publico" name="publico" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.publico : '') %>" />
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="descricao">Descrição do projeto <b>*</b></label>
+	<textarea id="descricao" name="descricao" maxlength="500" class="form-control" type="text" spellcheck="true" rows="8" style="resize: none;"><%=(info ? info.descricao : '') %></textarea>
+</div>
+
+<label>Macro categorias relacionadas ao projeto <b>*</b></label>
+<div class="row mb-3">
+	<div class="col-md-6">
+		<% let macroCategorias2 = Math.ceil(macroCategorias.length * 0.5); for (let i = 0; i < macroCategorias2; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- macroCategorias[i].id %>" id="macrocategoria<%- macroCategorias[i].id %>" name="macrocategoria" <%- ((info && info.macrocategoria && info.macrocategoria.includes(macroCategorias[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="macrocategoria<%- macroCategorias[i].id %>"><%= macroCategorias[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+	<div class="col-md-6">
+		<% for (let i = macroCategorias2; i < macroCategorias.length; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- macroCategorias[i].id %>" id="macrocategoria<%- macroCategorias[i].id %>" name="macrocategoria" <%- ((info && info.macrocategoria && info.macrocategoria.includes(macroCategorias[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="macrocategoria<%- macroCategorias[i].id %>"><%= macroCategorias[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			<label for="escalonamento">Potencial de escalonamento do projeto (caso possua)</label>
+			<input id="escalonamento" name="escalonamento" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.escalonamento : '') %>" />
+		</div>
+
+		<div class="form-group">
+			<label for="local">Descrição do local da implementação do projeto <b>*</b></label>
+			<input id="local" name="local" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.local : '') %>" />
+		</div>
+
+		<div class="form-group">
+			<label for="abrangencia">Território de abrangência do projeto <b>*</b></label>
+			<div class="cb-search">
+				<select id="abrangencia" name="abrangencia" class="form-control">
+					<option value="">Selecione...</option>
+					<% for (let i = 0, abrangencia = (info && info.abrangencia) || 0; i < abrangencias.length; i++) { %>
+						<option value="<%- abrangencias[i].id %>" <%- (abrangencia === abrangencias[i].id ? 'selected="selected"' : '') %>><%- abrangencias[i].nome %></option>
+					<% } %>
+				</select>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				"use strict";
+				prepareCbSearch(_("abrangencia"));
+				//]]>
+			</script>
+		</div>
+
+		<div class="form-group">
+			<label for="parceiros">Parceiros de implementação do projeto (caso possua)</label>
+			<input id="parceiros" name="parceiros" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.parceiros : '') %>" />
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="form-group">
+			<label for="status">Status atual <b>*</b></label>
+			<div class="cb-search">
+				<select id="status" name="status" class="form-control">
+					<option value="">Selecione...</option>
+					<% for (let i = 0, istatus = (info && info.status) || 0; i < status.length; i++) { %>
+						<option value="<%- status[i].id %>" <%- (istatus === status[i].id ? 'selected="selected"' : '') %>><%- status[i].nome %></option>
+					<% } %>
+				</select>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				"use strict";
+				prepareCbSearch(_("status"));
+				//]]>
+			</script>
+		</div>
+
+		<div class="form-group">
+			<label for="financiamento">Financiamento do projeto (caso possua)</label>
+			<input id="financiamento" name="financiamento" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.financiamento : '') %>" />
+		</div>
+
+		<div class="form-group">
+			<label for="replicabilidade">Replicabilidade do projeto (caso possua)</label>
+			<input id="replicabilidade" name="replicabilidade" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(info ? info.replicabilidade : '') %>" />
+		</div>
+	</div>
+</div>
+
+<%
+	if (item && item.resumoods) {
+		item.ods = item.resumoods.split(",");
+		for (let i = item.ods.length - 1; i >= 0; i--)
+			item.ods[i] = parseInt(item.ods[i]);
+	}
+%>
+<label>ODS's relacionadas ao projeto <b>*</b></label>
+<div class="row">
+	<div class="col-md-6">
+		<% let ods2 = Math.ceil(ods.length * 0.5); for (let i = 0; i < ods2; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input mt-2" type="checkbox" value="<%- ods[i].id %>" id="ods<%- ods[i].id %>" name="ods" <%- ((item && item.ods && item.ods.includes(ods[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="ods<%- ods[i].id %>"><img src="<%- staticRoot %>/img/ods/<%- ods[i].id %>.svg" alt="Logo ODS" width="32" /> <%= ods[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+	<div class="col-md-6">
+		<% for (let i = ods2; i < ods.length; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input mt-2" type="checkbox" value="<%- ods[i].id %>" id="ods<%- ods[i].id %>" name="ods" <%- ((item && item.ods && item.ods.includes(ods[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="ods<%- ods[i].id %>"><img src="<%- staticRoot %>/img/ods/<%- ods[i].id %>.svg" alt="Logo ODS" width="32" /> <%= ods[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+</div>
+
+<hr class="my-5" />
+
+<h2 class="mt-5">Informações Adicionais sobre o Projeto</h2>
+<p class="mb-5 aviso">* informações obrigatórias</p>
+
+<label>Divulgação do projeto (anterior, presente ou futura)</label>
+<div class="row mb-3">
+	<div class="col-md-6">
+		<% let divulgacoes2 = Math.ceil(divulgacoes.length * 0.5); for (let i = 0; i < divulgacoes2; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- divulgacoes[i].id %>" id="divulgacao<%- divulgacoes[i].id %>" name="divulgacao" <%- ((info && info.divulgacao && info.divulgacao.includes(divulgacoes[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="divulgacao<%- divulgacoes[i].id %>"><%= divulgacoes[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+	<div class="col-md-6">
+		<% for (let i = divulgacoes2; i < divulgacoes.length; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- divulgacoes[i].id %>" id="divulgacao<%- divulgacoes[i].id %>" name="divulgacao" <%- ((info && info.divulgacao && info.divulgacao.includes(divulgacoes[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="divulgacao<%- divulgacoes[i].id %>"><%= divulgacoes[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+</div>
+
+<label>Características gerais sobre o projeto</label>
+<div class="row mb-3">
+	<div class="col-md-6">
+		<% let caracteristicas2 = Math.ceil(caracteristicas.length * 0.5); for (let i = 0; i < caracteristicas2; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- caracteristicas[i].id %>" id="caracteristica<%- caracteristicas[i].id %>" name="caracteristica" <%- ((info && info.caracteristica && info.caracteristica.includes(caracteristicas[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="caracteristica<%- caracteristicas[i].id %>"><%= caracteristicas[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+	<div class="col-md-6">
+		<% for (let i = caracteristicas2; i < caracteristicas.length; i++) { %>
+			<div class="form-check mb-2">
+				<input class="form-check-input" type="checkbox" value="<%- caracteristicas[i].id %>" id="caracteristica<%- caracteristicas[i].id %>" name="caracteristica" <%- ((info && info.caracteristica && info.caracteristica.includes(caracteristicas[i].id)) ? 'checked="checked"' : '') %> />
+				<label class="form-check-label" for="caracteristica<%- caracteristicas[i].id %>"><%= caracteristicas[i].nome %></label>
+			</div>
+		<% } %>
+	</div>
+</div>
+
+<label>Você pode contribuir com links para redes sociais (Facebook, Instagram, Twitter, Youtube, etc), ou para páginas do projeto que ajudem a explicar e difundir o projeto?</label>
+<div class="table-responsive mb-3">
+	<table class="table table-flush table-striped table-hover no-footer mb-0">
+		<thead>
+			<tr>
+				<th class="col-min"></th>
+				<th>URL</th>
+			</tr>
+		</thead>
+		<tbody id="tbodyLinks">
+			<% if (info && info.links && info.links.length) { for (let i = 0; i < info.links.length; i++) { %>
+				<tr>
+					<td class="col-min">
+						<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
+					</td>
+					<td>
+						<input type="url" name="links" class="form-control" value="<%- info.links[i] %>" onblur="ajustarLink(this)" />
+					</td>
+				</tr>
+			<% } } %>
+		</tbody>
+	</table>
+</div>
+
+<div class="text-center">
+	<button type="button" onclick="adicionarLink()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-plus"></i> Adicionar Link</button>
+</div>
+
+<hr class="my-5" />
+
+<h2 class="mt-5">Exposição do Pública do Projeto</h2>
+<p class="mb-5 aviso">* informações obrigatórias</p>
+
+<% if (item) { %>
+<label>Foto atual do projeto (pequena)</label>
+<div class="mb-3">
+	<img id="imgIcone" alt="Foto atual do projeto (pequena)" src="<%- staticRoot %><%- PrefixoAbsolutoIcone %>/<%- item.id %>.jpg?<%- item.versaoimagem %>" style="max-width: 100%;" />
+</div>
+
+<label>Foto atual do projeto</label>
+<div class="mb-3">
+	<img id="imgImagem" alt="Foto atual do projeto" src="<%- staticRoot %><%- PrefixoAbsolutoImagem %>/<%- item.id %>.jpg?<%- item.versaoimagem %>" style="max-width: 100%;" />
+</div>
+<% } %>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			<label for="imagem"><%- (item ? "Nova foto" : "Foto") %> do projeto (de preferência em paisagem 16:9) <%- (item ? '' : '<b>*</b>') %></label>
+			<input id="imagem" name="imagem" class="form-control" type="file" accept="image/*" />
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="1" id="exposicao" name="exposicao" <%- ((item && item.exposicao) ? 'checked="checked"' : '') %> />
+			<label class="form-check-label" for="exposicao">Tenho interesse em expor o projeto em feiras e eventos</label>
+		</div>
+	</div>
+</div>
+
+<%- contentFor("styles") %>
+<style type="text/css">
+	#mapa {
+		height: 450px;
+	}
+
+	label > b, .aviso {
+		font-weight: 700;
+		color: var(--red);
+	}
+</style>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	var ajustandoImagem = false,
+		procurandoLocalizacao = false,
+		mapa = L.map("mapa", { zoomControl: false }),
+		marker = null,
+		versaoimagem = parseInt("<%- (item ? item.versaoimagem : 0) %>"),
+		TamanhoMaximoIconeEmBytes = parseInt("<%- TamanhoMaximoIconeEmBytes %>"),
+		TamanhoMaximoImagemEmBytes = parseInt("<%- TamanhoMaximoImagemEmBytes %>");
+
+	maskMobilePhone("#telefone");
+	$("#cep").mask("00000-000");
+	prepareCbState(_("idestado"), _("idcidade"));
+	//<% if (item) { %>
+	setCbSearch(_("idcidade"), "<%- item.idcidade %>");
+	//<% } %>
+
+	function definirMarker(lat, lng) {
+		$("#latitude").val(lat);
+		$("#longitude").val(lng);
+
+		if (marker) {
+			marker.setLatLng(new L.LatLng(lat, lng));
+		} else {
+			var highDpi = (("matchMedia" in window) && (highDpi = window.matchMedia("(min-resolution: 150dpi)")) && highDpi.matches),
+				icon = L.icon({
+					iconUrl: (highDpi ? "<%- staticRoot %>/img/marker@2x.png" : "<%- staticRoot %>/img/marker.png"),
+					iconSize: [27, 43],
+					iconAnchor: [13, 43],
+					popupAnchor: [13, 25]
+				});
+
+			marker = L.marker([lat, lng], { icon: icon });
+			marker.addTo(mapa);
+		}
+	};
+
+	(function () {
+		if (!("geolocation" in navigator) || !navigator.geolocation.getCurrentPosition)
+			$("#divObterLocalizacao").hide();
+
+		//<% if (item && item.latitude) { %>
+		var lat = parseFloat("<%- item.latitude %>");
+		var lng = parseFloat("<%- item.longitude %>");
+		var zoom = 16;
+		//<% } else { %>
+		var lat = -15.58917717;
+		var lng = -47.91796178;
+		var zoom = 4;
+		//<% } %>
+
+		var latlng = new L.LatLng(lat, lng);
+
+		L.control.zoom({
+			position: "topright"
+		}).addTo(mapa);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			subdomains: ['a', 'b', 'c'],
+			center: [latlng],
+			minZoom: 4
+		}).addTo(mapa);
+
+		mapa.on("click", function (e) {
+			definirMarker(e.latlng.lat, e.latlng.lng);
+		});
+
+		mapa.setView(latlng, zoom);
+
+		//<% if (item && item.latitude) { %>
+		definirMarker(lat, lng);
+		//<% } %>
+	})();
+
+	function obterLocalizacao() {
+		if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
+			return;
+
+		Swal.wait();
+
+		var erroLocalizacao = function () {
+			procurandoLocalizacao = false;
+			Swal.error("Não foi possível obter sua localização no momento. Por favor, tente novamente dentro de alguns instantes " + emoji.sad);
+		};
+
+		if (!("geolocation" in navigator) || !navigator.geolocation.getCurrentPosition) {
+			erroLocalizacao();
+			return;
+		}
+
+		procurandoLocalizacao = true;
+
+		navigator.geolocation.getCurrentPosition(function (location) {
+			procurandoLocalizacao = false;
+			if (!location || !location.coords) {
+				erroLocalizacao();
+			} else {
+				Swal.close();
+				mapa.setView(new L.LatLng(location.coords.latitude, location.coords.longitude), 16);
+				definirMarker(location.coords.latitude, location.coords.longitude);
+			}
+		}, erroLocalizacao, {
+			maximumAge: 60 * 60 * 1000,
+			timeout: 20 * 1000,
+			enableHighAccuracy: true
+		});
+	}
+
+	function limparLocalizacao() {
+		if (marker) {
+			marker.removeFrom(mapa);
+			marker = null;
+		}
+		$("#latitude").val("0");
+		$("#longitude").val("0");
+	}
+
+	$("#tbodyLinks").on("click", "button", function () {
+		if (isSwalOpen() || isModalOpen() || JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
+			return;
+
+		var tr = this.parentNode.parentNode;
+
+		if (this.getAttribute("data-excluir")) {
+			$(tr).remove();
+		}
+	});
+
+	function ajustarLink(txt) {
+		if (!txt.value || txt.value.toLowerCase().startsWith("http"))
+			return;
+		txt.value = "http://" + txt.value;
+	}
+
+	function adicionarLink() {
+		if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
+			return;
+
+		if ($("#tbodyLinks").children().length >= 5) {
+			Swal.error("O limite máximo é de 5 links por projeto " + emoji.sad);
+			return;
+		}
+
+		$("#tbodyLinks").append(`<tr>
+			<td class="col-min">
+				<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
+			</td>
+			<td>
+				<input type="url" name="links" class="form-control" value="" onblur="ajustarLink(this)" />
+			</td>
+		</tr>`);
+	}
+
+	$("#form").validate({
+		rules: {
+			banco: {
+				required: true
+			},
+			autor: {
+				required: true
+			},
+			telefone: {
+				required: true,
+				minlength: 14
+			},
+			email: {
+				required: true,
+				emailCustom: true
+			},
+			logradouro: {
+				required: true
+			},
+			numero: {
+				required: true
+			},
+			bairro: {
+				required: true
+			},
+			cep: {
+				required: true,
+				minlength: 9
+			},
+			idestado: {
+				required: true
+			},
+			idcidade: {
+				required: true
+			},
+			nome: {
+				required: true
+			},
+			descricao: {
+				required: true
+			},
+			local: {
+				required: true
+			},
+			abrangencia: {
+				required: true
+			},
+			status: {
+				required: true
+			},
+			links: {
+				required: true
+			},
+			imagem: {
+				// <% if (!item) { %>
+				required: true,
+				// <% } %>
+				//tamanhoArquivoMaximoKiB: 2048,
+				suporteArquivoAvancado: true
+			}
+		},
+
+		submitHandler: function (form) {
+			if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
+				return;
+
+			Swal.wait();
+
+			var imagem = $("#imagem")[0],
+				arquivo = (imagem.files && imagem.files[0]), erroImagem, ultimoPasso, prepararImagem;
+
+			erroImagem = function (erro) {
+				ajustandoImagem = false;
+				Swal.error("Ocorreu um erro durante o processamento da imagem " + emoji.sad);
+			};
+
+			ultimoPasso = function () {
+				//<% if (item) { %>
+
+				JsonWebApi.postFormData("<%- root %>/api/projeto/editar", form, function (response) {
+					if (response.success) {
+						if (arquivo) {
+							$("#imagem").val("");
+							$("#arquivoIcone").val("");
+							$("#arquivoImagem").val("");
+							versaoimagem++;
+							$("#imgIcone").attr("src", "<%- staticRoot %><%- PrefixoAbsolutoIcone %>/<%- item.id %>.jpg?" + versaoimagem);
+							$("#imgImagem").attr("src", "<%- staticRoot %><%- PrefixoAbsolutoImagem %>/<%- item.id %>.jpg?" + versaoimagem);
+						}
+
+						// <% if (!usuario.admin) { %>
+						Swal.success({ html: "Projeto alterado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente " + emoji.happy });
+						// <% } else { %>
+						Swal.success("Projeto alterado com sucesso! " + emoji.happy);
+						// <% } %>
+					} else {
+						Swal.error(response.value + " " + emoji.sad);
+					}
+				});
+
+				//<% } else { %>
+
+				JsonWebApi.postFormData("<%- root %>/api/projeto/criar", form, function (response) {
+					if (response.success) {
+						resetForm("#form");
+						limparLocalizacao();
+						$("#tbodyLinks").empty();
+						// <% if (!usuario.admin) { %>
+						Swal.success({ html: "Projeto criado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente " + emoji.happy });
+						// <% } else { %>
+						Swal.success("Projeto criado com sucesso! " + emoji.happy);
+						// <% } %>
+					} else {
+						Swal.error(response.value + " " + emoji.sad);
+					}
+				});
+
+				//<% } %>
+			};
+
+			prepararImagem = function () {
+				var reader = new FileReader();
+				reader.onload = function () {
+					var imagem = new Image();
+					imagem.onload = function () {
+						ajustandoImagem = false;
+
+						var redimensionar = function (destino, rw, rh, tamanhoMaximoBytes) {
+							var w = imagem.width, h = imagem.height, cw = w, ch = h, base64, bordas = false, cortar = true;
+
+							// Inicialmente ajusta o tamanho do canvas com base
+							// no aspect ratio
+							if (Math.abs((cw / ch) - (rw / rh)) > 0.07) {
+								bordas = true;
+								if (!cortar) {
+									// Preserva a maior dimensão
+									if ((cw / rw) >= (ch / rh))
+										ch = (cw * rh) / rw;
+									else
+										cw = (ch * rw) / rh;
+								} else {
+									// Preserva a menor dimensão
+									if ((cw / rw) >= (ch / rh))
+										cw = (ch * rw) / rh;
+									else
+										ch = (cw * rh) / rw;
+								}
+							}
+
+							// Não podemos ter imagens muito grandes
+							if (cw >= ch) {
+								if (cw > rw) {
+									ch = ch * (rw / cw);
+									cw = rw;
+								}
+							} else {
+								if (ch > rh) {
+									cw = cw * (rh / ch);
+									ch = rh;
+								}
+							}
+
+							cw = (cw + 0.5) | 0;
+							ch = (ch + 0.5) | 0;
+
+							var canvas = document.createElement("canvas");
+							canvas.width = cw;
+							canvas.height = ch;
+
+							var context = canvas.getContext("2d", { alpha: false });
+
+							try {
+								if (("imageSmoothingEnabled" in context))
+									context.imageSmoothingEnabled = true;
+								if (("imageSmoothingQuality" in context))
+									context.imageSmoothingQuality = "high";
+							} catch (ex) {
+								// Apenas ignora...
+							}
+
+							if (bordas) {
+								// Preenche o fundo de preto (as novas bordas da imagem)
+								context.fillStyle = "#000";
+								context.fillRect(0, 0, cw, ch);
+
+								if (!cortar) {
+									// Redimensiona e centraliza a imagem dentro do canvas
+									if ((cw / ch) > (w / h)) {
+										// Bordas verticais nas laterais
+										w = (((w * ch) / h) + 0.5) | 0;
+										h = ch;
+									} else {
+										// Bordas horizontais acima e abaixo
+										h = (((h * cw) / w) + 0.5) | 0;
+										w = cw;
+									}
+								} else {
+									// Amplia cortando o excesso
+									if ((cw / ch) > (w / h)) {
+										// Corta a parte superior e inferior da imagem
+										h = (((h * cw) / w) + 0.5) | 0;
+										w = cw;
+									} else {
+										// Corta as laterais da imagem
+										w = (((w * ch) / h) + 0.5) | 0;
+										h = ch;
+									}
+								}
+
+								context.drawImage(imagem, 0, 0, imagem.width, imagem.height, (cw - w) >> 1, (ch - h) >> 1, w, h);
+							} else {
+								// Apenas redimensiona (não precisa de bordas)
+								context.drawImage(imagem, 0, 0, cw, ch);
+							}
+
+							base64 = canvas.toDataURL("image/jpeg", 0.89);
+							if (base64.length > (23 + (tamanhoMaximoBytes * 4 / 3)))
+								return false;
+
+							$(destino).val(base64);
+
+							return true;
+						};
+
+						if ((
+								!redimensionar("#arquivoIcone", 320, 180, TamanhoMaximoIconeEmBytes) &&
+								!redimensionar("#arquivoIcone", 240, 135, TamanhoMaximoIconeEmBytes) &&
+								!redimensionar("#arquivoIcone", 160, 90, TamanhoMaximoIconeEmBytes)
+							) ||
+							(
+								!redimensionar("#arquivoImagem", 2048, 1152, TamanhoMaximoImagemEmBytes) &&
+								!redimensionar("#arquivoImagem", 1536, 864, TamanhoMaximoImagemEmBytes) &&
+								!redimensionar("#arquivoImagem", 1024, 576, TamanhoMaximoImagemEmBytes)
+							)) {
+							ajustandoImagem = false;
+							Swal.error("Mesmo depois de tratada, a imagem ficou grande demais. Por favor, tente utilizar outra imagem com menos detalhes " + emoji.sad);
+							return;
+						}
+
+						ultimoPasso();
+					};
+					imagem.onerror = erroImagem;
+					imagem.src = reader.result;
+				};
+				reader.onerror = erroImagem;
+				ajustandoImagem = true;
+				reader.readAsDataURL(arquivo);
+			};
+
+			if (arquivo)
+				prepararImagem();
+			else
+				ultimoPasso();
+		}
+	});
+	//]]>
+</script>

@@ -29,7 +29,7 @@
 
 		if (this.getAttribute("data-excluir")) {
 			Swal.okcancel({
-				html: 'Tem certeza que deseja excluir o usuário "' + usuario.email + '"? Esta operação NÃO pode ser desfeita!<br/><br/>Para confirmar a exclusão, por favor, digite abaixo o e-mail do usuário conforme exibido acima.<br/><br/><label for="txtExcluirEmail">E-mail do usuário</label><input type="text" class="form-control" spellcheck="false" autocomplete="off" id="txtExcluirEmail" />',
+				html: 'Tem certeza que deseja excluir o usuário "' + encode(usuario.email) + '"? Esta operação NÃO pode ser desfeita!<br/><br/>Para confirmar a exclusão, por favor, digite abaixo o e-mail do usuário conforme exibido acima.<br/><br/><label for="txtExcluirEmail">E-mail do usuário</label><input type="text" class="form-control" spellcheck="false" autocomplete="off" id="txtExcluirEmail" />',
 				confirmButtonText: "Excluir",
 				preConfirm: function () {
 					email = $("#txtExcluirEmail").val().toLowerCase();

@@ -23,7 +23,7 @@ class UsuarioRoute {
 			res.redirect(app.root + "/acesso");
 		} else {
 			let id = parseInt(req.query["id"] as string);
-			let item: Usuario = null;
+			let item: Usuario | null = null;
 			if (isNaN(id) || !(item = await Usuario.obter(id)))
 				res.render("index/nao-encontrado", {
 					layout: "layout-sem-form",

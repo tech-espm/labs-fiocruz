@@ -18,7 +18,7 @@ class IndexRoute {
 	public static async login(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u) {
-			let mensagem: string = null;
+			let mensagem: string | null = null;
 	
 			if (req.body.email || req.body.senha) {
 				[mensagem, u] = await Usuario.efetuarLogin(req.body.email as string, req.body.senha as string, res);

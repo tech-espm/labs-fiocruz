@@ -23,4 +23,8 @@
 <script type="text/javascript" src="<%- staticRoot %>/js/cidades.js"></script>
 <% } %>
 
+<% if (typeof mapa !== "undefined" && mapa) { %>
+<script type="text/javascript" src="<%- staticRoot %>/lib/leaflet/js/leaflet-1.7.1.js"></script>
+<% } %>
+
 <script type="text/javascript" charset="utf-8" src="<%- staticRoot %>/js/admin.js?20211123"></script>

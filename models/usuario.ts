@@ -25,7 +25,7 @@ interface Usuario {
 class Usuario {
 	private static readonly IdAdmin = 1;
 
-	public static async cookie(req: app.Request, res: app.Response = null, admin: boolean = false): Promise<Usuario> {
+	public static async cookie(req: app.Request, res?: app.Response, admin?: boolean): Promise<Usuario | null> {
 		let cookieStr = req.cookies[appsettings.cookie] as string;
 		if (!cookieStr || cookieStr.length !== 48) {
 			if (res) {
@@ -35,7 +35,7 @@ class Usuario {
 			return null;
 		} else {
 			let id = parseInt(cookieStr.substr(0, 8), 16) ^ appsettings.usuarioHashId;
-			let usuario: Usuario = null;
+			let usuario: Usuario | null = null;
 
 			await app.sql.connect(async (sql) => {
 				let rows = await sql.query("select id, email, nome, idperfil, token from usuario where id = ?", [id]);
@@ -55,10 +55,11 @@ class Usuario {
 				usuario.nome = row.nome as string;
 				usuario.idperfil = row.idperfil as number;
 				usuario.admin = (usuario.idperfil === Perfil.Administrador);
+
+				if (admin && usuario.idperfil !== Perfil.Administrador)
+					usuario = null;
 			});
 
-			if (admin && usuario && usuario.idperfil !== Perfil.Administrador)
-				usuario = null;
 			if (!usuario && res) {
 				res.statusCode = 403;
 				res.json("Não permitido");
@@ -75,7 +76,7 @@ class Usuario {
 		return [token, cookieStr];
 	}
 
-	public static async efetuarLogin(email: string, senha: string, res: app.Response): Promise<[string, Usuario]> {
+	public static async efetuarLogin(email: string, senha: string, res: app.Response): Promise<[string | null, Usuario | null]> {
 		if (!email || !senha)
 			return ["Usuário ou senha inválidos", null];
 
@@ -111,7 +112,7 @@ class Usuario {
 		});
 	}
 
-	public static async alterarPerfil(usuario: Usuario, res: app.Response, nome: string, senhaAtual: string, novaSenha: string): Promise<string> {
+	public static async alterarPerfil(usuario: Usuario, res: app.Response, nome: string, senhaAtual: string, novaSenha: string): Promise<string | null> {
 		nome = (nome || "").normalize().trim();
 		if (nome.length < 3 || nome.length > 100)
 			return "Nome inválido";
@@ -119,7 +120,7 @@ class Usuario {
 		if (!!senhaAtual !== !!novaSenha || (novaSenha && (novaSenha.length < 6 || novaSenha.length > 20)))
 			return "Senha inválida";
 
-		let r: string = null;
+		let r: string | null = null;
 
 		await app.sql.connect(async (sql) => {
 			if (senhaAtual) {
@@ -144,7 +145,7 @@ class Usuario {
 		return r;
 	}
 
-	private static validar(usuario: Usuario, criacao: boolean): string {
+	private static validar(usuario: Usuario, criacao: boolean): string | null {
 		if (!usuario)
 			return "Usuário inválido";
 
@@ -174,7 +175,7 @@ class Usuario {
 	}
 
 	public static async listar(): Promise<Usuario[]> {
-		let lista: Usuario[] = null;
+		let lista: Usuario[] | null = null;
 
 		await app.sql.connect(async (sql) => {
 			lista = await sql.query("select u.id, u.email, u.nome, p.nome perfil, date_format(u.criacao, '%d/%m/%Y') criacao from usuario u inner join perfil p on p.id = u.idperfil where u.exclusao is null order by u.email asc") as Usuario[];
@@ -183,8 +184,8 @@ class Usuario {
 		return (lista || []);
 	}
 
-	public static async obter(id: number): Promise<Usuario> {
-		let lista: Usuario[] = null;
+	public static async obter(id: number): Promise<Usuario | null> {
+		let lista: Usuario[] | null = null;
 
 		await app.sql.connect(async (sql) => {
 			lista = await sql.query("select id, email, nome, idperfil, date_format(criacao, '%d/%m/%Y') criacao from usuario where id = ?", [id]) as Usuario[];
@@ -193,8 +194,8 @@ class Usuario {
 		return ((lista && lista[0]) || null);
 	}
 
-	public static async criar(usuario: Usuario, confirmado: number): Promise<string> {
-		let res: string;
+	public static async criar(usuario: Usuario, confirmado: number): Promise<string | null> {
+		let res: string | null;
 		if ((res = Usuario.validar(usuario, true)))
 			return res;
 
@@ -202,10 +203,10 @@ class Usuario {
 			try {
 				await sql.query("insert into usuario (email, nome, idperfil, senha, confirmado, criacao) values (?, ?, ?, ?, ?, now())", [usuario.email, usuario.nome, usuario.idperfil, await GeradorHash.criarHash(usuario.senha), confirmado]);
 
-				usuario.id = await sql.scalar("select last_insert_id()");
-			} catch (e) {
-				if (e.code) {
-					switch (e.code) {
+				usuario.id = await sql.scalar("select last_insert_id()") as number;
+			} catch (ex: any) {
+				if (ex.code) {
+					switch (ex.code) {
 						case "ER_DUP_ENTRY":
 							res = `O e-mail ${usuario.email} já está em uso`;
 							break;
@@ -214,10 +215,10 @@ class Usuario {
 							res = "Perfil não encontrado";
 							break;
 						default:
-							throw e;
+							throw ex;
 					}
 				} else {
-					throw e;
+					throw ex;
 				}
 			}
 		});
@@ -298,8 +299,8 @@ class Usuario {
 		});
 	}
 
-	public static async editar(usuario: Usuario): Promise<string> {
-		let res: string;
+	public static async editar(usuario: Usuario): Promise<string | null> {
+		let res: string | null;
 		if ((res = Usuario.validar(usuario, false)))
 			return res;
 
@@ -313,7 +314,7 @@ class Usuario {
 		});
 	}
 
-	public static async excluir(id: number): Promise<string> {
+	public static async excluir(id: number): Promise<string | null> {
 		if (id === Usuario.IdAdmin)
 			return "Não é possível excluir o usuário administrador principal";
 

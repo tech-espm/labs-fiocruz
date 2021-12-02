@@ -1,0 +1,122 @@
+﻿<table class="table table-flush table-striped table-hover" id="tabela"></table>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	var lista = <%- JSON.stringify(lista) %>;
+
+	(function () {
+		var regExp = /\,/g;
+
+		for (var i = lista.length - 1; i >= 0; i--) {
+			lista[i].aprovadoStr = (lista[i].aprovado ? "Sim" : "Não");
+			lista[i].exposicaoStr = (lista[i].exposicao ? "Sim" : "Não");
+			if (lista[i].resumoods)
+				lista[i].resumoods = lista[i].resumoods.replace(regExp, ", ");
+		}
+	})();
+
+	var tabela = prepareDataTable("tabela", {
+		order: [[1, "asc"], [2, "asc"]],
+		deferRender: true,
+		columns: [
+			{ title: "", "class": "col-min", searchable: false, orderable: false, data: "id", render: function (v, type, row) {
+				return '<a target="_blank" title="Editar" href="<%- root %>/projeto/editar?id=' + row.id + '" class="btn btn-sm btn-outline-primary"><i class="fa fa14 fa-edit"></i></a>' +
+				(row.latitude ? ' <a target="_blank" title="Mapa" href="https://www.google.com/maps/search/?api=1&query=' + row.latitude + ',' + row.longitude + '" class="btn btn-sm btn-outline-secondary"><i class="fa fa14 fa-map-marker-alt"></i></a>' : '') +
+				// <% if (usuario.admin) { %>
+				//(row.aprovado ? '' : ' <button title="Aprovar" type="button" data-aprovar="1" class="btn btn-sm btn-outline-success"><i class="fa fa14 fa-thumbs-up"></i></button>') +
+				// <% } %>
+				' <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>';
+			} },
+			{ title: "Aprovado", render: encode, data: "aprovadoStr" },
+			{ title: "Nome", render: encode, data: "nome" },
+			{ title: "ODS", render: encode, data: "resumoods" },
+			{ title: "Autor", render: encode, data: "autor" },
+			{ title: "Interesse exposição", render: encode, data: "exposicaoStr" },
+			{ title: "Telefone", render: encode, data: "telefone" },
+			{ title: "E-mail", render: encode, data: "email" },
+			{ title: "UF", render: encode, data: "estado" },
+			{ title: "Cidade", render: encode, data: "cidade" },
+			//<% if (usuario.admin) { %>
+			{ title: "Criador", render: encode, data: "usuario" },
+			//<% } %>
+			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" }
+		],
+		data: lista,
+		export: { title: "Usuários" }
+	});
+
+	$("#tabela").on("click", "tbody button", function () {
+		if (JsonWebApi.active)
+			return;
+
+		var trClicada = this.parentNode.parentNode,
+			nome = null,
+			projeto = tabela.row(trClicada).data();
+
+		if (this.getAttribute("data-excluir")) {
+			Swal.okcancel({
+				html: 'Tem certeza que deseja excluir o projeto "' + encode(projeto.nome) + '"? Esta operação NÃO pode ser desfeita!<br/><br/>Para confirmar a exclusão, por favor, digite abaixo o nome do projeto conforme exibido acima.<br/><br/><label for="txtExcluirNome">Nome do projeto</label><input type="text" class="form-control" spellcheck="false" autocomplete="off" id="txtExcluirNome" />',
+				confirmButtonText: "Excluir",
+				preConfirm: function () {
+					nome = $("#txtExcluirNome").val().toLowerCase();
+					return true;
+				}
+			}, null, true).then(function (result) {
+				if (JsonWebApi.active || !trClicada)
+					return;
+
+				if (result.value) {
+					if (nome !== projeto.nome.toLowerCase()) {
+						Swal.error("O nome do projeto não confere! " + emoji.sad);
+						return;
+					}
+
+					Swal.wait();
+
+					JsonWebApi.delete("<%- root %>/api/projeto/excluir", function (response) {
+						if (response.success) {
+							Swal.success("Projeto excluído com sucesso! " + emoji.happy);
+							tabela.row(trClicada).remove().draw();
+						} else {
+							Swal.error(response.value + " " + emoji.sad);
+						}
+						trClicada = null;
+					}, "id", projeto.id);
+				}
+			});
+		}
+
+		// <% if (usuario.admin) { %>
+		if (this.getAttribute("data-aprovar")) {
+			Swal.okcancel({
+				html: 'Tem certeza que deseja aprovar o projeto "' + encode(projeto.nome) + '"?',
+				confirmButtonText: "Aprovar"
+			}).then(function (result) {
+				if (JsonWebApi.active || !trClicada)
+					return;
+
+				if (result.value) {
+					Swal.wait();
+
+					JsonWebApi.post("<%- root %>/api/projeto/aprovar", null, function (response) {
+						if (response.success) {
+							Swal.success("Projeto aprovado com sucesso! " + emoji.happy);
+							projeto.aprovado = 1;
+							projeto.aprovadoStr = "Sim";
+							tabela.row(trClicada).data(projeto).draw();
+						} else {
+							Swal.error(response.value + " " + emoji.sad);
+						}
+						trClicada = null;
+					}, "id", projeto.id);
+				}
+			});
+		}
+		// <% } %>
+	});
+
+	//]]>
+</script>

@@ -8,6 +8,11 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,400;0,600;0,700;1,200;1,400;1,600;1,700&display=swap" />
 <link rel="stylesheet" type="text/css" href="<%- staticRoot %>/lib/fontawesome-free/css/all.min.css" />
 <link rel="stylesheet" type="text/css" href="<%- staticRoot %>/lib/sweetalert2-11.1.4/css/sweetalert2.min.css" />
+
+<% if (typeof mapa !== "undefined" && mapa) { %>
+<link rel="stylesheet" type="text/css" href="<%- staticRoot %>/lib/leaflet/css/leaflet-1.7.1.css" />
+<% } %>
+
 <link rel="stylesheet" type="text/css" href="<%- staticRoot %>/css/style.min.css?20211123" />
 
 <% if (typeof datatables !== "undefined" && datatables) { %>

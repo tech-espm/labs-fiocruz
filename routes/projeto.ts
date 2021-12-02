@@ -1,88 +1,86 @@
 ﻿import app = require("teem");
+import abrangencias = require("../models/abrangencia");
+import bancosTecnologia = require("../models/bancoTecnologia");
+import caracteristicas = require("../models/caracteristica");
+import divulgacoes = require("../models/divulgacao");
+import estados = require("../models/estado");
+import macroCategorias = require("../models/macroCategoria");
+import ods = require("../models/ods");
+import status = require("../models/status");
 import Projeto = require("../models/projeto");
 import Usuario = require("../models/usuario");
 
 class ProjetoRoute {
-	public static async index(req: app.Request, res: app.Response) {
+	public static async criar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
-			res.redirect(app.root + "/login");
+			res.redirect(app.root + "/acesso");
 		else
-			res.render("index/index", {
-				layout: "layout-sem-form",
-				titulo: "Dashboard",
-				usuario: u
+			res.render("projeto/editar", {
+				titulo: "Criar Projeto",
+				textoSubmit: "Criar",
+				usuario: u,
+				item: null,
+				mapa: true,
+				cidades: true,
+				estados: estados.lista,
+				abrangencias: abrangencias.lista,
+				bancosTecnologia: bancosTecnologia.lista,
+				caracteristicas: caracteristicas.lista,
+				divulgacoes: divulgacoes.lista,
+				macroCategorias: macroCategorias.lista,
+				ods: ods.lista,
+				status: status.lista,
+				TamanhoMaximoIconeEmBytes: Projeto.TamanhoMaximoIconeEmBytes,
+				TamanhoMaximoImagemEmBytes: Projeto.TamanhoMaximoImagemEmBytes
 			});
 	}
 
-	@app.http.all()
-	public static async login(req: app.Request, res: app.Response) {
+	public static async editar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u) {
-			let mensagem: string = null;
-	
-			if (req.body.email || req.body.senha) {
-				[mensagem, u] = await Usuario.efetuarLogin(req.body.email as string, req.body.senha as string, res);
-				if (mensagem)
-					res.render("index/login", { layout: "layout-basico", mensagem: mensagem });
-				else
-					res.redirect(app.root + "/");
-			} else {
-				res.render("index/login", { layout: "layout-basico", mensagem: null });
-			}
+			res.redirect(app.root + "/acesso");
 		} else {
-			res.redirect(app.root + "/");
+			let id = parseInt(req.query["id"] as string);
+			let item: Projeto | null = null;
+			if (isNaN(id) || !(item = await Projeto.obter(id, u.id, u.admin)))
+				res.render("index/nao-encontrado", {
+					layout: "layout-sem-form",
+					usuario: u
+				});
+			else
+				res.render("projeto/editar", {
+					titulo: "Editar Projeto",
+					usuario: u,
+					item: item,
+					mapa: true,
+					cidades: true,
+					estados: estados.lista,
+					abrangencias: abrangencias.lista,
+					bancosTecnologia: bancosTecnologia.lista,
+					caracteristicas: caracteristicas.lista,
+					divulgacoes: divulgacoes.lista,
+					macroCategorias: macroCategorias.lista,
+					ods: ods.lista,
+					status: status.lista,
+					TamanhoMaximoIconeEmBytes: Projeto.TamanhoMaximoIconeEmBytes,
+					TamanhoMaximoImagemEmBytes: Projeto.TamanhoMaximoImagemEmBytes
+				});
 		}
 	}
 
-	public static async registro(req: app.Request, res: app.Response) {
-		res.render("index/registro", { layout: "layout-basico", titulo: "Registro" });
-	}
-
-	public static async redefinirSenha(req: app.Request, res: app.Response) {
-		const i = req.url.indexOf("?");
-		res.render("index/redefinirSenha", {
-			layout: "layout-basico",
-			token: ((i >= 0) ? req.url.substr(i + 1) : null)
-		});
-	}
-
-	public static async confirmacao(req: app.Request, res: app.Response) {
-		const i = req.url.indexOf("?");
-		res.render("index/confirmacao", {
-			layout: "layout-basico",
-			mensagem: await Usuario.confirmarEmail((i >= 0) ? req.url.substr(i + 1) : null)
-		});
-	}
-
-	public static async acesso(req: app.Request, res: app.Response) {
+	public static async listar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
-			res.redirect(app.root + "/login");
+			res.redirect(app.root + "/acesso");
 		else
-			res.render("index/acesso", {
-				layout: "layout-sem-form",
-				titulo: "Sem Permissão",
-				usuario: u
+			res.render("projeto/listar", {
+				layout: "layout-tabela",
+				titulo: "Gerenciar Projetos",
+				datatables: true,
+				usuario: u,
+				lista: await Projeto.listar(u.id, u.admin)
 			});
-	}
-
-	public static async perfil(req: app.Request, res: app.Response) {
-		let u = await Usuario.cookie(req);
-		if (!u)
-			res.redirect(app.root + "/");
-		else
-			res.render("index/perfil", {
-				titulo: "Meu Perfil",
-				usuario: u
-			});
-	}
-
-	public static async logout(req: app.Request, res: app.Response) {
-		let u = await Usuario.cookie(req);
-		if (u)
-			await Usuario.efetuarLogout(u, res);
-		res.redirect(app.root + "/");
 	}
 }
 
