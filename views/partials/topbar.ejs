@@ -11,14 +11,22 @@
 		<!-- include("topbar-extra") -->
 
 		<li class="nav-item dropdown no-arrow">
+			<% if (!usuario) { %>
+
+			<a class="nav-link dropdown-toggle" href="<%- root %>/login" id="userDropdown">
+				<span class="mr-2 d-none d-md-inline text-gray-600 small">Acessar meus projetos</span>
+				<img class="img-profile rounded-circle" src="<%- staticRoot %>/img/undraw_profile_pic.svg">
+			</a>
+
+			<% } else { %>
+
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="mr-2 d-none d-md-inline text-gray-600 small"><%= usuario.nome %></span>
 				<img class="img-profile rounded-circle" src="<%- staticRoot %>/img/undraw_profile_pic.svg">
 			</a>
 
-			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-				aria-labelledby="userDropdown">
+			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 				<a class="dropdown-item" href="<%- root %>/perfil">
 					<i class="fas fa-user fa-sm fa-fw mr-2 op-40"></i>
 					Perfil
@@ -29,6 +37,7 @@
 					Logout
 				</a>
 			</div>
+			<% } %>
 		</li>
 
 	</ul>

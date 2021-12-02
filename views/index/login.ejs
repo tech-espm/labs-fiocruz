@@ -1,50 +1,52 @@
-﻿<div class="row login-bg login-text">
-	<!-- Logo && Separator -->
-	<div class="col-lg-4 d-flex flex-row justify-content-center">
-		<div class="col-sm-11 d-flex flex-column login-logo-div justify-content-center">
-			<img class="login-logo " src="../../public/img/logoBranco.png" alt="floresta"/>
+﻿<div class="container-fluid">
+	<div class="row login-bg login-text">
+		<!-- Logo && Separator -->
+		<div class="col-lg-4 d-flex flex-row justify-content-center">
+			<div class="col-sm-11 d-flex flex-column login-logo-div justify-content-center">
+				<img class="login-logo " src="../../public/img/logoBranco.png" alt="floresta"/>
+			</div>
+			<div class="col-sm-1 d-flex flex-row align-items-center justify-content-center login-separator-div">
+				<div class="login-separator"></div>
+			</div>
 		</div>
-		<div class="col-sm-1 d-flex flex-row align-items-center justify-content-center login-separator-div">
-			<div class="login-separator"></div>
+
+		<!-- Frase -->
+		<div class="col-lg-3 d-flex flex-row align-items-center justify-content-center">
+			<h3 class="login-title text-center text-lg-left">ninguém será deixado para trás.</h3>
 		</div>
-	</div>
 
-	<!-- Frase -->
-	<div class="col-lg-3 d-flex flex-row align-items-center justify-content-center">
-		<h3 class="login-title text-center text-lg-left">ninguém será deixado para trás.</h3>
-	</div>
+		<!-- Card Login -->
+		<div class="col-lg-5 d-flex flex-column align-items-center justify-content-center">
+			<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5">
+				<form id="form" class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
 
-	<!-- Card Login -->
-	<div class="col-lg-5 d-flex flex-column align-items-center justify-content-center">
-		<div class="d-flex flex-column align-items-center justify-content-center login-card mr-5">
-			<form id="form" class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
+					<% if (mensagem) { %>
+						<div class="alert alert-danger w-100"><%= mensagem %></div>
+					<% } %>
 
-				<% if (mensagem) { %>
-					<div class="alert alert-danger w-100"><%= mensagem %></div>
-				<% } %>
+					<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user py-4" spellcheck="false">
 
-				<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user py-4" spellcheck="false">
+					<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user py-4">
 
-				<input type="password" name="senha" id="senha" placeholder="Senha" class="mb-3 mt-4 form-control form-control-user py-4">
+					<div class="d-flex flex-row justify-content-between mb-3 w-100 small form-text">
+						<div class="d-flex">
+						</div>
 
-				<div class="d-flex flex-row justify-content-between mb-3 w-100 small form-text">
-					<div class="d-flex">
+						<a href="#" onclick="recuperarSenha(); return false;">
+							Esqueci minha senha!
+						</a>
 					</div>
+					<button type="submit" class="btn btn-primary btn-block">Login</button>
+				</form>
+				
+				<hr style="width: 100%;" />
 
-					<a href="#" onclick="recuperarSenha(); return false;">
-						Esqueci Minha Senha!
-					</a>
-				</div>
-				<button type="submit" class="btn btn-primary btn-block">Login</button>
-			</form>
+				<!-- Criar nova conta -->
+				<a href="<%- root %>/registro">Criar nova conta!</a>
+
+			</div>
 			
-			<hr style="width: 100%;" />
-
-			<!-- Criar nova conta -->
-			<a href="<%- root %>/registro">Criar nova conta!</a>
-
 		</div>
-		
 	</div>
 </div>
 
@@ -53,7 +55,6 @@
 
 <style type="text/css">
 	.login-bg {
-		width: 100vw;
 		height: 100vh;
 	}
 

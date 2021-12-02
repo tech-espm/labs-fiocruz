@@ -47,8 +47,8 @@ class UsuarioRoute {
 			res.render("usuario/listar", {
 				layout: "layout-tabela",
 				titulo: "Gerenciar Usuários",
-				datatables: true,
 				usuario: u,
+				datatables: true,
 				lista: await Usuario.listar()
 			});
 	}

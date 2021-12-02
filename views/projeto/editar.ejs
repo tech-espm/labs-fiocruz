@@ -18,7 +18,7 @@
 %>
 
 <% if (!usuario.admin && item && item.aprovado) { %>
-<div class="alert alert-danger text-center">
+<div class="alert alert-danger text-center" id="alertaProvacao">
 	<b>Cuidado!</b>
 	<br/>
 	<br/>
@@ -650,7 +650,9 @@
 						}
 
 						// <% if (!usuario.admin) { %>
-						Swal.success({ html: "Projeto alterado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente " + emoji.happy });
+						$("#alertaProvacao").hide();
+						$("#aprovado").val("0");
+						Swal.success({ html: "Projeto alterado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente! " + emoji.happy });
 						// <% } else { %>
 						Swal.success("Projeto alterado com sucesso! " + emoji.happy);
 						// <% } %>
@@ -667,7 +669,7 @@
 						limparLocalizacao();
 						$("#tbodyLinks").empty();
 						// <% if (!usuario.admin) { %>
-						Swal.success({ html: "Projeto criado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente " + emoji.happy });
+						Swal.success({ html: "Projeto criado com sucesso!<br/><br/>Agora é só aguardar que ele seja aprovado para ser exibido publicamente! " + emoji.happy });
 						// <% } else { %>
 						Swal.success("Projeto criado com sucesso! " + emoji.happy);
 						// <% } %>

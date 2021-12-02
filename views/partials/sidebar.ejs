@@ -1,18 +1,46 @@
 ﻿<ul class="navbar-nav bg-dark-primary sidebar sidebar-dark accordion d-none d-md-flex" id="accordionSidebar">
 
-	<li class="nav-item text-center p-3" style="background-color: #49783d;">
-		<img src="<%- staticRoot %>/img/logo.png" style="max-width: 100%;">
+	<li class="nav-item text-center p-3 mb-3" style="background-color: #49783d;">
+		<a href="<%- root %>/">
+			<img src="<%- staticRoot %>/img/logo.png" style="max-width: 100%;">
+		</a>
 	</li>
 
-	<!-- <hr class="sidebar-divider my-0"> -->
+	<% if (usuario) { %>
+
+	<!-- <hr class="sidebar-divider my-0" /> -->
 
 	<!-- Para deixar sempre em destaque, basta adicionar a classe active -->
 	<li class="nav-item">
-		<a class="nav-link" href="<%- root %>/">
+		<a class="nav-link" href="<%- root %>/dashboard">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>Dashboard</span>
 		</a>
 	</li>
+
+	<hr class="sidebar-divider" />
+
+	<% } %>
+
+	<li class="nav-item">
+		<a class="nav-link" target="_blank" href="...">
+			<i class="fas fa-fw fa-newspaper"></i>
+			<span>Notícias</span>
+		</a>
+	</li>
+
+	<hr class="sidebar-divider" />
+
+	<li class="nav-item">
+		<a class="nav-link" target="_blank" href="...">
+			<i class="fas fa-fw fa-question-circle"></i>
+			<span>Quem Somos</span>
+		</a>
+	</li>
+
+	<% if (usuario) { %>
+
+	<hr class="sidebar-divider" />
 
 	<% if (usuario.admin) { %>
 	<li class="nav-item">
@@ -28,7 +56,7 @@
 		</div>
 	</li>
 
-	<hr class="sidebar-divider">
+	<hr class="sidebar-divider" />
 
 	<% } %>
 
@@ -45,7 +73,9 @@
 		</div>
 	</li>
 
-	<hr class="sidebar-divider d-none d-md-block">
+	<% } %>
+
+	<hr class="sidebar-divider d-none d-md-block" />
 
 	<div class="text-center d-none d-md-inline">
 		<button class="rounded-circle border-0" id="sidebarToggle"></button>

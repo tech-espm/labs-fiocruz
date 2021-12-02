@@ -1,17 +1,32 @@
 ﻿import app = require("teem");
+import Projeto = require("../models/projeto");
 import Usuario = require("../models/usuario");
 
 class IndexRoute {
 	public static async index(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
-		if (!u)
+
+		res.render("index/index", {
+			layout: "layout-sem-form",
+			usuario: u
+		});
+	}
+
+	public static async dashboard(req: app.Request, res: app.Response) {
+		let u = await Usuario.cookie(req);
+		if (!u) {
 			res.redirect(app.root + "/login");
-		else
-			res.render("index/index", {
-				layout: "layout-sem-form",
+		} else {
+			const lista = (u.admin ? await Projeto.listar(u.id, u.admin, true) : null);
+
+			res.render(u.admin ? ((lista && lista.length) ? "index/dashboard-admin" : "index/dashboard-admin-vazio") : "index/dashboard-comum", {
+				layout: ((lista && lista.length) ? "layout-tabela" : "layout-sem-form"),
 				titulo: "Dashboard",
-				usuario: u
+				usuario: u,
+				datatables: (lista && lista.length),
+				lista
 			});
+		}
 	}
 
 	@app.http.all()
@@ -25,17 +40,21 @@ class IndexRoute {
 				if (mensagem)
 					res.render("index/login", { layout: "layout-basico", mensagem: mensagem });
 				else
-					res.redirect(app.root + "/");
+					res.redirect(app.root + "/dashboard");
 			} else {
 				res.render("index/login", { layout: "layout-basico", mensagem: null });
 			}
 		} else {
-			res.redirect(app.root + "/");
+			res.redirect(app.root + "/dashboard");
 		}
 	}
 
 	public static async registro(req: app.Request, res: app.Response) {
-		res.render("index/registro", { layout: "layout-basico", titulo: "Registro" });
+		let u = await Usuario.cookie(req);
+		if (!u)
+			res.render("index/registro", { layout: "layout-basico", titulo: "Registro" });
+		else
+			res.redirect(app.root + "/dashboard");
 	}
 
 	public static async redefinirSenha(req: app.Request, res: app.Response) {
@@ -69,7 +88,7 @@ class IndexRoute {
 	public static async perfil(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
-			res.redirect(app.root + "/");
+			res.redirect(app.root + "/login");
 		else
 			res.render("index/perfil", {
 				titulo: "Meu Perfil",

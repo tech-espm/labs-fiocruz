@@ -77,8 +77,8 @@ class ProjetoRoute {
 			res.render("projeto/listar", {
 				layout: "layout-tabela",
 				titulo: "Gerenciar Projetos",
-				datatables: true,
 				usuario: u,
+				datatables: true,
 				lista: await Projeto.listar(u.id, u.admin)
 			});
 	}
