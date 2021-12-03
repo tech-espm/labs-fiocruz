@@ -18,7 +18,9 @@
 
 				<div class="container-fluid">
 
-					<h1 class="mb-4 text-gray-800"><%=((typeof titulo === "undefined" || !titulo) ? "terra 2030" : titulo) %></h1>
+					<% if (typeof titulo !== "undefined" && titulo) { %>
+					<h1 class="mb-4 text-gray-800"><%= titulo %></h1>
+					<% } %>
 
 					<%- body %>
 
