@@ -1,4 +1,6 @@
 ﻿import app = require("teem");
+import estados = require("../models/estado");
+import ods = require("../models/ods");
 import Projeto = require("../models/projeto");
 import Usuario = require("../models/usuario");
 
@@ -8,7 +10,12 @@ class IndexRoute {
 
 		res.render("index/index", {
 			layout: "layout-sem-form",
-			usuario: u
+			usuario: u,
+			mapa: true,
+			cidades: true,
+			estados: estados.lista,
+			ods: ods.lista,
+			lista: await Projeto.listarExterno()
 		});
 	}
 
