@@ -43,7 +43,7 @@
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="sr-only">Anterior</span>
 						</a>
-						<h5><%= item.nome %></h5>
+						<h5><a class="carousel-link" href="#" onclick="return exibirProjeto('<%- item.id %>')"><%= item.nome %></a></h5>
 						<a class="carousel-control-next" href="#carouselRecentes" role="button" data-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="sr-only">Próximo</span>
@@ -63,7 +63,7 @@
 	</div>
 
 	<div class="col-md-4 text-right">
-		<select class="form-control">
+		<select class="form-control" id="ordem" onchange="reordenar()">
 			<option value="1">Mais recentes</option>
 			<option value="2">Mais antigos</option>
 			<option value="3">A - Z</option>
@@ -74,73 +74,66 @@
 
 <p class="text-center mt-3 mb-2">Filtros</p>
 
-<div class="row limitador">
-	<div class="col-md-4 my-2">
-		<div class="cb-search">
-			<select id="idestado" class="form-control">
-				<option value="">UF</option>
-				<% for (let i = 1; i <= estados.length; i++) { %>
-					<option value="<%- i %>"><%- estados[i - 1].nome %></option>
-				<% } %>
-			</select>
+<form id="form">
+	<div class="row limitador">
+		<div class="col-md-4 my-2">
+			<div class="cb-search">
+				<select id="idestado" name="idestado" class="form-control">
+					<option value="">UF</option>
+					<% for (let i = 1; i <= estados.length; i++) { %>
+						<option value="<%- i %>"><%- estados[i - 1].nome %></option>
+					<% } %>
+				</select>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				"use strict";
+				prepareCbSearch(_("idestado"));
+				//]]>
+			</script>
 		</div>
-		<script type="text/javascript">
-			//<![CDATA[
-			"use strict";
-			prepareCbSearch(_("idestado"));
-			//]]>
-		</script>
-	</div>
-	<div class="col-md-8 my-2">
-		<div class="cb-search">
-			<select id="idcidade" class="form-control"><option value="" selected="selected">Cidade</option></select>
+		<div class="col-md-8 my-2">
+			<div class="cb-search">
+				<select id="idcidade" name="idcidade" class="form-control"><option value="" selected="selected">Cidade</option></select>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				"use strict";
+				prepareCbSearch(_("idcidade"));
+				//]]>
+			</script>
 		</div>
-		<script type="text/javascript">
-			//<![CDATA[
-			"use strict";
-			prepareCbSearch(_("idcidade"));
-			//]]>
-		</script>
 	</div>
-</div>
 
-<div class="row limitador">
-	<div class="col-md-4 my-2">
-		<input type="text" id="nome" class="form-control" placeholder="Nome" />
-	</div>
-	<div class="col-md-8 my-2">
-		<div class="cb-search">
-			<select id="ods" class="form-control">
-				<option value="">ODS</option>
-				<% for (let i = 0; i < ods.length; i++) { %>
-					<option value="<%- ods[i].id %>"><%- ods[i].nome %></option>
-				<% } %>
-			</select>
+	<div class="row limitador">
+		<div class="col-md-4 my-2">
+			<input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" />
 		</div>
-		<script type="text/javascript">
-			//<![CDATA[
-			"use strict";
-			prepareCbSearch(_("ods"));
-			//]]>
-		</script>
+		<div class="col-md-8 my-2">
+			<div class="cb-search">
+				<select id="ods" name="ods" class="form-control">
+					<option value="">ODS</option>
+					<% for (let i = 0; i < ods.length; i++) { %>
+						<option value="<%- ods[i].id %>"><%- ods[i].id %> - <%= ods[i].nome %></option>
+					<% } %>
+				</select>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				"use strict";
+				prepareCbSearch(_("ods"));
+				//]]>
+			</script>
+		</div>
 	</div>
-</div>
 
-<!-- hTodos Os projetos && select -->
-<div class="row d-flex justify-content-center pt-5">
-	<div class="col-lg-8 d-flex align-items-center justify-content-between">
-		<h3 class="m-0">TODOS OS PROJETOS</h3>
-		<div>
-			<select class="custom-select mr-sm-2 main-input" id="inlineFormCustomSelect">
-				<option selected disabled>Ordenar por</option>
-				<option value="1">Mais recente</option>
-				<option value="2">Mais antigo</option>
-				<option value="3">Mais populares</option>
-			</select>
-		</div>
+	<div class="text-center mt-2">
+		<button type="submit" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-filter"></i> Filtrar Projetos</button>
 	</div>
-	
-</div>
+</form>
+
+<div class="text-center px-4 my-5" id="vazio" style="display: none;">Não há projetos com as características desejadas 😢</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 limitador mt-5 mb-1" id="container" style="display: none;"></div>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -279,446 +272,6 @@
 		</div>
 	  </div>
 	</div>
-  </div>
-
-  <!-- Cards -->
-<div class="row d-flex justify-content-center mt-4">
-	<div class="col-lg-8 d-flex align-items-center justify-content-between">
-		<div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-			<div class="col mb-4">
-				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
-				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" style="min-height: 150px">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Doação de arroz</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
-				<div class="card-body d-flex" >
-					<div class="d-flex flex-column pr-2" style="width: 70%;">
-						<h6>Ensinando economia da água</h6>
-						<div class="d-flex align-items-center main-card-sm-text">
-							<i class="fas fa-map-marker-alt mr-1"></i>
-							<p class="m-0"><b>São Paulo - SP</b></p>
-						</div>
-						<div class="d-flex align-items-center flex-wrap pt-3" >
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					</div>
-				</div>
-			  </div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" >
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Marcha pelos direitos das mulheres</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-  
-						  </div>
-  
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			  </div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Plantar árvores no parque</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
-				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" style="min-height: 150px">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Doação de arroz</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
-				<div class="card-body d-flex" >
-					<div class="d-flex flex-column pr-2" style="width: 70%;">
-						<h6>Ensinando economia da água</h6>
-						<div class="d-flex align-items-center main-card-sm-text">
-							<i class="fas fa-map-marker-alt mr-1"></i>
-							<p class="m-0"><b>São Paulo - SP</b></p>
-						</div>
-						<div class="d-flex align-items-center flex-wrap pt-3" >
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					</div>
-				</div>
-			  </div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" >
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Marcha pelos direitos das mulheres</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-  
-						  </div>
-  
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			  </div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Plantar árvores no parque</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" data-toggle="modal" data-target=".bd-example-modal-lg" style="border-radius: 20px;">
-				  <img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" style="min-height: 150px">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Doação de arroz</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						  <img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-					  </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col mb-4">
-			  <div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				<img src="https://agora.fiocruz.br/wp-content/uploads/2020/10/como-economizar-c3a1gua-em-casa-420x290.png" class="card-img-top main-card-img" alt="...">
-				<div class="card-body d-flex" >
-					<div class="d-flex flex-column pr-2" style="width: 70%;">
-						<h6>Ensinando economia da água</h6>
-						<div class="d-flex align-items-center main-card-sm-text">
-							<i class="fas fa-map-marker-alt mr-1"></i>
-							<p class="m-0"><b>São Paulo - SP</b></p>
-						</div>
-						<div class="d-flex align-items-center flex-wrap pt-3" >
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-							<div class="main-card-tag">
-								<p class="m-0">TAG 1</p>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					</div>
-				</div>
-			  </div>
-			</div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://expresso.estadao.com.br/wp-content/uploads/2021/09/ODS-Igualdade-de-Genero-Getty.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex" >
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Marcha pelos direitos das mulheres</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-  
-						  </div>
-  
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			  </div>
-			<div class="col mb-4">
-				<div class="card h-100 main-card" style="border-radius: 20px;" data-toggle="modal" data-target=".bd-example-modal-lg">
-				  <img src="https://www.estudoemdia.com.br/wp-content/uploads/2021/09/ED_dia_arvore.jpg" class="card-img-top main-card-img" alt="...">
-				  <div class="card-body d-flex">
-					  <div class="d-flex flex-column pr-2" style="width: 70%;">
-						  <h6>Plantar árvores no parque</h6>
-						  <div class="d-flex align-items-center main-card-sm-text">
-							  <i class="fas fa-map-marker-alt mr-1"></i>
-							  <p class="m-0"><b>São Paulo - SP</b></p>
-						  </div>
-						  <div class="d-flex align-items-center flex-wrap pt-3" >
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-							  <div class="main-card-tag">
-								  <p class="m-0">TAG 1</p>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="d-flex flex-row-reverse flex-wrap pl-2 justify-content-between align-items-start" style="width: 30%; height:min-content;">
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-						<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-card-ods"/>
-
-					  </div>
-				  </div>
-				</div>
-			</div>
-		</div>			
-	</div>
-</div>
-<div class="row d-flex justify-content-center mt-3 mb-5">
-	<button class="main-btn-load d-flex align-items-center"><i class="fas fa-plus mr-2"></i>Carregar mais</button>
 </div>
 
 <%- contentFor("styles") %>
@@ -730,29 +283,34 @@
 		margin-right: auto;
 	}
 
-	.main-bg{
-		background-color: #fff;
-		min-width: 100vw;
-		min-height: 100vh;
-		margin: 0;
-	}
-	.main-input{
-		border-radius: 30px;
-		border: 2px solid #cecece;
+	.carousel-link, .carousel-link:hover, .carousel-link:active {
+		color: #fff;
 	}
 
-	.main-input:focus{
-		border: 2px solid var(--blue);
+	.card-projeto {
+		cursor: pointer;
+		max-width: 320px;
+	    margin: 0 auto;
+		transition: opacity .2s ease-in-out;
 	}
 
-	.main-slider-img{
+	.card-projeto:hover {
+		opacity: 0.75;
+	}
+
+	.img-ods {
+		max-width: 64px;
+		margin: 0.5rem;
+	}
+
+	.main-slider-img {
 		width: 100%;
 		height: 700px;
 		object-fit: cover;
 		object-position: center center;
 	}
 
-	.main-slider-caption{
+	.main-slider-caption {
 		background-color: rgba(0, 0, 0, 0.5);
 		position: absolute;
 		bottom: 20px;
@@ -762,137 +320,93 @@
 		color: #fff;
 		text-align: center;
 	}
-
-	
-	.main-card{
-		transition: .1s;
-		transition-timing-function: linear;
-	}
-
-	.main-card:hover{
-		opacity: .75;
-		cursor: pointer;
-	}
-
-	.main-card-img{
-		height: 60%
-	}
-
-	.main-card-sm-text{
-		font-size: .7em;
-	}
-
-	.main-card-tag{
-		background-color: var(--blue);
-		border-radius: 30px;
-		padding: 3px 6px;
-		font-size: .6em;
-		color: #fff;
-		margin: 0 2px 3px 0
-	}
-	
-	.main-card-ods{
-		width: 30px;
-		height: 30px;
-		margin-bottom: 3px;
-		
-	}
-
-	.main-btn-load{
-		background-color: #fff;
-		border: 0;
-		color: var(--blue)
-	}
-
 	
 	/* MODAL */
 	
-	.main-modal-project-name{
+	.main-modal-project-name {
 		margin: 0;
 	}
 	
-	.main-modal-sign{
+	.main-modal-sign {
 		margin: 0;
 		color: var(--blue);
 		font-weight: 400;
 		font-size: .8rem;
 	}
-	.main-modal-org-name{
+
+	.main-modal-org-name {
 		font-weight: 600;
 	}
 
-	.main-modal{
+	.main-modal {
 		padding: 20px 30px
 	}
 
-	.main-modal-img{
+	.main-modal-img {
 		width: 300px;
 		height: 250px;
 	}
 
-	.main-modal-ods{
+	.main-modal-ods {
 		width: 70px;
 		height: 70px;
 		margin: 0 8px 5px 0;
 	}
 
-	.main-modal-p-head{
+	.main-modal-p-head {
 		font-weight: 700;
 		margin: 12px 0 0 0;
 		font-size: .8em;
 	}
 
-	.main-modal-p-body{
+	.main-modal-p-body {
 		text-align: justify;
   		text-justify: inter-word;
 		margin: 0
 
 	}
 
-	.main-modal-deco{
+	.main-modal-deco {
 		width: 8px;
 		background-color: var(--blue);
 		margin-right: 8px;
-		
-
 	}
 
-	.main-modal-label{
+	.main-modal-label {
 		margin: 0;
 		font-weight: 600;
 		font-size: .66rem;
 	}
 
-	.main-modal-label-header{
+	.main-modal-label-header {
 		margin: 0;
 		overflow-wrap: break-word;
 	}
 
-	.main-modal-info{
+	.main-modal-info {
 		width: 65%;
 	}
 
-	.main-modal-contato{
+	.main-modal-contato {
 		width: 35%;
-
 	}
 
-	.main-modal-info-p{
+	.main-modal-info-p {
 		text-align: justify;
 		margin: 0 15px 0 0;
 	}
 
-	.main-modal-check{
+	.main-modal-check {
 		color: var(--blue);
 	}
 
-	.main-modal-contact-p{
+	.main-modal-contact-p {
 		font-size: .65em;
 		margin-bottom: 10px;
 		font-weight: 800;
 	}
 
-	.main-modal-textarea{
+	.main-modal-textarea {
 		background-color: rgba(122, 190, 105, 0.507);
 		border: 0;
 		width: 70%;
@@ -904,7 +418,7 @@
   		scrollbar-width: none;  /* Firefox */
 	}
 
-	.main-modal-textarea::-webkit-scrollbar{
+	.main-modal-textarea::-webkit-scrollbar {
 		display: none;
 	}
 
@@ -915,37 +429,40 @@
 	}
 
 	/* RESPONSIVENESS */
-	@media only screen and (max-width: 1280px) {
-		.main-slider-img{
+	@media (max-width: 1280px) {
+		.main-slider-img {
 			width: 100%;
 			height: 500px;
 		}
 	}
-	@media only screen and (max-width: 992px) {
-		.main-slider-img{
+
+	@media (max-width: 992px) {
+		.main-slider-img {
 			width: 100%;
 			height: 450px;
 		}
 	}
-	@media only screen and (max-width: 768px) {
-		.main-slider-img{
+
+	@media (max-width: 768px) {
+		.main-slider-img {
 			width: 100%;
 			height: 400px;
 		}
-		.main-modal-textarea{
+
+		.main-modal-textarea {
 			width: 100%;
 			border-radius: 20px;
 			padding: 15px;
 			height: 150px;
 		}
 	}
-	@media only screen and (max-width: 576px) {
-		.main-slider-img{
+
+	@media (max-width: 576px) {
+		.main-slider-img {
 			width: 100%;
 			height: 300px;
 		}
 	}
-
 </style>
 
 <%- contentFor("scripts") %>
@@ -953,7 +470,182 @@
 	//<![CDATA[
 	"use strict";
 
+	var estados = <%- estadosJSON %>,
+		lista = <%- JSON.stringify(lista) %>,
+		listaFiltrada = (lista || []).slice(),
+		ultimoEstado = 0,
+		ultimaCidade = 0,
+		ultimoNome = "",
+		ultimaODS = "",
+		vazio = document.getElementById("vazio"),
+		container = document.getElementById("container");
+
 	prepareCbState(_("idestado"), _("idcidade"));
+
+	(function () {
+		if (!lista || !lista.length)
+			return;
+
+		var i, j, item, cidade, html, ods, partes;
+
+		for (i = lista.length - 1; i >= 0; i--) {
+			item = lista[i];
+
+			html = "";
+			partes = item.resumoods.split(",");
+			ods = {};
+
+			for (j = 0; j < partes.length; j++) {
+				ods[partes[j]] = true;
+				html += '<img class="img-ods" alt="Logo ODS" src="<%- staticRoot %>/img/ods/' + partes[j] + '.svg" />';
+			}
+
+			item.nomenormalizado = normalizeAccent(item.nome);
+			item.nome = encode(item.nome);
+			item.estado = estados[item.idestado].sigla || "";
+			cidade = cidades[item.idestado];
+			item.cidade = (cidade ? (cidade.c[item.idcidade - cidade.i] || "") : "");
+			item.ods = ods;
+			item.resumoods = html;
+		}
+	})();
+
+	function exibirProjeto(id) {
+		if (JsonWebApi.active)
+			return false;
+
+		Swal.wait();
+
+		JsonWebApi.get("<%- root %>/api/projeto/obterExterno", function (response) {
+			if (response.success) {
+				if (!response.value) {
+					Swal.error("Projeto não encontrado! " + emoji.sad);
+					return;
+				}
+
+				Swal.close();
+			} else {
+				Swal.error(response.value + " " + emoji.sad);
+			}
+		}, "id", id);
+
+		return false;
+	}
+
+	function reordenar() {
+		if (!listaFiltrada || !listaFiltrada.length) {
+			container.style.display = 'none';
+			vazio.style.display = '';
+			return;
+		}
+
+		var i, item, html;
+
+		switch ($("#ordem").val()) {
+			case "2":
+				listaFiltrada.sort(function (a, b) { return a.id - b.id; });
+				break;
+			case "3":
+				listaFiltrada.sort(function (a, b) { return ((a.nomenormalizado < b.nomenormalizado) ? -1 : 1); });
+				break;
+			case "4":
+				listaFiltrada.sort(function (a, b) { return ((b.nomenormalizado < a.nomenormalizado) ? -1 : 1); });
+				break;
+			default:
+				listaFiltrada.sort(function (a, b) { return b.id - a.id; });
+				break;
+		}
+
+		html = '';
+
+		for (i = 0; i < listaFiltrada.length; i++) {
+			item = listaFiltrada[i];
+
+			html += `
+<div class="col mb-4">
+	<div class="card card-projeto h-100" onclick="exibirProjeto(${item.id})">
+		<img src="<%- staticRoot %><%- PrefixoAbsolutoIcone %>/${item.id}.jpg?${item.versaoimagem}" class="card-img-top" alt="Ícone do projeto" />
+		<div class="card-body">
+			<h5 class="card-title">${item.nome}</h5>
+			<p class="card-text"><small><b><i class="fas fa-map-marker-alt mr-1"></i> ${item.cidade} - ${item.estado}</b></small></p>
+			<p class="card-text text-center">${item.resumoods}</p>
+		</div>
+	</div>
+</div>
+			`;
+		}
+
+		container.innerHTML = html;
+
+		vazio.style.display = 'none';
+		container.style.display = '';
+	}
+
+	function filtrar() {
+		var i, j, item, nomenormalizado, partes = null,
+			estado = parseInt($("#idestado").val()) || 0,
+			cidade = parseInt($("#idcidade").val()) || 0,
+			nome = normalizeAccent($("#nome").val()),
+			ods = $("#ods").val();
+
+		if (ultimoEstado === estado &&
+			ultimaCidade === cidade &&
+			ultimoNome === nome &&
+			ultimaODS === ods)
+			return;
+
+		ultimoEstado = estado;
+		ultimaCidade = cidade;
+		ultimoNome = nome;
+		ultimaODS = ods;
+
+		if (nome) {
+			partes = nome.split(" ");
+
+			for (i = partes.length - 1; i >= 0; i--) {
+				if (!partes[i])
+					partes.splice(i, 1);
+			}
+
+			if (!partes.length)
+				partes = null;
+		}
+
+		listaFiltrada = lista.slice();
+
+		if (estado || cidade || partes || ods) {
+			for (i = listaFiltrada.length - 1; i >= 0; i--) {
+				item = listaFiltrada[i];
+
+				if ((estado && estado !== item.idestado) ||
+					(cidade && cidade !== item.idcidade) ||
+					(ods && !(ods in item.ods))) {
+					listaFiltrada.splice(i, 1);
+					continue;
+				}
+
+				if (partes) {
+					nomenormalizado = item.nomenormalizado;
+
+					for (j = partes.length - 1; j >= 0; j--) {
+						if (nomenormalizado.indexOf(partes[j]) < 0) {
+							listaFiltrada.splice(i, 1);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		reordenar();
+	}
+
+	document.getElementById("form").onsubmit = function (e) {
+		filtrar();
+		return cancelEvent(e);
+	};
+
+	reordenar();
 
 	//]]>
 </script>

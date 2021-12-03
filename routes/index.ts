@@ -14,6 +14,7 @@ class IndexRoute {
 			mapa: true,
 			cidades: true,
 			estados: estados.lista,
+			estadosJSON: estados.idsJSON,
 			ods: ods.lista,
 			lista: await Projeto.listarExterno()
 		});

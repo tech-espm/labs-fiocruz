@@ -333,7 +333,7 @@ class Projeto {
 		let lista: Projeto[] | null = null;
 
 		await app.sql.connect(async (sql) => {
-			lista = await sql.query("select p.id, p.resumoods, e.nome estado, c.nome cidade, p.latitude, p.longitude, p.nome, p.exposicao, p.versaoimagem, date_format(p.criacao, '%d/%m/%Y') criacao from projeto p inner join estado e on e.id = p.idestado inner join cidade c on c.id = p.idcidade where p.aprovado = 1 and p.exclusao is null order by p.id desc") as Projeto[];
+			lista = await sql.query("select id, resumoods, idestado, idcidade, latitude, longitude, nome, exposicao, versaoimagem, date_format(criacao, '%d/%m/%Y') criacao from projeto where aprovado = 1 and exclusao is null order by id desc") as Projeto[];
 		});
 
 		return (lista || []);
@@ -358,10 +358,10 @@ class Projeto {
 
 		await app.sql.connect(async (sql) => {
 			const params = [id];
-			if (!admin)
+			if (!admin && idusuario)
 				params.push(idusuario);
 
-			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info from projeto where id = ? and exclusao is null" + (admin ? "" : " and idusuario = ?"), params) as Projeto[];
+			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info from projeto where id = ? and exclusao is null" + (admin ? "" : (idusuario ? " and idusuario = ?" : " and aprovado = 1")), params) as Projeto[];
 		});
 
 		return ((lista && lista[0]) || null);

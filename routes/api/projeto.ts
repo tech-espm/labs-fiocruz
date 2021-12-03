@@ -7,6 +7,10 @@ class ProjetoApiRoute {
 		res.json(await Projeto.listarExterno());
 	}
 
+	public static async obterExterno(req: app.Request, res: app.Response) {
+		res.json(await Projeto.obter(parseInt(req.query["id"] as string), 0, false));
+	}
+
 	public static async listarNaoAprovados(req: app.Request, res: app.Response) {
 		const u = await Usuario.cookie(req, res);
 		if (!u)
