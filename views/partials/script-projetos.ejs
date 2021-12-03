@@ -8,7 +8,7 @@
 		var regExp = /\,/g;
 
 		for (var i = lista.length - 1; i >= 0; i--) {
-			lista[i].aprovadoStr = (lista[i].aprovado ? "Sim" : "Não");
+			lista[i].aprovadoStr = (lista[i].aprovado ? "Sim" : '<b style="color: var(--danger);">Não</b>');
 			lista[i].exposicaoStr = (lista[i].exposicao ? "Sim" : "Não");
 			if (lista[i].resumoods)
 				lista[i].resumoods = lista[i].resumoods.replace(regExp, ", ");
@@ -16,7 +16,7 @@
 	})();
 
 	var tabela = prepareDataTable("tabela", {
-		order: [[1, "asc"], [2, "asc"]],
+		order: [[1, "asc"], [2, "desc"]],
 		deferRender: true,
 		columns: [
 			{ title: "", "class": "col-min", searchable: false, orderable: false, data: "id", render: function (v, type, row) {
@@ -27,19 +27,19 @@
 				// <% } %>
 				' <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>';
 			} },
-			{ title: "Aprovado", render: encode, data: "aprovadoStr" },
+			{ title: "Aprovado", data: "aprovadoStr" },
+			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" },
+			//<% if (usuario.admin) { %>
+				{ title: "Criador", render: encode, data: "usuario" },
+			//<% } %>
 			{ title: "Nome", render: encode, data: "nome" },
 			{ title: "ODS", render: encode, data: "resumoods" },
 			{ title: "Autor", render: encode, data: "autor" },
-			{ title: "Interesse exposição", render: encode, data: "exposicaoStr" },
+			{ title: "Interesse exposição", data: "exposicaoStr" },
 			{ title: "Telefone", render: encode, data: "telefone" },
 			{ title: "E-mail", render: encode, data: "email" },
 			{ title: "UF", render: encode, data: "estado" },
-			{ title: "Cidade", render: encode, data: "cidade" },
-			//<% if (usuario.admin) { %>
-			{ title: "Criador", render: encode, data: "usuario" },
-			//<% } %>
-			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" }
+			{ title: "Cidade", render: encode, data: "cidade" }
 		],
 		data: lista,
 		export: { title: "Usuários" }
