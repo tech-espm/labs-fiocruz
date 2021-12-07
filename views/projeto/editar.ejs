@@ -409,7 +409,7 @@
 
 	var ajustandoImagem = false,
 		procurandoLocalizacao = false,
-		mapa = L.map("mapa", { zoomControl: false }),
+		mapa = L.map("mapa", { zoomControl: false, scrollWheelZoom: false }),
 		marker = null,
 		versaoimagem = parseInt("<%- (item ? item.versaoimagem : 0) %>"),
 		TamanhoMaximoIconeEmBytes = parseInt("<%- TamanhoMaximoIconeEmBytes %>"),
