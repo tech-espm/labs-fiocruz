@@ -1,7 +1,11 @@
 ﻿import app = require("teem");
+import abrangencias = require("../models/abrangencia");
+import caracteristicas = require("../models/caracteristica");
 import estados = require("../models/estado");
+import macroCategorias = require("../models/macroCategoria");
 import ods = require("../models/ods");
 import Projeto = require("../models/projeto");
+import status = require("../models/status");
 import Usuario = require("../models/usuario");
 
 class IndexRoute {
@@ -15,6 +19,10 @@ class IndexRoute {
 			cidades: true,
 			estados: estados.lista,
 			estadosJSON: estados.idsJSON,
+			abrangenciasJSON: abrangencias.idsJSON,
+			caracteristicasJSON: caracteristicas.idsJSON,
+			macroCategoriasJSON: macroCategorias.idsJSON,
+			statusJSON: status.idsJSON,
 			ods: ods.lista,
 			lista: await Projeto.listarExterno()
 		});

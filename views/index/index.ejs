@@ -37,7 +37,7 @@
 			<div class="carousel-inner">
 				<% for (let i = 0; i < maximoRecentes; i++) { let item = lista[i]; %>
 				<div class="carousel-item <%- (i ? '' : 'active') %>">
-					<img class="d-block main-slider-img" src="<%- staticRoot %><%- PrefixoAbsolutoImagem %>/<%- item.id %>.jpg?<%- item.versaoimagem %>" alt="Imagem do projeto">
+					<a class="d-block" href="#" onclick="return exibirProjeto('<%- item.id %>')"><img class="d-block main-slider-img" src="<%- staticRoot %><%- PrefixoAbsolutoImagem %>/<%- item.id %>.jpg?<%- item.versaoimagem %>" alt="Imagem do projeto"></a>
 					<div class="main-slider-caption w-100">
 						<a class="carousel-control-prev" href="#carouselRecentes" role="button" data-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -136,141 +136,87 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 limitador mt-5 mb-1" id="container" style="display: none;"></div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-	  <div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body main-modal">
-				<div class="row d-flex flex-column flex-lg-row">
-					<div class="col d-flex flex-column justify-content-center align-items-center">
-						<!-- Img -->
-						<img src="https://www.bioblog.com.br/wp-content/uploads/2017/03/ODS-N2-erradicacao-da-fome-.jpg" alt="ODS 1" class="main-modal-img"/>
-						
-						<h5 class="main-modal-sign d-flex align-items-center mt-3 mb-4"><i class="fas fa-chevron-down mr-2"></i>Mais informações<i class="fas fa-chevron-down ml-2"></i></h5>
-						
-					</div>
-					<div class="col">
-						<!-- Info principal -->
-						<div class="d-flex flex-column">
-							<div class="d-flex align-items-center">
-								<i class="fas fa-map-marker-alt mr-1"></i>
-								<p class="m-0"><b>São Paulo - SP</b></p>
-							</div>
-							<h4 class="main-modal-project-name">TEMA DO PROJETO</h4>
-							<h5 class="main-modal-org-name">Nome da Organização</h5>
-							<p class="main-modal-p-head">OBJETIVOS - ODS</p>
-							<div class="d-flex flex-wrap">
-								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
-								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
-								<img src="https://www.unicesumar.edu.br/extensao/wp-content/uploads/sites/61/2016/05/E_SDG_Icons_NoText-02.jpg" alt="ODS 2" class="main-modal-ods"/>
-							</div>
+		<div class="modal-content">
 
-							<p class="main-modal-p-head">RESUMO DO PROJETO</p>
-							<p class="main-modal-p-body">
-								Lorem ipsum dolor sit amet. Est culpa enim et debitis
-								tempora sit laudantium quia et architecto eaque. Enim
-								corrupti et deleniti velit aut fuga illum et voluptatum
-								accusamus et iure inventore. Et autem nostrum qui sunt
-								quibusdam quo fuga laborum est similique veniam nam
-								molestiae assumenda cum ipsum nostrum.
-							</p>
-						</div>
-					
-					</div>
-				</div>
-				<div class="row mt-4">
-					<!-- Mais Info - Green deco -->
-					<div class="d-flex flex-column mb-2 px-2">
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">AUTOR</label>
-								<h4 class="main-modal-label-header">Nome do Autor</h4>
-							</div>
-						</div>
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">ÁREAS DE ATUAÇÃO</label>
-								<h4 class="main-modal-label-header">Nome das Áreas de Atuação</h4>
-							</div>
-						</div>
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">PÚBLICO ALVO</label>
-								<h4 class="main-modal-label-header">Tipo de Público Alvo</h4>
-							</div>
-						</div>
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">LOCAL DE IMPLEMENTAÇÃO DA SOLUÇÃO</label>
-								<h4 class="main-modal-label-header">Local da Implementação da solução feita por ongs nacionais</h4>
-							</div>
-						</div>
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">ABRANGÊNCIA</label>
-								<h4 class="main-modal-label-header">Tipo de Abrangência</h4>
-							</div>
-						</div>
-						<div class="d-flex mb-4">
-							<div class="main-modal-deco"></div>
-							<div>
-								<label class="main-modal-label">PARCEIROS</label>
-								<h4 class="main-modal-label-header">Nome dos Parceiros</h4>
-							</div>
-						</div>
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Detalhes do Projeto</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 
-					</div>
+			<div class="modal-body main-modal-body">	
+				<h4 class="mb-4" id="modalNome"></h4>
+
+				<img class="main-modal-img mb-4" id="modalImagem" alt="Imagem do projeto" />
+
+				<div class="mb-4">
+					<p class="m-0"><i class="fa fa-map-marker-alt"></i> <b id="modalCidade"></b></p>
+					<p id="modalLinkMapaP" class="mt-2 mb-0"><a target="_blank" id="modalLinkMapa" href=""><i class="fa fa-external-link-alt"></i> Ver no mapa</a></small></p>
 				</div>
 
+				<p class="main-modal-p-head mb-2">OBJETIVOS - ODS</p>
+				<div id="modalOds"></div>
 
-				<div class="row d-flex flex-column flex-lg-row">
-					<!-- Lista Info - Green check -->
-					<div class="col-lg-8 d-flex flex-column mb-4">
-						<h4 class="mb-2">INFORMAÇÕES SOBRE A SOLUÇÃO</h4>
-						<div>
-							<div class="d-flex align-items-center text-justify justify-content-between">
-								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing</p>
-								<i class="fas fa-check main-modal-check"></i>
-							</div>
-							<div class="d-flex align-items-center text-justify justify-content-between">
-								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-								<i class="fas fa-check main-modal-check"></i>
-							</div>
-							<div class="d-flex align-items-center text-justify justify-content-between">
-								<p class="main-modal-info-p">Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-								<i class="fas fa-check main-modal-check"></i>
-							</div>
-						</div>
-					</div>
-					<!-- Contato -->
-					<div class="col-lg-4 mb-4">
-						<h4>CONTATO</h4>
-						<p class="main-modal-contact-p">TEL: 00 1234 5678</p>
-						<p class="main-modal-contact-p">EMAIL: ABCD@HOTMAIL.COM</p>
-						<p class="main-modal-contact-p">FACEBOOK: ABCDEFG</p>
-						<p class="main-modal-contact-p">TWITTER: ABCDEFG</p>
-					</div>
-
-				</div>
-
-				<!-- Comentarios -->
 				<div class="row">
-					<div class="col">
-						<h4>COMENTÁRIOS</h4>
-						<textarea class="main-modal-textarea"></textarea>
+					<div class="col-lg-6">
+						<p class="main-modal-p-head my-2">RESUMO DO PROJETO</p>
+						<p class="main-modal-p-body mb-4" id="modalDescricao"></p>
+					</div>
+
+					<div class="col-lg-6">
+						<p class="main-modal-p-head mt-0 mt-lg-2 mb-2">CONTATO</p>
+						<p class="mb-2" id="modalEndereco"></p>
+						<p class="mb-2"><a id="modalTelefone"></a></p>
+						<p class="mb-2"><a id="modalEmail"></a></p>
+						<div id="modalLinks"></div>
 					</div>
 				</div>
+
+				<div class="main-modal-deco mb-3">
+					<label class="main-modal-label">AUTOR</label>
+					<h4 class="m-0" id="modalAutor"></h4>
+				</div>
+
+				<div class="main-modal-deco mb-3" id="modalMacroCategoriaDiv">
+					<label class="main-modal-label">ÁREAS DE ATUAÇÃO</label>
+					<ol class="main-modal-list" id="modalMacroCategoria"></ol>
+				</div>
+
+				<div class="main-modal-deco mb-3" id="modalPublicoDiv">
+					<label class="main-modal-label">PÚBLICO-ALVO</label>
+					<h4 class="m-0" id="modalPublico"></h4>
+				</div>
+
+				<div class="main-modal-deco mb-3">
+					<label class="main-modal-label">LOCAL DE IMPLEMENTAÇÃO DA SOLUÇÃO</label>
+					<h4 class="m-0" id="modalLocal"></h4>
+				</div>
+
+				<div class="main-modal-deco mb-3" id="modalAbrangenciaDiv">
+					<label class="main-modal-label">ABRANGÊNCIA</label>
+					<h4 class="m-0" id="modalAbrangencia"></h4>
+				</div>
+
+				<div class="main-modal-deco mb-3" id="modalParceirosDiv">
+					<label class="main-modal-label">PARCEIROS</label>
+					<h4 class="m-0" id="modalParceiros"></h4>
+				</div>
+
+				<div class="main-modal-deco mb-3" id="modalCaracteristicaDiv">
+					<label class="main-modal-label">INFORMAÇÕES SOBRE A SOLUÇÃO</label>
+					<ol class="main-modal-list" id="modalCaracteristica"></ol>
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+			</div>
+
 		</div>
-	  </div>
 	</div>
 </div>
 
@@ -322,113 +268,54 @@
 	}
 	
 	/* MODAL */
-	
-	.main-modal-project-name {
-		margin: 0;
-	}
-	
-	.main-modal-sign {
-		margin: 0;
-		color: var(--blue);
-		font-weight: 400;
-		font-size: .8rem;
+
+	.main-modal-img {
+		width: 100%;
 	}
 
 	.main-modal-org-name {
 		font-weight: 600;
 	}
 
-	.main-modal {
-		padding: 20px 30px
-	}
-
-	.main-modal-img {
-		width: 300px;
-		height: 250px;
-	}
-
-	.main-modal-ods {
-		width: 70px;
-		height: 70px;
-		margin: 0 8px 5px 0;
+	.main-modal-body {
+		padding: 1.5rem 1.5rem .5rem;
 	}
 
 	.main-modal-p-head {
 		font-weight: 700;
-		margin: 12px 0 0 0;
 		font-size: .8em;
 	}
 
 	.main-modal-p-body {
 		text-align: justify;
   		text-justify: inter-word;
-		margin: 0
-
+		white-space: pre-line;
 	}
 
 	.main-modal-deco {
-		width: 8px;
-		background-color: var(--blue);
-		margin-right: 8px;
+		border-left: .5rem solid var(--blue);
+		padding: 0 0 .5rem .5rem;
 	}
 
 	.main-modal-label {
 		margin: 0;
 		font-weight: 600;
-		font-size: .66rem;
+		font-size: .75rem;
+		vertical-align: bottom;
 	}
 
-	.main-modal-label-header {
+	.main-modal-list {
 		margin: 0;
-		overflow-wrap: break-word;
+		font-size: 1rem;
+		padding-left: 1rem;
 	}
 
-	.main-modal-info {
-		width: 65%;
-	}
-
-	.main-modal-contato {
-		width: 35%;
-	}
-
-	.main-modal-info-p {
-		text-align: justify;
-		margin: 0 15px 0 0;
-	}
-
-	.main-modal-check {
-		color: var(--blue);
-	}
-
-	.main-modal-contact-p {
-		font-size: .65em;
-		margin-bottom: 10px;
-		font-weight: 800;
-	}
-
-	.main-modal-textarea {
-		background-color: rgba(122, 190, 105, 0.507);
-		border: 0;
-		width: 70%;
-		border-radius: 20px;
-		padding: 15px;
-		height: 150px;
-		resize: none;
-		-ms-overflow-style: none;  /* IE and Edge */
-  		scrollbar-width: none;  /* Firefox */
-	}
-
-	.main-modal-textarea::-webkit-scrollbar {
-		display: none;
-	}
-
-	.main-modal-textarea:focus{
-		outline: none !important;
-		border:1px solid #cecece;
-		box-shadow: 0 0 5px 0 #719ece67;
+	.main-modal-list li + li {
+		margin-top: .5rem;
 	}
 
 	/* RESPONSIVENESS */
+
 	@media (max-width: 1280px) {
 		.main-slider-img {
 			width: 100%;
@@ -448,13 +335,6 @@
 			width: 100%;
 			height: 400px;
 		}
-
-		.main-modal-textarea {
-			width: 100%;
-			border-radius: 20px;
-			padding: 15px;
-			height: 150px;
-		}
 	}
 
 	@media (max-width: 576px) {
@@ -471,6 +351,10 @@
 	"use strict";
 
 	var estados = <%- estadosJSON %>,
+		abrangencias = <%- abrangenciasJSON %>,
+		caracteristicas = <%- caracteristicasJSON %>,
+		macroCategorias = <%- macroCategoriasJSON %>,
+		statusProj = <%- statusJSON %>,
 		lista = <%- JSON.stringify(lista) %>,
 		listaFiltrada = (lista || []).slice(),
 		ultimoEstado = 0,
@@ -497,7 +381,7 @@
 
 			for (j = 0; j < partes.length; j++) {
 				ods[partes[j]] = true;
-				html += '<img class="img-ods" alt="Logo ODS" src="<%- staticRoot %>/img/ods/' + partes[j] + '.svg" />';
+				html += '<img class="img-ods" alt="Logo ODS ' + partes[j] + '" src="<%- staticRoot %>/img/ods/' + partes[j] + '.svg" />';
 			}
 
 			item.nomenormalizado = normalizeAccent(item.nome);
@@ -524,6 +408,139 @@
 				}
 
 				Swal.close();
+
+				var i, item, info, cidade, html, partes, macroCategoria, abrangencia, caracteristica;
+
+				item = response.value;
+
+				$("#modalImagem").attr("src", "<%- staticRoot %><%- PrefixoAbsolutoImagem %>/" + item.id + ".jpg?" + item.versaoimagem);
+
+				item.estado = estados[item.idestado].sigla || "";
+				cidade = cidades[item.idestado];
+				item.cidade = (cidade ? (cidade.c[item.idcidade - cidade.i] || "") : "");
+
+				$("#modalCidade").text(item.cidade + " - " + item.estado);
+				$("#modalNome").text(item.nome);
+				$("#modalAutor").text(item.autor);
+				$("#modalEndereco").text(item.logradouro + ", " + item.numero + (item.complemento ? ", " + item.complemento : "") + ", " + item.bairro + ", " + item.cep);
+				$("#modalTelefone").attr("href", "tel:" + item.telefone.replace("(", "").replace(") ", "-"));
+				$("#modalTelefone").text(encode(item.telefone));
+				$("#modalEmail").attr("href", "mailto:" + item.email);
+				$("#modalEmail").text(encode(item.email));
+
+				if (item.latitude) {
+					$("#modalLinkMapa").attr("href", "https://www.google.com/maps/search/?api=1&query=" + item.latitude + "," + item.longitude);
+					$("#modalLinkMapaP").show();
+				} else {
+					$("#modalLinkMapaP").hide();
+				}
+
+				html = "";
+				partes = item.resumoods.split(",");
+
+				for (i = 0; i < partes.length; i++)
+					html += '<img class="mr-3 mb-3" width="80" height="80" alt="Logo ODS ' + partes[i] + '" src="<%- staticRoot %>/img/ods/' + partes[i] + '.svg" />';
+
+				$("#modalOds").html(html);
+
+				try {
+					info = JSON.parse(item.info);
+				} catch (ex) {
+					info = null;
+				}
+
+				if (info) {
+					partes = [];
+					if (info.links) {
+						for (i = 0; i < info.links.length; i++)
+							partes.push('<p class="mb-2"><a target="_blank" href="' + info.links[i] + '"><i class="fa fa-external-link-alt"></i> ' + encode(info.links[i]) + ' </a></p>');
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalLinks").html(partes.join(""));
+						$("#modalLinks").show();
+					} else {
+						$("#modalLinks").hide();
+					}
+
+					$("#modalDescricao").text(info.descricao);
+
+					$("#modalLocal").text(info.local);
+
+					partes = [];
+					if (info.macrocategoria) {
+						for (i = 0; i < info.macrocategoria.length; i++) {
+							macroCategoria = macroCategorias[info.macrocategoria[i]];
+							if (!macroCategoria)
+								continue;
+							partes.push('<li><h4 class="m-0">' + macroCategoria.nome + '</li>');
+						}
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalMacroCategoria").html(partes.join(""));
+						$("#modalMacroCategoriaDiv").show();
+					} else {
+						$("#modalMacroCategoriaDiv").hide();
+					}
+
+					if (info.publico) {
+						$("#modalPublico").text(info.publico);
+						$("#modalPublicoDiv").show();
+					} else {
+						$("#modalPublicoDiv").hide();
+					}
+
+					abrangencia = abrangencias[info.abrangencia];
+
+					if (abrangencia) {
+						$("#modalAbrangencia").text(abrangencia.nome);
+						$("#modalAbrangenciaDiv").show();
+					} else {
+						$("#modalAbrangenciaDiv").hide();
+					}
+
+					if (info.parceiros) {
+						$("#modalParceiros").text(info.parceiros);
+						$("#modalParceirosDiv").show();
+					} else {
+						$("#modalParceirosDiv").hide();
+					}
+
+					partes = [];
+					if (info.caracteristica) {
+						for (i = 0; i < info.caracteristica.length; i++) {
+							caracteristica = caracteristicas[info.caracteristica[i]];
+							if (!caracteristica)
+								continue;
+							partes.push('<li><h4 class="m-0">' + caracteristica.nome + '</li>');
+						}
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalCaracteristica").html(partes.join(""));
+						$("#modalCaracteristicaDiv").show();
+					} else {
+						$("#modalCaracteristicaDiv").hide();
+					}
+				} else {
+					$("#modalLinks").hide();
+					$("#modalDescricao").text("-");
+					$("#modalLocal").text("-");
+					$("#modalMacroCategoriaDiv").hide();
+					$("#modalPublicoDiv").hide();
+					$("#modalAbrangenciaDiv").hide();
+					$("#modalParceirosDiv").hide();
+					$("#modalCaracteristicaDiv").hide();
+				}
+
+				$("#modal").modal({
+					backdrop: "static",
+					keyboard: true
+				});
 			} else {
 				Swal.error(response.value + " " + emoji.sad);
 			}
