@@ -24,7 +24,7 @@
 <!-- Carousel -->
 <div class="row limitador mt-5">
 	<div class="col">
-		<h3>PROJETOS RECENTES</h3>
+		<h3><b>PROJETOS RECENTES</b></h3>
 
 		<div id="carouselRecentes" class="carousel slide shadow mt-3" data-ride="carousel">
 			<ol class="carousel-indicators">
@@ -59,7 +59,7 @@
 
 <div class="row limitador mt-5">
 	<div class="col-md-8">
-		<h3>TODOS OS PROJETOS</h3>
+		<h3><b>TODOS OS PROJETOS</b></h3>
 	</div>
 
 	<div class="col-md-4 text-right">
@@ -166,7 +166,7 @@
 						<p class="main-modal-p-body mb-4" id="modalDescricao"></p>
 					</div>
 
-					<div class="col-lg-6">
+					<div class="col-lg-6 mb-3">
 						<p class="main-modal-p-head mt-0 mt-lg-2 mb-2">CONTATO</p>
 						<p class="mb-2" id="modalEndereco"></p>
 						<p class="mb-2"><a id="modalTelefone"></a></p>
@@ -244,9 +244,13 @@
 		opacity: 0.75;
 	}
 
+	.text-ods {
+		vertical-align: middle;
+	}
+
 	.img-ods {
-		max-width: 64px;
-		margin: 0.5rem;
+		max-width: 16px;
+		margin: .25rem;
 	}
 
 	.main-slider-img {
@@ -293,7 +297,7 @@
 	}
 
 	.main-modal-deco {
-		border-left: .5rem solid var(--blue);
+		border-left: .5rem solid var(--primary);
 		padding: 0 0 .5rem .5rem;
 	}
 
@@ -307,7 +311,7 @@
 	.main-modal-list {
 		margin: 0;
 		font-size: 1rem;
-		padding-left: 1rem;
+		padding-left: 1.5rem;
 	}
 
 	.main-modal-list li + li {
@@ -583,9 +587,9 @@
 	<div class="card card-projeto h-100" onclick="exibirProjeto(${item.id})">
 		<img src="<%- staticRoot %><%- PrefixoAbsolutoIcone %>/${item.id}.jpg?${item.versaoimagem}" class="card-img-top" alt="Ícone do projeto" />
 		<div class="card-body">
-			<h5 class="card-title">${item.nome}</h5>
-			<p class="card-text"><small><b><i class="fas fa-map-marker-alt mr-1"></i> ${item.cidade} - ${item.estado}</b></small></p>
-			<p class="card-text text-center">${item.resumoods}</p>
+			<h5 class="card-title mb-3">${item.nome}</h5>
+			<p class="card-text mb-3"><small><b><i class="fas fa-map-marker-alt mr-1"></i> ${item.cidade} - ${item.estado}</b></small></p>
+			<p class="card-text"><small class="text-ods"><b>ODS</b></small> ${item.resumoods}</p>
 		</div>
 	</div>
 </div>
