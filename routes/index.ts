@@ -28,6 +28,15 @@ class IndexRoute {
 		});
 	}
 
+	public static async quemSomos(req: app.Request, res: app.Response) {
+		let u = await Usuario.cookie(req);
+
+		res.render("index/quem-somos", {
+			layout: "layout-sem-form",
+			usuario: u
+		});
+	}
+
 	public static async dashboard(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u) {

@@ -1,0 +1,52 @@
+﻿<div class="limitador mt-4">
+	<div class="espaco">
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_01.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_02.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_03.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_04.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_05.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_06.png" />
+		<img alt="Infográfico" src="<%- staticRoot %>/img/InfograficoTerra2030_07.png" />
+	</div>
+	<div class="borda"></div>
+</div>
+
+<%- contentFor("styles") %>
+
+<style type="text/css">
+	.limitador {
+		max-width: 1000px;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
+
+	.espaco {
+		padding-left: 15%;
+	}
+
+	.borda {
+		position: absolute;
+		width: 15.5%;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		background-color: var(--primary);
+		background-image: url('<%- staticRoot %>/img/corte.svg');
+		background-size: 100%;
+		background-repeat: no-repeat;
+		background-position: left top;
+	}
+
+	img {
+		width: 100%;
+	}
+</style>
+
+<%- contentFor("scripts") %>
+<script type="text/javascript">
+	//<![CDATA[
+	"use strict";
+
+	//]]>
+</script>

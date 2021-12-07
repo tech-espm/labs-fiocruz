@@ -1,6 +1,6 @@
 {
-	"name": "TERRA 2030",
-	"short_name": "TERRA 2030",
+	"name": "terra 2030",
+	"short_name": "terra 2030",
 	"start_url": "/",
 	"dir": "ltr",
 	"lang": "pt-BR",
@@ -8,7 +8,7 @@
 	"display": "standalone",
 	"background_color": "#ffffff",
 	"theme_color": "#ffffff",
-	"description": "TERRA 2030",
+	"description": "terra 2030",
 	"icons": [
 		{
 			"src": "/public/img/favicons/favicon-36x36.png",
