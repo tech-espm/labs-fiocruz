@@ -1,5 +1,4 @@
 ﻿import app = require("teem");
-import appsettings = require("../appsettings");
 import abrangencias = require("../models/abrangencia");
 import caracteristicas = require("../models/caracteristica");
 import estados = require("../models/estado");
@@ -18,7 +17,6 @@ class IndexRoute {
 			layout: "layout-sem-form",
 			usuario: u,
 			projetoId: id,
-			urlSite: appsettings.urlSite,
 			clipboard: true,
 			mapa: true,
 			cidades: true,
