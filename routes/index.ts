@@ -1,4 +1,5 @@
 ﻿import app = require("teem");
+import appsettings = require("../appsettings");
 import abrangencias = require("../models/abrangencia");
 import caracteristicas = require("../models/caracteristica");
 import estados = require("../models/estado");
@@ -9,12 +10,16 @@ import status = require("../models/status");
 import Usuario = require("../models/usuario");
 
 class IndexRoute {
-	public static async index(req: app.Request, res: app.Response) {
+	@app.http.hidden()
+	public static async renderIndex(id: string | null, req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 
 		res.render("index/index", {
 			layout: "layout-sem-form",
 			usuario: u,
+			projetoId: id,
+			urlSite: appsettings.urlSite,
+			clipboard: true,
 			mapa: true,
 			cidades: true,
 			estados: estados.lista,
@@ -26,6 +31,10 @@ class IndexRoute {
 			ods: ods.lista,
 			lista: await Projeto.listarExterno()
 		});
+	}
+
+	public static async index(req: app.Request, res: app.Response): Promise<void> {
+		return IndexRoute.renderIndex(null, req, res);
 	}
 
 	public static async quemSomos(req: app.Request, res: app.Response) {

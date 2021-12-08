@@ -4,6 +4,7 @@ import bancosTecnologia = require("../models/bancoTecnologia");
 import caracteristicas = require("../models/caracteristica");
 import divulgacoes = require("../models/divulgacao");
 import estados = require("../models/estado");
+import IndexRoute = require("./index");
 import macroCategorias = require("../models/macroCategoria");
 import ods = require("../models/ods");
 import status = require("../models/status");
@@ -11,6 +12,7 @@ import Projeto = require("../models/projeto");
 import Usuario = require("../models/usuario");
 
 class ProjetoRoute {
+	@app.http.hidden()
 	public static async criar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
@@ -36,6 +38,7 @@ class ProjetoRoute {
 			});
 	}
 
+	@app.http.hidden()
 	public static async editar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u) {
@@ -69,6 +72,7 @@ class ProjetoRoute {
 		}
 	}
 
+	@app.http.hidden()
 	public static async listar(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
@@ -81,6 +85,22 @@ class ProjetoRoute {
 				datatables: true,
 				lista: await Projeto.listar(u.id, u.admin)
 			});
+	}
+
+	@app.route.methodName(":id")
+	public static async index(req: app.Request, res: app.Response): Promise<void> {
+		const id = req.params["id"];
+
+		switch (id) {
+			case "criar":
+				return ProjetoRoute.criar(req, res);
+			case "editar":
+				return ProjetoRoute.editar(req, res);
+			case "listar":
+				return ProjetoRoute.listar(req, res);
+		}
+
+		return IndexRoute.renderIndex(id, req, res);
 	}
 }
 

@@ -147,7 +147,14 @@
 				</button>
 			</div>
 
-			<div class="modal-body main-modal-body">	
+			<div class="modal-body main-modal-body">
+				<p class="text-center">
+					Gostou do projeto?<br />
+					<a class="d-inline-block mt-2" href="#" onclick="return compartilhar();"><i class="fa fa-share-alt"></i> Clique aqui para compartilhar! 😊</a>
+				</p>
+
+				<hr style="margin: 1.5rem -1.5rem;" />
+
 				<h4 class="mb-4" id="modalNome"></h4>
 
 				<img class="main-modal-img mb-4" id="modalImagem" alt="Imagem do projeto" />
@@ -361,6 +368,9 @@
 		statusProj = <%- statusJSON %>,
 		lista = <%- JSON.stringify(lista) %>,
 		listaFiltrada = (lista || []).slice(),
+		projetoId = '<%= projetoId %>',
+		modalProjetoURL = null,
+		modalProjetoNome = null,
 		ultimoEstado = 0,
 		ultimaCidade = 0,
 		ultimoNome = "",
@@ -389,6 +399,7 @@
 			}
 
 			item.nomenormalizado = normalizeAccent(item.nome);
+			item.nomeoriginal = item.nome;
 			item.nome = encode(item.nome);
 			item.estado = estados[item.idestado].sigla || "";
 			cidade = cidades[item.idestado];
@@ -416,6 +427,9 @@
 				var i, item, info, cidade, html, partes, macroCategoria, abrangencia, caracteristica;
 
 				item = response.value;
+
+				modalProjetoURL = "<%- urlSite %><%- root %>/projeto/" + id;
+				modalProjetoNome = item.nome;
 
 				$("#modalImagem").attr("src", "<%- staticRoot %><%- PrefixoAbsolutoImagem %>/" + item.id + ".jpg?" + item.versaoimagem);
 
@@ -667,6 +681,57 @@
 	};
 
 	reordenar();
+
+	function compartilharFallback() {
+		Swal.success({
+			html: 'Para compartilhar o projeto, basta copiar o endereço abaixo e enviar a quem quiser! ' + emoji.happy + '<br/><br/><a target="_blank" href="' + modalProjetoURL + '">' + modalProjetoURL + '</a><br/><br/><button type="button" class="btn btn-copyjs btn-secondary" data-clipboard-title="Copiar Endereço" data-clipboard-text="' + modalProjetoURL + '"><i class="fa fa14 fa-fw fa-copy"></i> Copiar Endereço</button>',
+			title: "Compartilhar Projeto",
+			confirmButtonText: "Fechar",
+			didOpen: function () {
+				setTimeout(function () {
+					prepareCopyHandler(document.getElementById("modal"));
+				}, 50);
+			}
+		});
+	}
+
+	function compartilhar() {
+		if (modalProjetoURL && modalProjetoNome) {
+			if (("share" in navigator)) {
+				try {
+					navigator.share({
+						title: "terra 2030 - Projeto " + modalProjetoNome,
+						url: modalProjetoURL
+					}).then(function () {
+					}).catch(compartilharFallback);
+
+					return false;
+				} catch (ex) {
+					// Apenas ignora...
+				}
+			}
+
+			compartilharFallback();
+		}
+		return false;
+	}
+
+	if (projetoId) {
+		(function () {
+			projetoId = parseInt(projetoId);
+			if (!projetoId || projetoId < 0) {
+				Swal.error("Projeto não encontrado " + emoji.sad);
+			} else {
+				for (var i = lista.length - 1; i >= 0; i--) {
+					if (lista[i].id === projetoId) {
+						exibirProjeto(projetoId);
+						return;
+					}
+				}
+				Swal.error("Projeto não encontrado " + emoji.sad);
+			}
+		})();		
+	}
 
 	//]]>
 </script>
