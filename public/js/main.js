@@ -406,7 +406,7 @@ window.prepareDataTableMain = (function () {
 								shiftKey: true
 							}));
 						} else if (("createEvent" in document) &&
-							(a = document.createEvent("MouseEvent")) &&
+							(a = document.createEvent("MouseEvents")) &&
 							("initMouseEvent" in a)) {
 							a.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
 							ul[0].dispatchEvent(a);
@@ -1323,7 +1323,14 @@ window.BlobDownloader = {
 		BlobDownloader.blobURL = URL.createObjectURL(blob);
 		a.href = BlobDownloader.blobURL;
 		a.download = filename;
-		if (document.createEvent && (window.MouseEvent || window.MouseEvents)) {
+		if (("MouseEvent" in window)) {
+			try {
+				a.dispatchEvent(new MouseEvent("click"));
+				return;
+			} catch (ex) {
+			}
+		}
+		if (("createEvent" in document)) {
 			try {
 				evt = document.createEvent("MouseEvents");
 				evt.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -1342,12 +1349,19 @@ window.BlobDownloader = {
 
 	function cbSearch_SetValue(select, value) {
 		select.value = value;
-		if ("createEvent" in document) {
+		if (("Event" in window)) {
+			select.dispatchEvent(new Event("change", {
+				bubbles: false,
+				cancelable: true
+			}));
+		} else if (("createEvent" in document)) {
 			var evt = document.createEvent("HTMLEvents");
 			evt.initEvent("change", false, true);
 			select.dispatchEvent(evt);
-		} else {
+		} else if (("fireEvent" in select)) {
 			select.fireEvent("onchange");
+		} else if (select.onchange) {
+			select.onchange();
 		}
 	}
 
@@ -1747,16 +1761,7 @@ window.BlobDownloader = {
 	window.setCbSearch = function (select, value) {
 		if (!select)
 			return;
-		select.value = value;
-		if (("createEvent" in document)) {
-			var e = document.createEvent("HTMLEvents");
-			e.initEvent("change", false, true);
-			select.dispatchEvent(e);
-		} else if (("fireEvent" in select)) {
-			select.fireEvent("onchange");
-		} else if (select.onchange) {
-			select.onchange();
-		}
+		cbSearch_SetValue(select, value);
 		if (select.cbSearchChange)
 			select.cbSearchChange();
 	};
