@@ -78,7 +78,8 @@ ul.dropdown-menu > li > a {
 	border-color: $bs-danger;
 }
 
-.cb-search select.error + label + .form-group > input:focus {
+.cb-search select.error + label + .form-group > input:focus,
+.cb-search select.error + label + .form-group > input.forced-focus {
 	box-shadow: 0 0 0 0.2rem rgba($bs-danger, .25);
 }
 

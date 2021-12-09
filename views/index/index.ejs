@@ -1,28 +1,5 @@
-﻿<div class="row" style="
-	margin: -1.5rem -1.5rem 0;
-	background: url('<%- staticRoot %>/img/floresta.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;">
-
-	<!-- Logo && Separator -->
-	<div class="col-md-6 p-3 text-center text-md-right">
-		<img class="login-logo " src="<%- staticRoot %>/img/logoBranco.png" alt="Logo terra 2030" style="max-height: 100px; max-width: 80%; vertical-align: middle;" />
-		<div class="ml-2 d-none d-md-inline-block" style="vertical-align: middle;
-		background-color: white;
-		width: 0.15rem;
-		height: 80%;"></div>
-	</div>
-
-	<!-- Frase -->
-	<div class="col-md-6 p-3 pl-md-0 text-center text-md-left" style="color: #fff;">
-		<h3><b>ninguém<br/>será deixado<br/>para trás.</b></h3>
-	</div>
-
-</div>
-
-<!-- Carousel -->
-<div class="row limitador mt-5">
+﻿<!-- Carousel -->
+<div class="row limitador mt-3">
 	<div class="col">
 		<h3><b>PROJETOS RECENTES</b></h3>
 
@@ -263,7 +240,9 @@
 
 	.main-slider-img {
 		width: 100%;
-		height: 700px;
+		min-height: 300px;
+		height: 10000px;
+		max-height: 55vh;
 		object-fit: cover;
 		object-position: center center;
 	}
@@ -328,7 +307,7 @@
 
 	/* RESPONSIVENESS */
 
-	@media (max-width: 1280px) {
+	/*@media (max-width: 1280px) {
 		.main-slider-img {
 			width: 100%;
 			height: 500px;
@@ -354,7 +333,7 @@
 			width: 100%;
 			height: 300px;
 		}
-	}
+	}*/
 </style>
 
 <%- contentFor("scripts") %>
