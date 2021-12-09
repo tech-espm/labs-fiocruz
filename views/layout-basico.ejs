@@ -9,44 +9,47 @@
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
+			background-attachment: fixed;
 		}
-	
+
+		label.error {
+			text-align: center;
+		}
+
 		.login-logo-div {
 			align-items: flex-end;
 		}
-	
+
 		.login-logo{
 			width: 50%;
 			margin-right: 15px;
 		}
-	
+
 		.login-separator {
 			background-color: white;
 			width: 4px;
 			height: 30%;
 		}
-	
+
 		.login-title {
 			font-size: 54px;
 			font-weight: bold;
 			color: white
 		}
-	
-		.login-card{
+
+		.login-card {
 			min-width: 55%;
-			min-height: 45%;
 			background-color: white;
 			border-radius: 0.35rem;
-			padding: 0 20px;
+			padding: 1.5rem;
 		}
-	
-		.login-card-separator{
+
+		.login-card-separator {
 			background-color: #cecece;
 			width: 90%;
 			height: 2px;
-	
 		}
-	
+
 		/* RESPONSIVENESS */
 		@media only screen and (max-width: 1280px) {
 			.login-title {
@@ -54,65 +57,51 @@
 				font-weight: bold;
 				color: white
 			}
-	
-			.form-text{
-				font-size: 11px
-			}
-	
-			.login-card{
-				min-width: 55%;
-				min-height: 50%;
-				padding: 30px 20px
+
+			.form-text {
+				font-size: 11px;
 			}
 		}
-	
+
 		@media only screen and (max-width: 992px) {
-			.login-logo-div{
+			.login-logo-div {
 				align-items: center;
 				
 			}
-	
-			.login-logo{
+
+			.login-logo {
 				margin: 0;
 				width: 25%;
 			}
-	
+
 			.login-title {
 				font-size: 34px;
 				font-weight: bold;
 				color: white
 			}
-	
-			.login-separator-div{
+
+			.login-separator-div {
 				display: none !important;
 			}
-	
-			.login-separator{
-				display: none ;
-			}
-	
-			.login-card{
-				margin: 0 !important;
-			}
-	
-			.login-card{
-				padding: 50px 20px
+
+			.login-separator {
+				display: none;
 			}
 		}
-	
+
 		@media only screen and (max-width: 768px) {
 			.login-title {
 				font-size: 30px;
 				font-weight: bold;
-				color: white
+				color: white;
 			}
 		}
-	
+
 		@media only screen and (max-width: 576px) {
 			.login-title {
 				font-size: 26px;
 				font-weight: bold;
-				color: white
+				color: white;
 			}
 		}
 	</style>
