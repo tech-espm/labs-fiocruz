@@ -112,6 +112,11 @@
 
 <div class="text-center px-4 my-5" id="vazio" style="display: none;">Não há projetos com as características desejadas 😢</div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 limitador mt-5 mb-1" id="container" style="display: none;"></div>
+<div class="row limitador mb-5" id="containerPagina" style="display: none;">
+	<div class="col-md-4 offset-md-4">
+		<select class="form-control" id="pagina" onchange="alterarPagina(true);"></select>
+	</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
@@ -355,8 +360,11 @@
 		ultimaCidade = 0,
 		ultimoNome = "",
 		ultimaODS = "",
+		itemsPorPagina = 24,
 		vazio = document.getElementById("vazio"),
-		container = document.getElementById("container");
+		container = document.getElementById("container"),
+		containerPagina = document.getElementById("containerPagina"),
+		pagina = document.getElementById("pagina");
 
 	prepareCbState(_("idestado"), _("idcidade"));
 
@@ -547,33 +555,10 @@
 		return false;
 	}
 
-	function reordenar() {
-		if (!listaFiltrada || !listaFiltrada.length) {
-			container.style.display = 'none';
-			vazio.style.display = '';
-			return;
-		}
+	function alterarPagina(scroll) {
+		var i, total, item, html = '', rect;
 
-		var i, item, html;
-
-		switch ($("#ordem").val()) {
-			case "2":
-				listaFiltrada.sort(function (a, b) { return a.id - b.id; });
-				break;
-			case "3":
-				listaFiltrada.sort(function (a, b) { return ((a.nomenormalizado < b.nomenormalizado) ? -1 : 1); });
-				break;
-			case "4":
-				listaFiltrada.sort(function (a, b) { return ((b.nomenormalizado < a.nomenormalizado) ? -1 : 1); });
-				break;
-			default:
-				listaFiltrada.sort(function (a, b) { return b.id - a.id; });
-				break;
-		}
-
-		html = '';
-
-		for (i = 0; i < listaFiltrada.length; i++) {
+		for (i = parseInt(pagina.value) * itemsPorPagina, total = itemsPorPagina; i < listaFiltrada.length && total > 0; i++, total--) {
 			item = listaFiltrada[i];
 
 			html += `
@@ -592,8 +577,55 @@
 
 		container.innerHTML = html;
 
-		vazio.style.display = 'none';
-		container.style.display = '';
+		if (scroll) {
+			if (("getBoundingClientRect" in container) && (rect = container.getBoundingClientRect())) {
+				window.scrollTo({ left: 0, top: window.scrollY + container.getBoundingClientRect().top - 25, behavior: "smooth" });
+			} else {
+				// Cuidado! O container.offsetParent deve ser o próprio document.body, senão isso não irá parar na posição correta
+				window.scrollTo({ left: 0, top: container.offsetTop - 25, behavior: "smooth" });
+			}
+		}
+	}
+
+	function reordenar() {
+		if (!listaFiltrada || !listaFiltrada.length) {
+			container.style.display = "none";
+			containerPagina.style.display = "none";
+			vazio.style.display = "";
+			return;
+		}
+
+		switch ($("#ordem").val()) {
+			case "2":
+				listaFiltrada.sort(function (a, b) { return a.id - b.id; });
+				break;
+			case "3":
+				listaFiltrada.sort(function (a, b) { return ((a.nomenormalizado < b.nomenormalizado) ? -1 : 1); });
+				break;
+			case "4":
+				listaFiltrada.sort(function (a, b) { return ((b.nomenormalizado < a.nomenormalizado) ? -1 : 1); });
+				break;
+			default:
+				listaFiltrada.sort(function (a, b) { return b.id - a.id; });
+				break;
+		}
+
+		var i, html = '', totalDePaginas = Math.ceil(listaFiltrada.length / itemsPorPagina);
+
+		for (i = 0; i < totalDePaginas; i++)
+			html += '<option value="' + i + '">Página ' + (i + 1) + ' de ' + totalDePaginas + '</option>';
+
+		pagina.innerHTML = html;
+		pagina.value = "0";
+		//container.innerHTML = "";
+
+		vazio.style.display = "none";
+		container.style.display = "";
+		containerPagina.style.display = "";
+
+		setTimeout(function () {
+			alterarPagina(false);
+		}, 50);
 	}
 
 	function filtrar() {
