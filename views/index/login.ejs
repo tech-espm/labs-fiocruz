@@ -21,7 +21,7 @@
 				<form id="form" class="d-flex flex-column w-100 align-items-center" method="POST" action="<%- root %>/login">
 
 					<% if (mensagem) { %>
-						<div class="alert alert-danger w-100"><%= mensagem %></div>
+						<div class="alert alert-danger text-center w-100"><%= mensagem %></div>
 					<% } %>
 
 					<input type="email" name="email" id="email" placeholder="E-mail" class="form-control form-control-user py-4" spellcheck="false">
