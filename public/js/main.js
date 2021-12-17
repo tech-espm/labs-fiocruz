@@ -55,7 +55,7 @@ window.encode = (function () {
 })();
 window.prepareCopyHandler = function (modal, selector) {
 	function copyError() {
-		alert("Por favor, tecle Ctrl+C / Command+C para copiar " + emoji.sad);
+		Swal.error("Por favor, tecle Ctrl+C / Command+C para copiar " + emoji.sad);
 	}
 
 	var lastTooltipBtn = null,
@@ -1298,7 +1298,7 @@ window.BlobDownloader = {
 	supported: (("Blob" in window) && ("URL" in window) && ("createObjectURL" in window.URL) && ("revokeObjectURL" in window.URL)),
 
 	alertNotSupported: function () {
-		alert("Infelizmente seu navegador não suporta essa funcionalidade " + emoji.sad);
+		Swal.error("Infelizmente seu navegador não suporta essa funcionalidade " + emoji.sad);
 		return false;
 	},
 
@@ -1315,7 +1315,7 @@ window.BlobDownloader = {
 				BlobDownloader.saveAs.call(window.navigator, blob, filename);
 				return;
 			} catch (ex) {
-				alert("Ocorreu um erro durante o download dos dados " + emoji.sad);
+				Swal.error("Ocorreu um erro durante o download dos dados " + emoji.sad);
 			}
 		}
 
