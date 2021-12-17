@@ -179,3 +179,7 @@ table.dataTable {
 .hidden {
 	display: none !important;
 }
+
+.btn > i {
+	pointer-events: none;
+}
