@@ -141,7 +141,7 @@ class Projeto {
 			projeto.longitude = 0;
 		}
 
-		if (!projeto.nome || !(projeto.nome = projeto.nome.normalize().trim()) || projeto.nome.length > 100)
+		if (!projeto.nome || !(projeto.nome = projeto.nome.normalize().trim().toUpperCase()) || projeto.nome.length > 100)
 			return "Nome inválido";
 
 		// Deixar como == mesmo!
@@ -182,7 +182,7 @@ class Projeto {
 		if (tmp.publico.length > 100)
 			return "Público-alvo inválido";
 
-		if (!info.descricao || !(tmp.descricao = info.descricao.normalize().trim()) || tmp.descricao.length > 500)
+		if (!info.descricao || !(tmp.descricao = info.descricao.normalize().trim()) || tmp.descricao.length > 1000)
 			return "Descrição inválida";
 
 		if (!Array.isArray(info.macrocategoria) && info.macrocategoria !== undefined)

@@ -4,7 +4,8 @@ enum Abrangencia {
 	Municipal = 2,
 	Estadual = 3,
 	Nacional = 4,
-	Internacional = 5
+	Internacional = 5,
+	Regional = 6
 };
 
 export = Abrangencia;

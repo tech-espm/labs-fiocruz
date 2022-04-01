@@ -7,6 +7,7 @@ const abrangencias = new ListaNomeada([
 	new ItemNomeado(Abrangencia.Local, "Local"),
 	new ItemNomeado(Abrangencia.Municipal, "Municipal"),
 	new ItemNomeado(Abrangencia.Estadual, "Estadual"),
+	new ItemNomeado(Abrangencia.Regional, "Regional"),
 	new ItemNomeado(Abrangencia.Nacional, "Nacional"),
 	new ItemNomeado(Abrangencia.Internacional, "Internacional")
 ]);

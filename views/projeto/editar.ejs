@@ -159,7 +159,7 @@
 <div class="form-row">
 	<div class="col-md-6 form-group">
 		<label for="nome">Nome do projeto<b>*</b></label>
-		<input id="nome" name="nome" maxlength="100" class="form-control" type="text" spellcheck="true" value="<%=(item ? item.nome : '') %>" />
+		<input id="nome" name="nome" maxlength="100" class="form-control text-uppercase" type="text" spellcheck="true" value="<%=(item ? item.nome : '') %>" />
 	</div>
 
 	<div class="col-md-6 form-group">
@@ -170,7 +170,7 @@
 
 <div class="form-group">
 	<label for="descricao">Descrição do projeto <b>*</b></label>
-	<textarea id="descricao" name="descricao" maxlength="500" class="form-control" type="text" spellcheck="true" rows="8" style="resize: none;"><%=(info ? info.descricao : '') %></textarea>
+	<textarea id="descricao" name="descricao" maxlength="1000" class="form-control" type="text" spellcheck="true" rows="8" style="resize: none;"><%=(info ? info.descricao : '') %></textarea>
 </div>
 
 <label>Macro categorias relacionadas ao projeto <b>*</b></label>
@@ -362,7 +362,7 @@
 
 <hr class="my-5" />
 
-<h2 class="mt-5">Exposição do Pública do Projeto</h2>
+<h2 class="mt-5">Exposição Pública do Projeto</h2>
 <p class="mb-5 aviso">* informações obrigatórias</p>
 
 <% if (item) { %>
