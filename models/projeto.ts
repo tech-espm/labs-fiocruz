@@ -130,7 +130,9 @@ class Projeto {
 		if (!projeto.bairro || !(projeto.bairro = projeto.bairro.normalize().trim()) || projeto.bairro.length > 100)
 			return "Número inválido";
 
-		if (!projeto.cep || !(projeto.cep = projeto.cep.normalize().trim()) || projeto.cep.length > 9)
+		// @@@ TEMP
+		//if (!projeto.cep || !(projeto.cep = projeto.cep.normalize().trim()) || projeto.cep.length > 9)
+		if ((projeto.cep = (projeto.cep || "").normalize().trim()).length > 9)
 			return "CEP inválido";
 
 		projeto.latitude = (parseFloat(projeto.latitude as any) || 0);
@@ -441,7 +443,8 @@ class Projeto {
 		if (!admin) {
 			// Ao ser editado, o projeto volta para o status de não aprovado
 			projeto.idusuario = idusuario;
-			projeto.aprovado = 0;
+			// @@@ TEMP
+			//projeto.aprovado = 0;
 		}
 
 		let res: string | null;
@@ -459,6 +462,13 @@ class Projeto {
 		return await app.sql.connect(async (sql) => {
 			try {
 				await sql.beginTransaction();
+
+				// @@@ TEMP
+				if (!admin) {
+					projeto.aprovado = await sql.scalar("select aprovado from projeto where where id = ? and exclusao is null and idusuario = ?", [projeto.id, idusuario]) as number;
+					if (!projeto.aprovado)
+						projeto.aprovado = 0;
+				}
 
 				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.info, projeto.id];
 

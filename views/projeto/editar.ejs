@@ -17,7 +17,8 @@
 	}
 %>
 
-<% if (!usuario.admin && item && item.aprovado) { %>
+<!-- @@@ TEMP -->
+<% if (false && !usuario.admin && item && item.aprovado) { %>
 <div class="alert alert-danger text-center" id="alertaProvacao">
 	<b>Cuidado!</b>
 	<br/>
@@ -98,7 +99,9 @@
 	</div>
 
 	<div class="col-md-3 form-group">
-		<label for="cep">CEP <b>*</b></label>
+		<!-- @@@ TEMP -->
+		<!-- <label for="cep">CEP <b>*</b></label> -->
+		<label for="cep">CEP</label>
 		<input id="cep" name="cep" maxlength="9" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.cep : '') %>" />
 	</div>
 </div>
@@ -585,7 +588,8 @@
 				required: true
 			},
 			cep: {
-				required: true,
+				// @@@ TEMP
+				//required: true,
 				minlength: 9
 			},
 			idestado: {
