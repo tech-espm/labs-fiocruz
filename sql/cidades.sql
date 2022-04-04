@@ -5590,3 +5590,10 @@ INSERT INTO cidade (nome, idestado) VALUES ('TUPIRAMA', 27);
 INSERT INTO cidade (nome, idestado) VALUES ('TUPIRATINS', 27);
 INSERT INTO cidade (nome, idestado) VALUES ('WANDERLÂNDIA', 27);
 INSERT INTO cidade (nome, idestado) VALUES ('XAMBIOÁ', 27);
+
+INSERT INTO cidade (nome, idestado) VALUES ('PARAÍSO DAS ÁGUAS', 11);
+INSERT INTO cidade (nome, idestado) VALUES ('MOJUÍ DOS CAMPOS', 14);
+INSERT INTO cidade (nome, idestado) VALUES ('NAZÁRIA', 18);
+INSERT INTO cidade (nome, idestado) VALUES ('PINTO BANDEIRA', 21);
+INSERT INTO cidade (nome, idestado) VALUES ('BALNEÁRIO RINCÃO', 24);
+INSERT INTO cidade (nome, idestado) VALUES ('PESCARIA BRAVA', 24);

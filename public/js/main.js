@@ -1934,7 +1934,7 @@ window.prepareFilteredCbState = function (cbState, cbCity, callback) {
 window.prepareCbState = function (cbState, cbCity, callback) {
 	if (cbCity) {
 		cbState.onchange = function () {
-			var i, id, opt, s = parseInt(cbState.value);
+			var i, id, opt, s = parseInt(cbState.value), extras;
 			s = ((!isNaN(s) && s > 0) ? window.cidades[s] : null);
 			while (cbCity.childNodes.length > 1)
 				cbCity.removeChild(cbCity.childNodes[1]);
@@ -1942,6 +1942,7 @@ window.prepareCbState = function (cbState, cbCity, callback) {
 			if (cbCity.cbSearchInput)
 				cbCity.cbSearchInput.value = "";
 			if (s && s.c && s.c.length) {
+				extras = s.extras;
 				id = s.i;
 				s = s.c;
 				for (i = 0; i < s.length; i++) {
@@ -1949,6 +1950,14 @@ window.prepareCbState = function (cbState, cbCity, callback) {
 					opt.setAttribute("value", id + i);
 					opt.textContent = s[i];
 					cbCity.appendChild(opt);
+				}
+				if (extras) {
+					for (i = 0; i < extras.length; i++) {
+						opt = document.createElement("option");
+						opt.setAttribute("value", extras[i].i);
+						opt.textContent = extras[i].n;
+						cbCity.insertBefore(opt, cbCity.childNodes[extras[i].idx + 1]);
+					}
 				}
 			}
 			if (callback)
