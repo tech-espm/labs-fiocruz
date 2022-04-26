@@ -377,7 +377,7 @@ class Projeto {
 			projeto.aprovado = 0;
 
 		// @@@ TEMP
-		if (idusuario === 8 || idusuario === 9 || idusuario === 10)
+		if (idusuario === 10)
 			projeto.aprovado = 1;
 
 		const buffers: Buffer[] = [];
@@ -448,7 +448,10 @@ class Projeto {
 			// Ao ser editado, o projeto volta para o status de não aprovado
 			projeto.idusuario = idusuario;
 			// @@@ TEMP
-			//projeto.aprovado = 0;
+			if (idusuario === 10)
+				projeto.aprovado = 1;
+			else
+				projeto.aprovado = 0;
 		}
 
 		let res: string | null;
@@ -463,16 +466,9 @@ class Projeto {
 				return res;
 		}
 
-		return await app.sql.connect(async (sql) => {
+		return app.sql.connect(async (sql) => {
 			try {
 				await sql.beginTransaction();
-
-				// @@@ TEMP
-				if (!admin) {
-					projeto.aprovado = await sql.scalar("select aprovado from projeto where where id = ? and exclusao is null and idusuario = ?", [projeto.id, idusuario]) as number;
-					if (!projeto.aprovado)
-						projeto.aprovado = 0;
-				}
 
 				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.info, projeto.id];
 
