@@ -45,6 +45,7 @@ interface Projeto {
 	exposicao: number;
 	versaoimagem: number;
 	info: string;
+	link: string | null;
 	criacao: string;
 
 	ods?: ODS[];
@@ -298,6 +299,14 @@ class Projeto {
 		if (projeto.info.length > 64000)
 			return "O tamanho das informações extras do projeto excede o limite de 64000 bytes";
 
+		if (projeto.link)
+			projeto.link = projeto.link.normalize().trim();
+
+		if (!projeto.link)
+			projeto.link = null;
+		else if (projeto.link.length > 200 || !projeto.link.toLowerCase().startsWith("http"))
+			return "Link inválido";
+
 		return null;
 	}
 
@@ -349,7 +358,7 @@ class Projeto {
 			if (!admin)
 				params.push(idusuario);
 
-			lista = await sql.query("select " + (admin ? "p.idusuario, u.email usuario, " : "") + "p.id, p.aprovado, p.resumoods, p.autor, p.telefone, p.email, e.nome estado, c.nome cidade, p.latitude, p.longitude, p.nome, p.exposicao, p.versaoimagem, date_format(p.criacao, '%d/%m/%Y') criacao from projeto p inner join estado e on e.id = p.idestado inner join cidade c on c.id = p.idcidade " + (admin ? "inner join usuario u on u.id = p.idusuario " : "") + "where p.exclusao is null" + (admin ? "" : " and p.idusuario = ?") + (apenasNaoAprovados ? " and p.aprovado = 0" : ""), params) as Projeto[];
+			lista = await sql.query("select " + (admin ? "p.idusuario, u.email usuario, " : "") + "p.id, p.aprovado, p.resumoods, p.autor, p.telefone, p.email, p.link, e.nome estado, c.nome cidade, p.latitude, p.longitude, p.nome, p.exposicao, p.versaoimagem, date_format(p.criacao, '%d/%m/%Y') criacao from projeto p inner join estado e on e.id = p.idestado inner join cidade c on c.id = p.idcidade " + (admin ? "inner join usuario u on u.id = p.idusuario " : "") + "where p.exclusao is null" + (admin ? "" : " and p.idusuario = ?") + (apenasNaoAprovados ? " and p.aprovado = 0" : ""), params) as Projeto[];
 		});
 
 		return (lista || []);
@@ -363,7 +372,7 @@ class Projeto {
 			if (!admin && idusuario)
 				params.push(idusuario);
 
-			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info from projeto where id = ? and exclusao is null" + (admin ? "" : (idusuario ? " and idusuario = ?" : " and aprovado = 1")), params) as Projeto[];
+			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link from projeto where id = ? and exclusao is null" + (admin ? "" : (idusuario ? " and idusuario = ?" : " and aprovado = 1")), params) as Projeto[];
 		});
 
 		return ((lista && lista[0]) || null);
@@ -396,7 +405,7 @@ class Projeto {
 
 				await sql.beginTransaction();
 
-				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, criacao) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.versaoimagem, projeto.info, agora]);
+				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link, criacao) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.versaoimagem, projeto.info, projeto.link, agora]);
 
 				projeto.id = await sql.scalar("select last_insert_id()") as number;
 
@@ -470,12 +479,12 @@ class Projeto {
 			try {
 				await sql.beginTransaction();
 
-				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.info, projeto.id];
+				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.info, projeto.link, projeto.id];
 
 				if (!admin)
 					params.push(idusuario);
 
-				await sql.query("update projeto set aprovado = ?, banco = ?, resumoods = ?, autor = ?, telefone = ?, email = ?, idestado = ?, idcidade = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, latitude = ?, longitude = ?, nome = ?, exposicao = ?" + (buffers.length ? ", versaoimagem = versaoimagem + 1" : "") + ", info = ? where id = ? and exclusao is null" + (admin ? "" : " and idusuario = ?"), params);
+				await sql.query("update projeto set aprovado = ?, banco = ?, resumoods = ?, autor = ?, telefone = ?, email = ?, idestado = ?, idcidade = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, latitude = ?, longitude = ?, nome = ?, exposicao = ?" + (buffers.length ? ", versaoimagem = versaoimagem + 1" : "") + ", info = ?, link = ? where id = ? and exclusao is null" + (admin ? "" : " and idusuario = ?"), params);
 
 				if (!sql.affectedRows)
 					return "Projeto não encontrado";

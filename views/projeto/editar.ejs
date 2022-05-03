@@ -70,6 +70,11 @@
 	</div>
 </div>
 
+<div class="form-group">
+	<label for="link">Link do banco de tecnologias</label>
+	<input id="link" name="link" maxlength="200" class="form-control" type="url" spellcheck="false" onblur="ajustarLink(this)" value="<%=(item ? (item.link || '') : '') %>" />
+</div>
+
 <div class="form-row">
 	<div class="col-md-6 form-group">
 		<label for="email">E-mail de contato <b>*</b></label>
@@ -161,7 +166,7 @@
 
 <div class="form-row">
 	<div class="col-md-6 form-group">
-		<label for="nome">Nome do projeto<b>*</b></label>
+		<label for="nome">Nome do projeto <b>*</b></label>
 		<input id="nome" name="nome" maxlength="100" class="form-control text-uppercase" type="text" spellcheck="true" value="<%=(item ? item.nome : '') %>" />
 	</div>
 
@@ -351,7 +356,7 @@
 						<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
 					</td>
 					<td>
-						<input type="url" name="links" class="form-control" value="<%- info.links[i] %>" onblur="ajustarLink(this)" />
+						<input type="url" maxlength="100" spellcheck="false" name="links" class="form-control" value="<%- info.links[i] %>" onblur="ajustarLink(this)" />
 					</td>
 				</tr>
 			<% } } %>
@@ -557,7 +562,7 @@
 				<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
 			</td>
 			<td>
-				<input type="url" name="links" class="form-control" value="" onblur="ajustarLink(this)" />
+				<input type="url" maxlength="100" spellcheck="false" name="links" class="form-control" value="" onblur="ajustarLink(this)" />
 			</td>
 		</tr>`);
 	}
