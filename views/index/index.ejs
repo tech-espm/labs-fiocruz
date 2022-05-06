@@ -159,8 +159,8 @@
 					<div class="col-lg-6 mb-3">
 						<p class="main-modal-p-head mt-0 mt-lg-2 mb-2">CONTATO</p>
 						<p class="mb-2" id="modalEndereco"></p>
-						<p class="mb-2"><a id="modalTelefone"></a></p>
-						<p class="mb-2"><a id="modalEmail"></a></p>
+						<p class="mb-2 limite-p"><a id="modalTelefone"></a></p>
+						<p class="mb-2 limite-p"><a id="modalEmail"></a></p>
 						<div id="modalLinks"></div>
 					</div>
 				</div>
@@ -339,6 +339,12 @@
 			height: 300px;
 		}
 	}*/
+
+	.limite-p {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 </style>
 
 <%- contentFor("scripts") %>
@@ -459,7 +465,7 @@
 					partes = [];
 					if (info.links) {
 						for (i = 0; i < info.links.length; i++)
-							partes.push('<p class="mb-2"><a target="_blank" href="' + info.links[i] + '"><i class="fa fa-external-link-alt"></i> ' + encode(info.links[i]) + ' </a></p>');
+							partes.push('<p class="mb-2 limite-p"><a target="_blank" href="' + info.links[i] + '"><i class="fa fa-external-link-alt"></i> ' + encode(info.links[i]) + ' </a></p>');
 					}
 
 					if (partes.length) {
