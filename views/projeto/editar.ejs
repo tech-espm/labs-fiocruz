@@ -152,7 +152,7 @@
 <div id="mapa"></div>
 
 <div class="text-center my-3" id="divObterLocalizacao">
-	<button type="button" onclick="obterLocalizacaoGoogle()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização Atual</button>
+	<button type="button" onclick="obterLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização Atual</button>
 </div>
 
 <div class="text-center mt-3">
@@ -494,7 +494,7 @@
 		//posicionar o ponteiro na lat e lng
 		
 	}
-	
+
 	function obterLocalizacao() {
 		if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
 			return;
