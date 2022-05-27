@@ -23,6 +23,8 @@ export = {
 		database: process.env.app_sqlConfig_database as string
 	},
 
+	googleKey: process.env.app_googleKey as string,
+
 	mailFromGeral: process.env.app_mailFromGeral as string,
 
 	mailConfig: {

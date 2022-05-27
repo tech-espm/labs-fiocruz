@@ -1,4 +1,5 @@
 ﻿import app = require("teem");
+import Geolocalizacao = require("../../models/googleGeocoding");
 import Projeto = require("../../models/projeto");
 import Usuario = require("../../models/usuario");
 
@@ -104,6 +105,19 @@ class ProjetoApiRoute {
 		}
 
 		res.sendStatus(204);
+	}
+
+	public static async obterGeolocalizacao(req: app.Request, res: app.Response) {
+		const u = await Usuario.cookie(req, res);
+		if (!u)
+			return;
+
+		if (!req.query.endereco) {
+			res.status(400).json("Endereço inválido");
+			return;
+		}
+
+		res.json(await Geolocalizacao.obter(req.query.endereco as string));
 	}
 }
 
