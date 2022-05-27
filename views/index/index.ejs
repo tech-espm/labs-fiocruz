@@ -161,7 +161,7 @@
 						<p class="mb-2" id="modalEndereco"></p>
 						<p class="mb-2 limite-p"><a id="modalEmail"></a></p>
 						<p class="mb-2 limite-p"><a id="modalTelefone"></a></p>
-						<p class="mb-2 limite-p"><a id="whatsappLink" target="_blank" href=""><i class="fab fa-whatsapp iconeWhatsapp"></i> <span id="whatsappSpan"></span></a></p>
+						<p class="mb-2 limite-p"><a id="whatsappLink" target="_blank" href=""><i class="fab fa-whatsapp"></i> <span id="whatsappSpan"></span></a></p>
 						<div id="modalLinks"></div>
 					</div>
 				</div>
@@ -451,7 +451,7 @@
 				link.setAttribute('href', 'https://api.whatsapp.com/send?phone=55'+telefone);
 
 				let whatsappSpan = document.getElementById('whatsappSpan');
-				whatsappSpan.text(encode(item.telefone));
+				whatsappSpan.textContent = encode(item.telefone);
 
 				if (item.latitude) {
 					$("#modalLinkMapa").attr("href", "https://www.google.com/maps/search/?api=1&query=" + item.latitude + "," + item.longitude);
