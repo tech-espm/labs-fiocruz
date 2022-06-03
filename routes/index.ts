@@ -27,7 +27,8 @@ class IndexRoute {
 			macroCategoriasJSON: macroCategorias.idsJSON,
 			statusJSON: status.idsJSON,
 			ods: ods.lista,
-			lista: await Projeto.listarExterno()
+			lista: await Projeto.listarExterno(),
+			destaques: await Projeto.listarDestaquesExterno()
 		});
 	}
 

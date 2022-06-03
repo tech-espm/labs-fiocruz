@@ -30,6 +30,9 @@
 			{ title: "Aprovado", data: "aprovadoStr" },
 			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" },
 			//<% if (usuario.admin) { %>
+				{ title: "Destaque", data: function (row, type, set, meta) { return (row.destaque ? "Destaque" : ""); } },
+			//<% } %>
+			//<% if (usuario.admin) { %>
 				{ title: "Criador", render: encode, data: "usuario" },
 			//<% } %>
 			{ title: "Nome", render: encode, data: "nome" },

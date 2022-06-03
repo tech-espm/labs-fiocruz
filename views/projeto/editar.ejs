@@ -395,25 +395,14 @@
 			<input class="form-check-input" type="checkbox" value="1" id="exposicao" name="exposicao" <%- ((item && item.exposicao) ? 'checked="checked"' : '') %> />
 			<label class="form-check-label" for="exposicao">Tenho interesse em expor o projeto em feiras e eventos</label>
 		</div>
-	</div>
-	<% if(usuario.admin){ %>
-	<div class="col-md-6">
-		<div class="form-group">
-			<label for="destaque">Projeto destaque</label>
-			<div class="row">
-			<div class="col-md-6">
-				<input id="destaque" name="destaque" class="form-control input" type="radio" value="0"/>
-				<p style="display: inline;">Sim</p>
-			</div>
-			<div class="col-md-6">
-				<input id="destaque" name="destaque" class="form-control input" type="radio" value="1" />
-				<p style="display: inline;">Não</p>
-			</div>
+		<% if (usuario.admin) { %>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="1" id="destaque" name="destaque" <%- ((item && item.destaque) ? 'checked="checked"' : '') %> />
+			<label class="form-check-label" for="destaque">Exibir projeto em destaque na tela inicial</label>
 		</div>
-		</div>
+		<% } %>
 	</div>
-	</div>
-	<% } %>
+</div>
 
 <%- contentFor("styles") %>
 <style type="text/css">
@@ -657,9 +646,6 @@
 				// <% } %>
 				//tamanhoArquivoMaximoKiB: 2048,
 				suporteArquivoAvancado: true
-			}, 
-			destaque: {
-				required: true
 			},
 		},
 

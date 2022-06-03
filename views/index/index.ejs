@@ -6,13 +6,13 @@
 		<div id="carouselRecentes" class="carousel slide shadow mt-3" data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselRecentes" data-slide-to="0" class="active"></li>
-				<% let maximoRecentes = Math.min(3, lista.length); for (let i = 1; i < maximoRecentes; i++) { %>
+				<% for (let i = 1; i < destaques.length; i++) { %>
 				<li data-target="#carouselRecentes" data-slide-to="<%- i %>"></li>
 				<% } %>
 			</ol>
 
 			<div class="carousel-inner">
-				<% for (let i = 0; i < maximoRecentes; i++) { let item = lista[i]; %>
+				<% for (let i = 0; i < destaques.length; i++) { let item = destaques[i]; %>
 				<div class="carousel-item <%- (i ? '' : 'active') %>">
 					<a class="d-block" href="#" onclick="return exibirProjeto('<%- item.id %>')"><img class="d-block main-slider-img" src="<%- staticRoot %><%- PrefixoAbsolutoImagem %>/<%- item.id %>.jpg?<%- item.versaoimagem %>" alt="Imagem do projeto"></a>
 					<div class="main-slider-caption w-100">

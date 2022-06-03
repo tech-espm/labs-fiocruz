@@ -95,6 +95,7 @@ CREATE TABLE projeto (
   longitude DOUBLE NOT NULL,
   nome varchar(100) NOT NULL,
   exposicao tinyint NOT NULL,
+  destaque tinyint NOT NULL,
   versaoimagem int NOT NULL,
   info text NOT NULL,
   link varchar(200) NULL,
@@ -107,6 +108,7 @@ CREATE TABLE projeto (
   KEY projeto_idcidade_FK_IX (idcidade),
   KEY projeto_aprovado_exclusao_id_IX (aprovado, exclusao, id),
   KEY projeto_exposicao_aprovado_exclusao_IX (exposicao, aprovado, exclusao),
+  KEY projeto_destaque_aprovado_exclusao_IX (destaque, aprovado, exclusao),
   KEY projeto_exclusao_IX (exclusao),
   CONSTRAINT projeto_idusuario_FK FOREIGN KEY (idusuario) REFERENCES usuario (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT projeto_idestado_FK FOREIGN KEY (idestado) REFERENCES estado (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -123,5 +125,3 @@ CREATE TABLE projetoods (
   CONSTRAINT projetoods_idprojeto_FK FOREIGN KEY (idprojeto) REFERENCES projeto (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT projetoods_idods_FK FOREIGN KEY (idods) REFERENCES ods (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
-ALTER TABLE projeto ADD destaque tinyint not null;

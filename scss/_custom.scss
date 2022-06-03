@@ -1,5 +1,9 @@
 // Nossas customizações :)
 
+.modal-body .form-group {
+	text-align: left;
+}
+
 .table td, .table th {
     font-size: .8125rem;
     white-space: nowrap;
@@ -11,6 +15,13 @@
 	margin: 0.5rem 0.75rem 0;
 	padding: 0.5rem 0.75rem;
 	font-size: 1rem;
+}
+
+.swal2-popup {
+    color: inherit;
+    border-radius: $modal-content-border-radius;
+    font-size: 1rem;
+    box-shadow: $modal-content-box-shadow-sm-up;
 }
 
 .bg-main{

@@ -114,9 +114,10 @@
   pointer-events: auto;
   background-color: $modal-content-bg;
   background-clip: padding-box;
-  border: $modal-content-border-width solid $modal-content-border-color;
   @include border-radius($modal-content-border-radius);
-  @include box-shadow($modal-content-box-shadow-xs);
+  // Force this shadow
+  //@include box-shadow($modal-content-box-shadow-xs);
+  box-shadow: $modal-content-box-shadow-sm-up;
   // Remove focus outline from opened modal
   outline: 0;
 }
@@ -143,7 +144,7 @@
   align-items: flex-start; // so the close btn always stays on the upper right corner
   justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
   padding: $modal-header-padding;
-  border-bottom: $modal-header-border-width solid $modal-header-border-color;
+  border-radius: $modal-content-border-radius $modal-content-border-radius 0 0;
   @include border-top-radius($modal-content-inner-border-radius);
 
   .close {
@@ -157,6 +158,10 @@
 .modal-title {
   margin-bottom: 0;
   line-height: $modal-title-line-height;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.875rem;
+  flex: 1 1 auto;
 }
 
 // Modal body
@@ -167,6 +172,7 @@
   // when there should be a fixed height on `.modal-dialog`.
   flex: 1 1 auto;
   padding: $modal-inner-padding;
+  text-align: center;
 }
 
 // Footer (for actions)
@@ -176,7 +182,7 @@
   align-items: center; // vertically center
   justify-content: center; // Right align buttons with flex property because text-align doesn't work on flex items
   padding: $modal-inner-padding - $modal-footer-margin-between * 0.5;
-  border-top: $modal-footer-border-width solid $modal-footer-border-color;
+  border-radius: 0 0 $modal-content-border-radius $modal-content-border-radius;
   @include border-bottom-radius($modal-content-inner-border-radius);
 
   // Place margin between footer elements
@@ -222,7 +228,9 @@
   }
 
   .modal-content {
-    @include box-shadow($modal-content-box-shadow-sm-up);
+    // Force this shadow
+    //@include box-shadow($modal-content-box-shadow-sm-up);
+    box-shadow: $modal-content-box-shadow-sm-up;
   }
 
   .modal-sm { max-width: $modal-sm; }

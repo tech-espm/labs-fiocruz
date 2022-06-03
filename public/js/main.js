@@ -48,9 +48,9 @@ window.parseQueryString = function () {
 	return assoc;
 };
 window.encode = (function () {
-	var lt = /</g, gt = />/g;
+	var amp = /\&/g, lt = /</g, gt = />/g;
 	return function (x) {
-		return (x ? x.replace(lt, "&lt;").replace(gt, "&gt;") : "");
+		return (x ? x.replace(amp, "&amp;").replace(lt, "&lt;").replace(gt, "&gt;") : "");
 	};
 })();
 window.prepareCopyHandler = function (modal, selector) {
@@ -2227,34 +2227,53 @@ Swal.okcancelNoIcon = function (message, title) {
 	return Swal.fire(options);
 };
 
-Swal.wait = function (message) {
-	var options = message;
+(function () {
+	var waitCalled = false, shouldShowWait = false, fire = Swal.fire;
 
-	if (!options)
-		options = {};
+	Swal.fire = function () {
+		if (waitCalled) {
+			waitCalled = false;
+			shouldShowWait = true;
+		} else {
+			shouldShowWait = false;
+		}
 
-	if (typeof message === "string")
-		options = { text: message };
-
-	if (!options.html && !options.text)
-		options.text = "Por favor, aguarde...";
-
-	if (!options.allowOutsideClick)
-		options.allowOutsideClick = false;
-
-	if (!options.allowEscapeKey)
-		options.allowEscapeKey = false;
-
-	if (!options.allowEnterKey)
-		options.allowEnterKey = false;
-
-	var didOpen = options.didOpen;
-
-	options.didOpen = function () {
-		Swal.showLoading();
-		if (didOpen)
-			didOpen();
+		fire.apply(Swal, arguments);
 	};
 
-	return Swal.fire(options);
-};
+	Swal.wait = function (message) {
+		var options = message;
+
+		if (!options)
+			options = {};
+
+		if (typeof message === "string")
+			options = { text: message };
+
+		if (!options.html && !options.text)
+			options.text = "Por favor, aguarde...";
+
+		if (!options.allowOutsideClick)
+			options.allowOutsideClick = false;
+
+		if (!options.allowEscapeKey)
+			options.allowEscapeKey = false;
+
+		if (!options.allowEnterKey)
+			options.allowEnterKey = false;
+
+		var didOpen = options.didOpen;
+
+		options.didOpen = function () {
+			if (shouldShowWait) {
+				Swal.showLoading();
+				if (didOpen)
+					didOpen();
+			}
+		};
+
+		waitCalled = true;
+
+		return Swal.fire(options);
+	};
+})();

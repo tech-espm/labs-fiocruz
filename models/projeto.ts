@@ -43,6 +43,7 @@ interface Projeto {
 	longitude: number;
 	nome: string;
 	exposicao: number;
+	destaque: number;
 	versaoimagem: number;
 	info: string;
 	link: string | null;
@@ -52,7 +53,6 @@ interface Projeto {
 
 	arquivoIcone?: string | null;
 	arquivoImagem?: string | null;
-	destaque?: number;
 }
 
 interface ProjetoInfo {
@@ -151,6 +151,9 @@ class Projeto {
 
 		// Deixar como == mesmo!
 		projeto.exposicao = ((projeto.exposicao == 1) ? 1 : 0);
+
+		// Deixar como == mesmo!
+		projeto.destaque = ((projeto.destaque == 1) ? 1 : 0);
 
 		if (projeto.ods) {
 			if (!Array.isArray(projeto.ods) && projeto.ods !== undefined)
@@ -346,7 +349,7 @@ class Projeto {
 		let lista: Projeto[] | null = null;
 
 		await app.sql.connect(async (sql) => {
-			lista = await sql.query("select id, resumoods, idestado, idcidade, latitude, longitude, nome, exposicao, versaoimagem, date_format(criacao, '%d/%m/%Y') criacao from projeto where aprovado = 1 and exclusao is null order by id desc") as Projeto[];
+			lista = await sql.query("select id, resumoods, idestado, idcidade, latitude, longitude, nome, exposicao, destaque, versaoimagem, date_format(criacao, '%d/%m/%Y') criacao from projeto where aprovado = 1 and exclusao is null order by id desc") as Projeto[];
 		});
 
 		return (lista || []);
@@ -360,7 +363,17 @@ class Projeto {
 			if (!admin)
 				params.push(idusuario);
 
-			lista = await sql.query("select " + (admin ? "p.idusuario, u.email usuario, " : "") + "p.id, p.aprovado, p.resumoods, p.autor, p.telefone, p.email, p.link, e.nome estado, c.nome cidade, p.latitude, p.longitude, p.nome, p.exposicao, p.versaoimagem, date_format(p.criacao, '%d/%m/%Y') criacao from projeto p inner join estado e on e.id = p.idestado inner join cidade c on c.id = p.idcidade " + (admin ? "inner join usuario u on u.id = p.idusuario " : "") + "where p.exclusao is null" + (admin ? "" : " and p.idusuario = ?") + (apenasNaoAprovados ? " and p.aprovado = 0" : ""), params) as Projeto[];
+			lista = await sql.query("select " + (admin ? "p.idusuario, u.email usuario, " : "") + "p.id, p.aprovado, p.resumoods, p.autor, p.telefone, p.email, p.link, e.nome estado, c.nome cidade, p.latitude, p.longitude, p.nome, p.exposicao, p.destaque, p.versaoimagem, date_format(p.criacao, '%d/%m/%Y') criacao from projeto p inner join estado e on e.id = p.idestado inner join cidade c on c.id = p.idcidade " + (admin ? "inner join usuario u on u.id = p.idusuario " : "") + "where p.exclusao is null" + (admin ? "" : " and p.idusuario = ?") + (apenasNaoAprovados ? " and p.aprovado = 0" : ""), params) as Projeto[];
+		});
+
+		return (lista || []);
+	}
+
+	public static async listarDestaquesExterno(): Promise<Projeto[]> {
+		let lista: Projeto[] | null = null;
+
+		await app.sql.connect(async (sql) => {
+			lista = await sql.query("select id, nome, versaoimagem from projeto where destaque = 1 and aprovado = 1 and exclusao is null") as Projeto[];
 		});
 
 		return (lista || []);
@@ -374,7 +387,7 @@ class Projeto {
 			if (!admin && idusuario)
 				params.push(idusuario);
 
-			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link from projeto where id = ? and exclusao is null" + (admin ? "" : (idusuario ? " and idusuario = ?" : " and aprovado = 1")), params) as Projeto[];
+			lista = await sql.query("select id, idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, destaque, versaoimagem, info, link from projeto where id = ? and exclusao is null" + (admin ? "" : (idusuario ? " and idusuario = ?" : " and aprovado = 1")), params) as Projeto[];
 		});
 
 		return ((lista && lista[0]) || null);
@@ -384,12 +397,18 @@ class Projeto {
 		projeto.idusuario = idusuario;
 		projeto.versaoimagem = 1;
 
-		if (!admin)
+		const destaqueOriginal = projeto.destaque;
+
+		if (!admin) {
 			projeto.aprovado = 0;
+			projeto.destaque = 0;
+		}
 
 		// @@@ TEMP
-		if (idusuario === 10)
+		if (idusuario === 10) {
 			projeto.aprovado = 1;
+			projeto.destaque = destaqueOriginal;
+		}
 
 		const buffers: Buffer[] = [];
 
@@ -407,7 +426,7 @@ class Projeto {
 
 				await sql.beginTransaction();
 
-				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link, criacao, destaque) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.versaoimagem, projeto.info, projeto.link, agora, projeto.destaque]);
+				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, destaque, versaoimagem, info, link, criacao) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.destaque, projeto.versaoimagem, projeto.info, projeto.link, agora]);
 
 				projeto.id = await sql.scalar("select last_insert_id()") as number;
 
@@ -479,14 +498,19 @@ class Projeto {
 
 		return app.sql.connect(async (sql) => {
 			try {
+				// @@@ TEMP (apenas para a parte idusuario !== 10)
+				if (!admin && idusuario !== 10) {
+					projeto.destaque = await sql.scalar("select destaque from projeto where id = ?", [projeto.id]) || 0;
+				}
+
 				await sql.beginTransaction();
 
-				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.info, projeto.link, projeto.id];
+				let params = [projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.destaque, projeto.info, projeto.link, projeto.id];
 
 				if (!admin)
 					params.push(idusuario);
 
-				await sql.query("update projeto set aprovado = ?, banco = ?, resumoods = ?, autor = ?, telefone = ?, email = ?, idestado = ?, idcidade = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, latitude = ?, longitude = ?, nome = ?, exposicao = ?" + (buffers.length ? ", versaoimagem = versaoimagem + 1" : "") + ", info = ?, link = ? where id = ? and exclusao is null" + (admin ? "" : " and idusuario = ?"), params);
+				await sql.query("update projeto set aprovado = ?, banco = ?, resumoods = ?, autor = ?, telefone = ?, email = ?, idestado = ?, idcidade = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, latitude = ?, longitude = ?, nome = ?, exposicao = ?, destaque = ?" + (buffers.length ? ", versaoimagem = versaoimagem + 1" : "") + ", info = ?, link = ? where id = ? and exclusao is null" + (admin ? "" : " and idusuario = ?"), params);
 
 				if (!sql.affectedRows)
 					return "Projeto não encontrado";
