@@ -2238,7 +2238,7 @@ Swal.okcancelNoIcon = function (message, title) {
 			shouldShowWait = false;
 		}
 
-		fire.apply(Swal, arguments);
+		return fire.apply(Swal, arguments);
 	};
 
 	Swal.wait = function (message) {
