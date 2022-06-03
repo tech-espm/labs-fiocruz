@@ -123,3 +123,5 @@ CREATE TABLE projetoods (
   CONSTRAINT projetoods_idprojeto_FK FOREIGN KEY (idprojeto) REFERENCES projeto (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT projetoods_idods_FK FOREIGN KEY (idods) REFERENCES ods (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+ALTER TABLE projeto ADD destaque tinyint not null;

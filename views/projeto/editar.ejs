@@ -396,7 +396,24 @@
 			<label class="form-check-label" for="exposicao">Tenho interesse em expor o projeto em feiras e eventos</label>
 		</div>
 	</div>
-</div>
+	<% if(usuario.admin){ %>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label for="destaque">Projeto destaque</label>
+			<div class="row">
+			<div class="col-md-6">
+				<input id="destaque" name="destaque" class="form-control input" type="radio" value="0"/>
+				<p style="display: inline;">Sim</p>
+			</div>
+			<div class="col-md-6">
+				<input id="destaque" name="destaque" class="form-control input" type="radio" value="1" />
+				<p style="display: inline;">Não</p>
+			</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<% } %>
 
 <%- contentFor("styles") %>
 <style type="text/css">
@@ -407,6 +424,12 @@
 	label > b, .aviso {
 		font-weight: 700;
 		color: var(--red);
+	}
+
+	.input{
+		width: 10%;
+		display: inline;
+		vertical-align: middle;
 	}
 </style>
 
@@ -634,7 +657,10 @@
 				// <% } %>
 				//tamanhoArquivoMaximoKiB: 2048,
 				suporteArquivoAvancado: true
-			}
+			}, 
+			destaque: {
+				required: true
+			},
 		},
 
 		submitHandler: function (form) {

@@ -52,6 +52,7 @@ interface Projeto {
 
 	arquivoIcone?: string | null;
 	arquivoImagem?: string | null;
+	destaque?: number;
 }
 
 interface ProjetoInfo {
@@ -82,6 +83,7 @@ class Projeto {
 
 	public static readonly TamanhoMaximoImagemEmKiB = 640;
 	public static readonly TamanhoMaximoImagemEmBytes = Projeto.TamanhoMaximoImagemEmKiB << 10;
+
 
 	private static validar(projeto: Projeto, criacao: boolean): string | null {
 		if (!projeto)
@@ -405,7 +407,7 @@ class Projeto {
 
 				await sql.beginTransaction();
 
-				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link, criacao) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.versaoimagem, projeto.info, projeto.link, agora]);
+				await sql.query("insert into projeto (idusuario, aprovado, banco, resumoods, autor, telefone, email, idestado, idcidade, logradouro, numero, complemento, bairro, cep, latitude, longitude, nome, exposicao, versaoimagem, info, link, criacao, destaque) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [projeto.idusuario, projeto.aprovado, projeto.banco, projeto.resumoods, projeto.autor, projeto.telefone, projeto.email, projeto.idestado, projeto.idcidade, projeto.logradouro, projeto.numero, projeto.complemento, projeto.bairro, projeto.cep, projeto.latitude, projeto.longitude, projeto.nome, projeto.exposicao, projeto.versaoimagem, projeto.info, projeto.link, agora, projeto.destaque]);
 
 				projeto.id = await sql.scalar("select last_insert_id()") as number;
 
