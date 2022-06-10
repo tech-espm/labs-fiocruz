@@ -10,6 +10,7 @@ import ods = require("../models/ods");
 import status = require("../models/status");
 import Projeto = require("../models/projeto");
 import Usuario = require("../models/usuario");
+import appsettings = require("../appsettings");
 
 class ProjetoRoute {
 	@app.http.hidden()
@@ -26,6 +27,7 @@ class ProjetoRoute {
 				mapa: true,
 				cidades: true,
 				estados: estados.lista,
+				temGoogleKey: !!appsettings.googleKey,
 				abrangencias: abrangencias.lista,
 				bancosTecnologia: bancosTecnologia.lista,
 				caracteristicas: caracteristicas.lista,
@@ -59,6 +61,7 @@ class ProjetoRoute {
 					mapa: true,
 					cidades: true,
 					estados: estados.lista,
+					temGoogleKey: !!appsettings.googleKey,
 					abrangencias: abrangencias.lista,
 					bancosTecnologia: bancosTecnologia.lista,
 					caracteristicas: caracteristicas.lista,

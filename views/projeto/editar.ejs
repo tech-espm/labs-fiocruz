@@ -155,6 +155,12 @@
 	<button type="button" onclick="obterLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização Atual</button>
 </div>
 
+<% if (temGoogleKey) { %>
+<div class="text-center my-3">
+	<button type="button" onclick="obterLocalizacaoEndereco()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização do Endereço</button>
+</div>
+<% } %>
+
 <div class="text-center mt-3">
 	<button type="button" onclick="limparLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-times"></i> Limpar Localização</button>
 </div>
@@ -500,12 +506,85 @@
 		//<% } %>
 	})();
 
-	function obterLocalizacaoGoogle(){
-		//estruturar a url e mandar para o googleGeocoding.ts fazer o req
-		//retorna o json --> pegar lat e lng
-		//posicionar o ponteiro na lat e lng
-		
+	// <% if (temGoogleKey) { %>
+	function escolherEndereco(lat, lng) {
+		Swal.close();
+		mapa.setView(new L.LatLng(lat, lng), 16);
+		definirMarker(lat, lng);
 	}
+	function obterLocalizacaoEndereco(){
+		if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
+			return;
+
+		let e = document.getElementById("idestado");
+		let c = document.getElementById("idcidade");
+		let logradouro = document.getElementById("logradouro").value.normalize().trim();
+		let numero = document.getElementById("numero").value.normalize().trim();
+		let bairro = document.getElementById("bairro").value.normalize().trim();
+		let idestado = parseInt(e.value);
+		let idcidade = parseInt(c.value);
+
+		if (!logradouro) {
+			Swal.error("Por favor, preencha o logradouro para obter a localização " + emoji.happy);
+			return;
+		}
+
+		if (!idestado) {
+			Swal.error("Por favor, preencha a UF para obter a localização " + emoji.happy);
+			return;
+		}
+
+		if (!idcidade) {
+			Swal.error("Por favor, preencha a cidade para obter a localização " + emoji.happy);
+			return;
+		}
+
+		let endereco = logradouro.toUpperCase();
+
+		if (numero) {
+			endereco += "," + numero;
+		}
+
+		if (bairro) {
+			endereco += "," + bairro.toUpperCase();
+		}
+
+		endereco += "," + c.options[c.selectedIndex].textContent;
+
+		endereco += "," + e.options[e.selectedIndex].textContent;
+
+		endereco += ",BRASIL";
+
+		Swal.wait();
+
+		JsonWebApi.get("<%- root %>/api/projeto/obterGeolocalizacao?endereco=" + encodeURIComponent(endereco), function (response) {
+			if (response.success) {
+				if (!response.value ||
+					!response.value.results ||
+					!response.value.results[0] ||
+					!response.value.results[0].geometry ||
+					!response.value.results[0].geometry.location) {
+					Swal.error("Não foi possível obter localização do endereço no momento. Por favor, tente novamente dentro de alguns instantes " + emoji.sad);
+					return;
+				}
+
+				if (response.value.results.length !== 1) {
+					escolherEndereco(response.value.results[0].geometry.location.lat, response.value.results[0].geometry.location.lng);
+				} else {
+					let html = "<p>Foram encontradas mais de uma possível localização para esse endereço. Por favor, selecione a correta da lista abaixo:</p>";
+
+					for (let i = 0; i < response.value.results.length; i++) {
+						html += '<p><button type="button" class="btn btn-secondary" onclick="escolherEndereco(' + response.value.results[i].geometry.location.lat + ', ' + response.value.results[i].geometry.location.lng + ')">' + encode(response.value.results[i].formatted_address) + '</button></p>';
+					}
+
+					Swal.info({ html: html, customClass: {confirmButton : "btn btn-light"}, confirmButtonText: "Cancelar" }, "Múltiplas Localizações");
+				}
+			} else {
+				Swal.error(response.value + " " + emoji.sad);
+			}
+		});
+	}
+	// <% } %>
 
 	function obterLocalizacao() {
 		if (JsonWebApi.active || ajustandoImagem || procurandoLocalizacao)
