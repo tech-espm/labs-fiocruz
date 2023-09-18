@@ -123,3 +123,15 @@ CREATE TABLE projetoods (
   CONSTRAINT projetoods_idprojeto_FK FOREIGN KEY (idprojeto) REFERENCES projeto (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT projetoods_idods_FK FOREIGN KEY (idods) REFERENCES ods (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+CREATE TABLE IF NOT EXISTS `fiocruz`.`doacoes` (
+            id INT NOT NULL AUTO_INCREMENT,
+            idusuario int not null,
+            idprojeto int not null,
+            data timestamp default current_timestamp,
+            valor double(10,2),
+            anonimo boolean,
+            Primary Key (id),
+            foreign key (idusuario) references usuario(id),
+            foreign key (idprojeto) references projeto(id)
+            ) ENGINE = InnoDB;
