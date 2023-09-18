@@ -12,16 +12,22 @@ CREATE TABLE IF NOT EXISTS `fiocruz`.`doacoes` (
             foreign key (idprojeto) references projeto(id)
             ) ENGINE = InnoDB;
             
-            
-drop table doacoes;
-
+select * from doacoes;
 select * from usuario;
 select * from projeto;
 
 insert into doacoes (idusuario, idprojeto, valor, anonimo) values (34, 269, 10000.50, 0);
 insert into doacoes (idusuario, idprojeto, valor, anonimo) values (34, 269, 20505.50, 1);
 
-select u.nome, p.nome, valor, d.data, valor, boolean
-from doacoes d
-inner join usuario u on d.idusuario = u.id
-inner join projeto p on d.idprojeto = p.id
+-- Select com Case para deixar os nomes anônimos caso o usuário tenha marcado a opção de doação anônima
+SELECT 
+     CASE 
+         WHEN anonimo = 0 THEN u.nome
+		 WHEN anonimo = 1 THEN 'Anônimo'
+	end as nome,
+    p.nome AS nome_projeto,
+    d.valor,
+    d.data
+FROM doacoes d
+INNER JOIN usuario u ON d.idusuario = u.id
+INNER JOIN projeto p ON d.idprojeto = p.id
