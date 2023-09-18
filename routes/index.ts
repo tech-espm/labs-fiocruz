@@ -7,6 +7,7 @@ import ods = require("../models/ods");
 import Projeto = require("../models/projeto");
 import status = require("../models/status");
 import Usuario = require("../models/usuario");
+import doacoes = require("../models/doacoes");
 
 class IndexRoute {
 	@app.http.hidden()
@@ -133,6 +134,19 @@ class IndexRoute {
 		if (u)
 			await Usuario.efetuarLogout(u, res);
 		res.redirect(app.root + "/");
+	}
+
+	public static async doadores(req: app.Request, res: app.Response) {
+		let u = await Usuario.cookie(req);
+		if (!u)
+			res.redirect(app.root + "/login");
+		else
+			res.render("index/doacoes", {
+				layout: "layout-vazio",
+				titulo: "Doações",
+				usuario: u,
+				lista: await doacoes.getDoacoes()
+			});
 	}
 }
 

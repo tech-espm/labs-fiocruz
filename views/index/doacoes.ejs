@@ -1,0 +1,18 @@
+<div>
+  <h1>Lista de Doações</h1>
+  <ul>
+    <% lista.forEach(function(doacao) { %>
+        <li>
+          Data: <%= doacao.data %><br>
+          Valor: R$ <%= doacao.valor %><br>
+          <% if (doacao.anonimo === 1) { %>
+            Doador: Doação Anônima<br>
+          <% } else { %>
+            Doador: <%= doacao.nome %><br>
+          <% } %>
+        </li>
+      <% }); %>
+  </ul>
+
+</div>
+  
