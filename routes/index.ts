@@ -136,18 +136,30 @@ class IndexRoute {
 		res.redirect(app.root + "/");
 	}
 
+	//Rota pra listas de doações -- No momento é temporária, a ideia é que esteja na junto com os projetos
 	public static async doadores(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
 			res.redirect(app.root + "/login");
 		else
 			res.render("index/doacoes", {
-				layout: "layout-vazio",
 				titulo: "Doações",
 				usuario: u,
 				lista: await doacoes.getDoacoes()
 			});
 	}
+
+	//Rota para fazer o cadastro de uma nova variação
+	@app.http.post()
+	public static async newDoacao(req: app.Request, res: app.Response) {
+		let u = await Usuario.cookie(req);
+		if (!u)
+			res.redirect(app.root + "/login");
+		else
+			await doacoes.postDoacoes(req.body);
+			
+	}
+
 }
 
 export = IndexRoute;
