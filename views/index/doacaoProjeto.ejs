@@ -1,0 +1,466 @@
+
+<div class="modal-content">
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="modalTitle">Detalhes do Projeto</h5>
+  </div>
+
+  <div class="modal-body main-modal-body">
+
+    <h4 class="mb-4" id="modalNome"></h4>
+
+    <img class="main-modal-img mb-4" id="modalImagem" alt="Imagem do projeto" />
+
+    <div class="mb-4">
+      <p class="m-0"><i class="fa fa-map-marker-alt"></i> <b id="modalCidade"></b></p>
+      <p id="modalLinkMapaP" class="mt-2 mb-0"><a target="_blank" id="modalLinkMapa" href=""><i class="fa fa-external-link-alt"></i> Ver no mapa</a></small></p>
+    </div>
+
+    <p class="main-modal-p-head mb-2">OBJETIVOS - ODS</p>
+    <div id="modalOds"></div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <p class="main-modal-p-head my-2">RESUMO DO PROJETO</p>
+        <p class="main-modal-p-body mb-4" id="modalDescricao"></p>
+      </div>
+
+      <div class="col-lg-6 mb-3">
+        <p class="main-modal-p-head mt-0 mt-lg-2 mb-2">CONTATO</p>
+        <p class="mb-2" id="modalEndereco"></p>
+        <p class="mb-2 limite-p"><a id="modalEmail"></a></p>
+        <p class="mb-2 limite-p"><a id="modalTelefone"></a></p>
+        <p class="mb-2 limite-p"><a id="whatsappLink" target="_blank" href=""><i class="fab fa-whatsapp"></i> <span id="whatsappSpan"></span></a></p>
+        <div id="modalLinks"></div>
+      </div>
+    </div>
+
+    <div class="main-modal-deco mb-3">
+      <label class="main-modal-label">AUTOR</label>
+      <h4 class="m-0" id="modalAutor"></h4>
+    </div>
+
+    <div class="main-modal-deco mb-3" id="modalMacroCategoriaDiv">
+      <label class="main-modal-label">ÁREAS DE ATUAÇÃO</label>
+      <ol class="main-modal-list" id="modalMacroCategoria"></ol>
+    </div>
+
+    <div class="main-modal-deco mb-3" id="modalPublicoDiv">
+      <label class="main-modal-label">PÚBLICO-ALVO</label>
+      <h4 class="m-0" id="modalPublico"></h4>
+    </div>
+
+    <div class="main-modal-deco mb-3">
+      <label class="main-modal-label">LOCAL DE IMPLEMENTAÇÃO DA SOLUÇÃO</label>
+      <h4 class="m-0" id="modalLocal"></h4>
+    </div>
+
+    <div class="main-modal-deco mb-3" id="modalAbrangenciaDiv">
+      <label class="main-modal-label">ABRANGÊNCIA</label>
+      <h4 class="m-0" id="modalAbrangencia"></h4>
+    </div>
+
+    <div class="main-modal-deco mb-3" id="modalParceirosDiv">
+      <label class="main-modal-label">PARCEIROS</label>
+      <h4 class="m-0" id="modalParceiros"></h4>
+    </div>
+
+    <div class="main-modal-deco mb-3" id="modalCaracteristicaDiv">
+      <label class="main-modal-label">INFORMAÇÕES SOBRE A SOLUÇÃO</label>
+      <ol class="main-modal-list" id="modalCaracteristica"></ol>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<div>
+  <input type="hidden" id="id" name="id" value='<%= usuario.id%>' />
+  <input type="hidden" id="idprojeto" name="idprojeto" value='<%= projeto.id%>' />
+
+  <div class="col-sm-6 form-group">
+    <label for="Valor">Valor da Doação</label>
+    <input id="Valor" name="Valor" maxlength="100" class="form-control" type="number" spellcheck="false" />
+  </div>
+</div>
+
+<div>
+  <label for="anonimo">Doação Anônima</label>
+  <input id="anonimo" name="anonimo" maxlength="100" class="form-control" type="checkbox" spellcheck="false" />
+</div>
+
+</div>
+<div>
+  <a onclick="doar()" style="padding: 10px; color: green; background-color: gray;">doar</a>
+</div>
+
+
+
+<!--Style + CSS-->
+<%- contentFor("styles") %>
+
+<style type="text/css">
+	.limitador {
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.carousel-link, .carousel-link:hover, .carousel-link:active {
+		color: #fff;
+	}
+
+	.card-projeto {
+		cursor: pointer;
+		max-width: 320px;
+	    margin: 0 auto;
+		transition: opacity .2s ease-in-out;
+	}
+
+	.card-projeto:hover {
+		opacity: 0.75;
+	}
+
+	.text-ods {
+		vertical-align: middle;
+	}
+
+	.img-ods {
+		max-width: 16px;
+		margin: .25rem;
+	}
+
+	.main-slider-img {
+		width: 100%;
+		min-height: 300px;
+		height: 10000px;
+		max-height: 55vh;
+		object-fit: cover;
+		object-position: center center;
+	}
+
+	.main-slider-caption {
+		background-color: rgba(0, 0, 0, 0.5);
+		position: absolute;
+		bottom: 20px;
+		z-index: 10;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		color: #fff;
+		text-align: center;
+	}
+	
+	/* MODAL */
+
+	.main-modal-img {
+		width: 100%;
+	}
+
+	.main-modal-org-name {
+		font-weight: 600;
+	}
+
+	.main-modal-body {
+		padding: 1.5rem 1.5rem .5rem;
+	}
+
+	.main-modal-p-head {
+		font-weight: 700;
+		font-size: .8em;
+	}
+
+	.main-modal-p-body {
+		text-align: justify;
+  		text-justify: inter-word;
+		white-space: pre-line;
+	}
+
+	.main-modal-deco {
+		border-left: .5rem solid var(--primary);
+		padding: 0 0 .5rem .5rem;
+	}
+
+	.main-modal-label {
+		margin: 0;
+		font-weight: 600;
+		font-size: .75rem;
+		vertical-align: bottom;
+	}
+
+	.main-modal-list {
+		margin: 0;
+		font-size: 1rem;
+		padding-left: 1.5rem;
+	}
+
+	.main-modal-list li + li {
+		margin-top: .5rem;
+	}
+
+	.iconeWhatsapp{
+		font-size: 1.5em; 
+		margin-left: 0.5em;
+	}
+
+	.limite-p {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+
+
+<!--Script para doação para o projeto-->
+<%- contentFor("scripts") %>
+<script>
+  let idprojeto = 0;
+  let valorAnonimo;
+  
+  var estados = <%- estadosJSON %>,
+		abrangencias = <%- abrangenciasJSON %>,
+		caracteristicas = <%- caracteristicasJSON %>,
+		macroCategorias = <%- macroCategoriasJSON %>,
+		statusProj = <%- statusJSON %>,
+		lista = <%- JSON.stringify(projeto) %>,
+		//listaFiltrada = (lista || []).slice(),
+		projetoId = <%- projeto.id %>,
+		modalProjetoURL = null,
+		modalProjetoNome = null,
+		ultimoEstado = 0,
+		ultimaCidade = 0,
+		ultimoNome = "",
+		ultimaODS = "",
+		itemsPorPagina = 12,
+		vazio = document.getElementById("vazio"),
+		container = document.getElementById("container"),
+		containerPagina = document.getElementById("containerPagina"),
+		pagina = document.getElementById("pagina");
+
+	prepareCbState(_("idestado"), _("idcidade"));
+
+	window.onload = (function () {
+		if (!lista) //|| !lista.length)
+			return;
+
+		var i, j, item, cidade, html, ods, partes;
+
+		
+			item = lista;
+
+			html = "";
+			partes = item.resumoods.split(",");
+			ods = {};
+
+			for (j = 0; j < partes.length; j++) {
+				ods[partes[j]] = true;
+				html += '<img class="img-ods" alt="Logo ODS ' + partes[j] + '" src="<%- staticRoot %>/img/ods/' + partes[j] + '.svg" />';
+			}
+
+			item.nomenormalizado = normalizeAccent(item.nome);
+			item.nomeoriginal = item.nome;
+			item.nome = encode(item.nome);
+			item.estado = estados[item.idestado].sigla || "";
+			cidade = cidades[item.idestado];
+			item.cidade = (cidade ? (cidade.c[item.idcidade - cidade.i] || "") : "");
+			item.ods = ods;
+			item.resumoods = html;
+		
+	})();
+
+	window.onload = function exibirProjeto(id) {
+		if (JsonWebApi.active)
+			return false;
+
+				var i, item, info, cidade, html, partes, macroCategoria, abrangencia, caracteristica;
+
+				item = <%- JSON.stringify(projeto) %>;
+
+				modalProjetoURL = "<%- urlSite %><%- root %>/projeto/" + id;
+				modalProjetoNome = item.nome;
+
+				$("#modalImagem").attr("src", "<%- staticRoot %><%- PrefixoAbsolutoImagem %>/" + item.id + ".jpg?" + item.versaoimagem);
+
+				item.estado = estados[item.idestado].sigla || "";
+				cidade = cidades[item.idestado];
+				item.cidade = (cidade ? (cidade.c[item.idcidade - cidade.i] || "") : "");
+
+				$("#modalCidade").text(item.cidade + " - " + item.estado);
+				$("#modalNome").text(item.nome);
+				$("#modalNomeUrl").attr("href", "doacaoProjeto/" + item.nome);
+				$("#modalAutor").text(item.autor);
+				$("#modalEndereco").text(item.logradouro + ", " + item.numero + (item.complemento ? ", " + item.complemento : "") + ", " + item.bairro + ", " + item.cep);
+				$("#modalTelefone").attr("href", "tel:" + item.telefone.replace("(", "").replace(") ", "-"));
+				$("#modalTelefone").text(encode(item.telefone));
+				$("#modalEmail").attr("href", "mailto:" + item.email);
+				$("#modalEmail").text(encode(item.email));
+
+				let link = document.getElementById('whatsappLink');
+				let telefone = item.telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
+				link.setAttribute('href', 'https://api.whatsapp.com/send?phone=55'+telefone);
+
+				let whatsappSpan = document.getElementById('whatsappSpan');
+				whatsappSpan.textContent = encode(item.telefone);
+
+				if (item.latitude) {
+					$("#modalLinkMapa").attr("href", "https://www.google.com/maps/search/?api=1&query=" + item.latitude + "," + item.longitude);
+					$("#modalLinkMapaP").show();
+				} else {
+					$("#modalLinkMapaP").hide();
+				}
+
+				html = "";
+				partes = item.resumoods.split(",");
+
+				for (i = 0; i < partes.length; i++)
+					html += '<img class="mr-3 mb-3" width="80" height="80" alt="Logo ODS ' + partes[i] + '" src="<%- staticRoot %>/img/ods/' + partes[i] + '.svg" />';
+
+				$("#modalOds").html(html);
+
+				try {
+					info = JSON.parse(item.info);
+				} catch (ex) {
+					info = null;
+				}
+
+				if (info) {
+					partes = [];
+					if (info.links) {
+						for (i = 0; i < info.links.length; i++)
+							partes.push('<p class="mb-2 limite-p"><a target="_blank" href="' + info.links[i] + '"><i class="fa fa-external-link-alt"></i> ' + encode(info.links[i]) + ' </a></p>');
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalLinks").html(partes.join(""));
+						$("#modalLinks").show();
+					} else {
+						$("#modalLinks").hide();
+					}
+
+					$("#modalDescricao").text(info.descricao);
+
+					$("#modalLocal").text(info.local);
+
+					partes = [];
+					if (info.macrocategoria) {
+						for (i = 0; i < info.macrocategoria.length; i++) {
+							macroCategoria = macroCategorias[info.macrocategoria[i]];
+							if (!macroCategoria)
+								continue;
+							partes.push('<li><h4 class="m-0">' + macroCategoria.nome + '</li>');
+						}
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalMacroCategoria").html(partes.join(""));
+						$("#modalMacroCategoriaDiv").show();
+					} else {
+						$("#modalMacroCategoriaDiv").hide();
+					}
+
+					if (info.publico) {
+						$("#modalPublico").text(info.publico);
+						$("#modalPublicoDiv").show();
+					} else {
+						$("#modalPublicoDiv").hide();
+					}
+
+					abrangencia = abrangencias[info.abrangencia];
+
+					if (abrangencia) {
+						$("#modalAbrangencia").text(abrangencia.nome);
+						$("#modalAbrangenciaDiv").show();
+					} else {
+						$("#modalAbrangenciaDiv").hide();
+					}
+
+					if (info.parceiros) {
+						$("#modalParceiros").text(info.parceiros);
+						$("#modalParceirosDiv").show();
+					} else {
+						$("#modalParceirosDiv").hide();
+					}
+
+					partes = [];
+					if (info.caracteristica) {
+						for (i = 0; i < info.caracteristica.length; i++) {
+							caracteristica = caracteristicas[info.caracteristica[i]];
+							if (!caracteristica)
+								continue;
+							partes.push('<li><h4 class="m-0">' + caracteristica.nome + '</li>');
+						}
+					}
+
+					if (partes.length) {
+						partes.sort(function (a, b) { return ((a < b) ? -1 : 1); });
+						$("#modalCaracteristica").html(partes.join(""));
+						$("#modalCaracteristicaDiv").show();
+					} else {
+						$("#modalCaracteristicaDiv").hide();
+					}
+				} else {
+					$("#modalLinks").hide();
+					$("#modalDescricao").text("-");
+					$("#modalLocal").text("-");
+					$("#modalMacroCategoriaDiv").hide();
+					$("#modalPublicoDiv").hide();
+					$("#modalAbrangenciaDiv").hide();
+					$("#modalParceirosDiv").hide();
+					$("#modalCaracteristicaDiv").hide();
+				}
+
+				$("#modal").modal({
+					backdrop: "static",
+					keyboard: true
+				});
+			
+		 "id", id;
+
+		return false;
+	}
+
+  async function doar() {
+      check();
+
+      let doacao = {
+        idusuario: document.getElementById('id').value,
+        idprojeto: idprojeto,
+        valor: document.getElementById('Valor').value,
+        anonimo: valorAnonimo
+      };
+
+      try {
+        let response = await fetch('newDoacao', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(doacao)
+        });
+
+        if (response.ok) {
+          alert('Doação realizada com sucesso!')
+        } else {
+          alert('Erro ao realizar doação!')
+        }
+      } catch (error) {
+        console.error('Erro durante a requisição:', error);
+      }
+    }
+
+    function check(){
+
+      if (document.getElementById('anonimo').checked) {
+        valorAnonimo = 1;
+      } else {
+        valorAnonimo = 0;
+      }
+
+    }
+
+   
+</script>

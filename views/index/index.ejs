@@ -203,6 +203,15 @@
 
 			</div>
 
+			<!--Botão para doacão-->
+			<div class='container text-left pb-3'>
+				<a id="modalNomeUrl" href="doacaoProjeto/">
+					<button type="button" class="btn btn-primary p-2">
+						Doar para o Projeto
+					</button>
+				</a>
+			</div>
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 			</div>
@@ -439,6 +448,7 @@
 
 				$("#modalCidade").text(item.cidade + " - " + item.estado);
 				$("#modalNome").text(item.nome);
+				$("#modalNomeUrl").attr("href", "doacaoProjeto/" + item.nome);
 				$("#modalAutor").text(item.autor);
 				$("#modalEndereco").text(item.logradouro + ", " + item.numero + (item.complemento ? ", " + item.complemento : "") + ", " + item.bairro + ", " + item.cep);
 				$("#modalTelefone").attr("href", "tel:" + item.telefone.replace("(", "").replace(") ", "-"));

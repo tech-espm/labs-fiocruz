@@ -378,6 +378,18 @@ class Projeto {
 		return ((lista && lista[0]) || null);
 	}
 
+	public static async obterProjeto(nome: string): Promise<Projeto | null> {
+		let lista: Projeto[] | null = null;
+
+		await app.sql.connect(async (sql) => {
+			if (nome != null || nome != undefined || nome != "")
+				lista = await sql.query("select * from projeto where nome=?", [nome]) as Projeto[];
+			
+		});
+
+		return (lista && lista[0]) || null;
+	}
+
 	public static async criar(projeto: Projeto, idusuario: number, admin: boolean): Promise<string | null> {
 		projeto.idusuario = idusuario;
 		projeto.versaoimagem = 1;

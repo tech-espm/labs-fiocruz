@@ -137,7 +137,7 @@ class IndexRoute {
 	}
 
 	//Rota pra listas de doações -- No momento é temporária, a ideia é que esteja na junto com os projetos
-	public static async doadores(req: app.Request, res: app.Response) {
+	public static async doacao(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
 		if (!u)
 			res.redirect(app.root + "/login");
@@ -145,7 +145,38 @@ class IndexRoute {
 			res.render("index/doacoes", {
 				titulo: "Doações",
 				usuario: u,
-				lista: await doacoes.getDoacoes()
+				lista: await doacoes.getDoacoes(),
+				projetos : await Projeto.listarExterno()
+			});
+	}
+
+	//Rota para doação com id fixo
+	public static async 'doacaoProjeto/:nome'(req: app.Request, res: app.Response) {
+		let u = await Usuario.cookie(req);
+		let nome = req.params.nome;
+		if (!u)
+			res.redirect(app.root + "/login");
+
+		//Verifica se o id chegou corretamente
+		else if (nome == null || nome == undefined || nome == "")
+			res.redirect(app.root + "/doacoes");
+
+		else
+			res.render("index/doacaoProjeto", {
+				titulo: "Doação",
+				usuario: u,
+				projeto : await Projeto.obterProjeto(nome),
+				clipboard: true,
+				mapa: true,
+				cidades: true,
+				estados: estados.lista,
+				estadosJSON: estados.idsJSON,
+				abrangenciasJSON: abrangencias.idsJSON,
+				caracteristicasJSON: caracteristicas.idsJSON,
+				macroCategoriasJSON: macroCategorias.idsJSON,
+				statusJSON: status.idsJSON,
+				ods: ods.lista,
+				lista: await Projeto.listarExterno()
 			});
 	}
 
