@@ -184,11 +184,18 @@ class IndexRoute {
 	@app.http.post()
 	public static async newDoacao(req: app.Request, res: app.Response) {
 		let u = await Usuario.cookie(req);
-		if (!u)
+		if (!u) {
 			res.redirect(app.root + "/login");
-		else
-			await doacoes.postDoacoes(req.body);
-			
+		} else {
+			let response = await doacoes.postDoacoes(req.body);
+			if (response) {
+				res.send("Donation posted successfully");
+				//return true;
+			} else {
+				res.send("Error posting donation");
+				//return false;
+			}
+		}
 	}
 
 }

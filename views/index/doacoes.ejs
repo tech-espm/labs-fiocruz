@@ -1,27 +1,45 @@
-<div class="container-fluid">
+<div class="container-fluid pb-3">
   <div class="row">
-    <div class="col-sm-12">
-      <h1>Lista de Doações</h1>
-      <ul>
-        <% lista.forEach(function(doacao) { %>
-          <li>
-            Data: <%= doacao.data %><br>
-              Valor: R$ <%= doacao.valor %><br>
-                <% if (doacao.anonimo===1) { %>
-                  Doador: Doação Anônima<br>
-                  <% } else { %>
-                    Doador: <%= doacao.nome %><br>
-                      <% } %>
-          </li> 
-          <% }); %>
-      </ul>
+    <div class="col-12">
+      <input type="hidden" id="id" name="id" value='<%= usuario.id%>' />
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Selecione o Projeto</label>
+        <select class="form-control" id="idProjeto">
+          <option value="0">Selecione um projeto</option>
+          <% projetos.forEach(function(projeto) { %>
+            <option value='<%- projeto.id %>' onclick="obterProjeto()">
+              <%= projeto.nome %>
+            </option>
+          <% }); %>    
+        </select>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div>
+        <label for="anonimo">Doação Anônima</label>
+        <input id="anonimo" name="anonimo" class="form-control checkbox" type="checkbox" spellcheck="false"/>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <label for="inputAddress">Valor para doação</label>
+      <input type="number" class="form-control" id="Valor" placeholder="Valor para doação">  
     </div>
   </div>
 
+  <div class="col-sm-12 text-center">
+    <button type="button" class="btn btn-primary" onclick="doar()">Doar</button>
+  </div>
+</div>
+
+<div class="container-fluid">
   <div class="row pb-3">
-    <div class="card-deck">
+    
       <% lista.forEach(function(doacao) { %>
-        <div class="card">
+       <div class="card-deck">
+         <div class="card">
           <div class="card-header">
             <%= doacao.nome %><br>
           </div>
@@ -30,30 +48,18 @@
               <%= doacao.nome_projeto %>
             </h5>
             <hr style="margin: 1.5rem -1.5rem;" />
-            <p class="card-text">Valor Doado: R$<%= doacao.valor %></p>
-            <p class="card-text">Data: <%= doacao.data %></p>
+            <p class="card-text">Valor Doado: R$<%= doacao.valor %>
+            </p>
+            <p class="card-text">Data: <%= doacao.data %>
+            </p>
           </div>
         </div>
-      <% }); %>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div>
-      <input type="hidden" id="id" name="id" value='<%= usuario.id%>' />
-    </div>
-
-    <div>
-      <a onclick="doar()">
-        <button style="padding: 10px; color: green; background-color: gray;">
-            Doar
-        </button>
-      </a>
-    </div>
+      </div>
+        <% }); %>
+    
   </div>
 </div>
-  
-  <!--
+<!--
 Check box para doação anônima
 <div>
   <label for="anonimo">Doação Anônima</label>
@@ -64,50 +70,65 @@ Check box para doação anônima
 
 
 
+<!--Style + CSS-->
+<%- contentFor("styles") %>
+<style type="text/css">
+.checkbox {
+  display: inline-block;
+}
+</style>
+
+<!--Script para doação para o projeto-->
+<%- contentFor("scripts") %>
 <script>
   let idprojeto = 0;
   let valorAnonimo;
-  
-  async function doar() {
-      check();
 
-      let doacao = {
-        idusuario: document.getElementById('id').value,
-        idprojeto: idprojeto,
-        valor: document.getElementById('Valor').value,
-        anonimo: valorAnonimo
-      };
+function check() {
+  let valorAnonimo = document.getElementById('anonimo').checked ? 1 : 0
+}
 
-      try {
-        let response = await fetch('newDoacao', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(doacao)
-        });
+function obterProjeto() {
+  let dropdown = document.getElementById('idProjeto');
+  idprojeto = dropdown.options[dropdown.selectedIndex].value;
+}
 
-        if (response.ok) {
-          alert('Doação realizada com sucesso!')
-        } else {
-          alert('Erro ao realizar doação!')
-        }
-      } catch (error) {
-        console.error('Erro durante a requisição:', error);
-      }
+async function doar() {
+  check();
+  obterProjeto();
+
+  let doacao = {
+    idusuario: document.getElementById('id').value,
+    idprojeto: idprojeto,
+    valor: document.getElementById('Valor').value,
+    anonimo: valorAnonimo
+  };
+
+  if (doacao.idprojeto == 0) {
+    alert('Selecione um projeto!');
+    return;
+  } else if (doacao.valor <= 0) {
+    alert('Digite um valor válido para a doação!');
+    return;
+  }
+
+  try {
+    let response = await fetch('newDoacao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(doacao)
+    });
+
+    if (response.ok) {
+      alert('Doação realizada com sucesso!')
+    } else {
+      alert('Erro ao realizar doação!')
     }
+  } catch (error) {
+    console.error('Erro durante a requisição:', error);
+  }
+}
 
-    function check(){
-
-      if (document.getElementById('anonimo').checked) {
-        valorAnonimo = 1;
-      } else {
-        valorAnonimo = 0;
-      }
-
-    }
-
-    function obterProjeto(IdSelect){
-      idprojeto = IdSelect;
-    }
 </script>

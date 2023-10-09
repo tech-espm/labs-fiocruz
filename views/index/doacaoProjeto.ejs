@@ -71,31 +71,32 @@
     </div>
 
   </div>
+ <div class="row pb-3">
+  <div class="col-sm-3">
+	<div>
+	<input type="hidden" id="id" name="id" value='<%= usuario.id%>' />
+	<input type="hidden" id="idprojeto" name="idprojet" value='<%= projeto.id%>' />
 
+	  <label for="anonimo">Doação Anônima</label>
+	  <input id="anonimo" name="anonimo" class="form-control checkbox" type="checkbox" spellcheck="false"/>
+	</div>
+  </div>
 
-</div>
-
-
-
-<div>
-  <input type="hidden" id="id" name="id" value='<%= usuario.id%>' />
-  <input type="hidden" id="idprojeto" name="idprojeto" value='<%= projeto.id%>' />
-
-  <div class="col-sm-6 form-group">
-    <label for="Valor">Valor da Doação</label>
-    <input id="Valor" name="Valor" maxlength="100" class="form-control" type="number" spellcheck="false" />
+  <div class="col-sm-9">
+	<label for="inputAddress">Valor para doação</label>
+	<input type="number" class="form-control" id="Valor" placeholder="Valor para doação">  
   </div>
 </div>
 
-<div>
-  <label for="anonimo">Doação Anônima</label>
-  <input id="anonimo" name="anonimo" maxlength="100" class="form-control" type="checkbox" spellcheck="false" />
+<div class="col-sm-12 text-center">
+  <button type="button" class="btn btn-primary" onclick="doar()">Doar</button>
+</div>
 </div>
 
-</div>
-<div>
-  <a onclick="doar()" style="padding: 10px; color: green; background-color: gray;">doar</a>
-</div>
+
+
+
+
 
 
 
@@ -216,8 +217,6 @@
 <!--Script para doação para o projeto-->
 <%- contentFor("scripts") %>
 <script>
-  let idprojeto = 0;
-  let valorAnonimo;
   
   var estados = <%- estadosJSON %>,
 		abrangencias = <%- abrangenciasJSON %>,
@@ -423,44 +422,54 @@
 		return false;
 	}
 
-  async function doar() {
-      check();
 
-      let doacao = {
-        idusuario: document.getElementById('id').value,
-        idprojeto: idprojeto,
-        valor: document.getElementById('Valor').value,
-        anonimo: valorAnonimo
-      };
+	let idprojeto = 0;
+let valorAnonimo;
 
-      try {
-        let response = await fetch('newDoacao', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(doacao)
-        });
+function check() {
+  let valorAnonimo = document.getElementById('anonimo').checked ? 1 : 0
+}
 
-        if (response.ok) {
-          alert('Doação realizada com sucesso!')
-        } else {
-          alert('Erro ao realizar doação!')
-        }
-      } catch (error) {
-        console.error('Erro durante a requisição:', error);
-      }
+function obterProjeto() {
+  let dropdown = document.getElementById('idprojeto');
+  idprojeto = parseInt(dropdown.value);
+}
+
+async function doar() {
+  check();
+  obterProjeto();
+
+  let doacao = {
+    idusuario: document.getElementById('id').value,
+    idprojeto: idprojeto,
+    valor: document.getElementById('Valor').value,
+    anonimo: valorAnonimo
+  };
+
+  if (doacao.idprojeto == 0) {
+    alert('Selecione um projeto!');
+    return;
+  } else if (doacao.valor <= 0) {
+    alert('Digite um valor válido para a doação!');
+    return;
+  }
+
+  try {
+    let response = await fetch('/newDoacao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(doacao)
+    });
+
+    if (response.ok) {
+      alert('Doação realizada com sucesso!')
+    } else {
+      alert('Erro ao realizar doação!')
     }
-
-    function check(){
-
-      if (document.getElementById('anonimo').checked) {
-        valorAnonimo = 1;
-      } else {
-        valorAnonimo = 0;
-      }
-
-    }
-
-   
+  } catch (error) {
+    console.error('Erro durante a requisição:', error);
+  }
+}
 </script>
