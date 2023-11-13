@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "CommonJS",
 		"target": "ES2017",
-		"lib": ["ES2017", "DOM"],
+		"lib": ["ES2017"],
 		"outDir": "src",
 		"sourceMap": true,
 		"experimentalDecorators": true,

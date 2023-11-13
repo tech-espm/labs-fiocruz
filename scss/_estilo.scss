@@ -1,0 +1,13 @@
+// Customizações extras :)
+
+.quebra-linha-sem-quebra-espaco {
+	white-space: pre !important;
+}
+
+.quebra-linha {
+	white-space: pre-line !important;
+}
+
+a:not(.btn):focus, .nav-link:focus {
+	text-decoration: underline;
+}

@@ -2,7 +2,7 @@
 	//<![CDATA[
 	"use strict";
 
-	var lista = <%- JSON.stringify(lista) %>;
+	var lista = <%- safeStringify(lista) %>;
 
 	(function () {
 		var regExp = /\,/g;
@@ -20,12 +20,12 @@
 		deferRender: true,
 		columns: [
 			{ title: "", "class": "col-min", searchable: false, orderable: false, data: "id", render: function (v, type, row) {
-				return '<a target="_blank" title="Editar" href="<%- root %>/projeto/editar?id=' + row.id + '" class="btn btn-sm btn-outline-primary"><i class="fa fa14 fa-edit"></i></a>' +
-				(row.latitude ? ' <a target="_blank" title="Mapa" href="https://www.google.com/maps/search/?api=1&query=' + row.latitude + ',' + row.longitude + '" class="btn btn-sm btn-outline-secondary"><i class="fa fa14 fa-map-marker-alt"></i></a>' : '') +
+				return '<a target="_blank" title="Editar" href="<%- root %>/projeto/editar?id=' + row.id + '" class="btn btn-sm btn-outline-primary"><i class="fa fa-fw fa-edit"></i></a>' +
+				(row.latitude ? ' <a target="_blank" title="Mapa" href="https://www.google.com/maps/search/?api=1&query=' + row.latitude + ',' + row.longitude + '" class="btn btn-sm btn-outline-secondary"><i class="fa fa-fw fa-map-marker-alt"></i></a>' : '') +
 				// <% if (usuario.admin) { %>
-				//(row.aprovado ? '' : ' <button title="Aprovar" type="button" data-aprovar="1" class="btn btn-sm btn-outline-success"><i class="fa fa14 fa-thumbs-up"></i></button>') +
+				//(row.aprovado ? '' : ' <button title="Aprovar" type="button" data-aprovar="1" class="btn btn-sm btn-outline-success"><i class="fa fa-fw fa-thumbs-up"></i></button>') +
 				// <% } %>
-				' <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>';
+				' <button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa-fw fa-times"></i></button>';
 			} },
 			{ title: "Aprovado", data: "aprovadoStr" },
 			{ title: "Criação", "class": "col-min text-right", "type": "customdateint", data: "criacao" },
@@ -41,7 +41,7 @@
 			{ title: "Interesse exposição", data: "exposicaoStr" },
 			{ title: "Telefone", render: encode, data: "telefone" },
 			{ title: "E-mail", render: encode, data: "email" },
-			{ title: "Link", data: "link", render: function (v, type, row) { return (v ? '<a target="_blank" title="Acessar link" href="' + encodeURI(v) + '" class="btn btn-sm btn-outline-primary"><i class="fa fa14 fa-external-link-alt"></i></a>' : ''); } },
+			{ title: "Link", data: "link", render: function (v, type, row) { return (v ? '<a target="_blank" title="Acessar link" href="' + encodeURI(v) + '" class="btn btn-sm btn-outline-primary"><i class="fa fa-fw fa-external-link-alt"></i></a>' : ''); } },
 			{ title: "UF", render: encode, data: "estado" },
 			{ title: "Cidade", render: encode, data: "cidade" }
 		],

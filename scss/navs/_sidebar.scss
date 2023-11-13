@@ -15,6 +15,10 @@
             padding: 0.75rem 1rem;
             width: $sidebar-collapsed-width;
 
+			&:focus {
+				color: $link-hover-color;
+			}
+			
             span {
                 font-size: 0.65rem;
                 display: block;
@@ -74,7 +78,7 @@
                     border-radius: $border-radius;
                     white-space: nowrap;
 
-                    &:hover {
+                    &:hover, &:focus {
                         background-color: $gray-200;
                     }
 

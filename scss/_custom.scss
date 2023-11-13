@@ -1,4 +1,4 @@
-// Nossas customizações :)
+// Customizações do tema :)
 
 .modal-body .form-group {
 	text-align: left;
@@ -22,10 +22,6 @@
     border-radius: $modal-content-border-radius;
     font-size: 1rem;
     box-shadow: $modal-content-box-shadow-sm-up;
-}
-
-.bg-main{
-    background-color: #eee;
 }
 
 select.form-control[size="1"], select.form-control:not([size]), .select-arrow {
@@ -98,9 +94,9 @@ ul.dropdown-menu > li > a {
 	background: $bs-danger;
 }
 
-.fa14 {
-	font-size: 13px;
-}
+//.fa14 {
+//	font-size: 13px;
+//}
 
 .col-h {
 	color: $bs-danger;
@@ -141,6 +137,10 @@ ul.dropdown-menu > li > a {
 
 table.dataTable {
 	border-bottom: $table-border-width solid $table-border-color;
+}
+
+.table-row-pointer > tbody > tr {
+	cursor: pointer;
 }
 
 .op-0 {
@@ -193,4 +193,48 @@ table.dataTable {
 
 .btn > i {
 	pointer-events: none;
+}
+
+#content > .container, #content > .container-fluid {
+	padding-right: $grid-gutter-width * 0.5;
+	padding-left: $grid-gutter-width * 0.5;
+}
+
+@media (min-width: 768px) {
+	#content > .container, #content > .container-fluid {
+		padding-right: $grid-gutter-width;
+		padding-left: $grid-gutter-width;
+	}
+}
+
+.mx-card, .ml-card, .m-card {
+	margin-left: $card-spacer-x !important;
+}
+
+.mx-card, .mr-card, .m-card {
+	margin-right: $card-spacer-x !important;
+}
+
+.my-card, .mt-card, .m-card {
+	margin-top: $card-spacer-x !important;
+}
+
+.my-card, .mb-card, .m-card {
+	margin-bottom: $card-spacer-x !important;
+}
+
+.mx-ncard, .ml-ncard, .m-ncard {
+	margin-left: -$card-spacer-x !important;
+}
+
+.mx-ncard, .mr-ncard, .m-ncard {
+	margin-right: -$card-spacer-x !important;
+}
+
+.my-ncard, .mt-ncard, .m-ncard {
+	margin-top: -$card-spacer-x !important;
+}
+
+.my-ncard, .mb-ncard, .m-ncard {
+	margin-bottom: -$card-spacer-x !important;
 }

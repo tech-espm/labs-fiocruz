@@ -135,6 +135,14 @@ class IndexRoute {
 			await Usuario.efetuarLogout(u, res);
 		res.redirect(app.root + "/");
 	}
+
+	public static async modo(req: app.Request, res: app.Response) {
+		if (res.locals["darkMode"])
+			res.cookie("darkMode", "", { expires: new Date(0), httpOnly: true, path: "/" });
+		else
+			res.cookie("darkMode", "1", { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: true, path: "/" });
+		res.redirect(app.root + "/");
+	}
 }
 
 export = IndexRoute;

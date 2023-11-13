@@ -2,6 +2,7 @@
 import appsettings = require("./appsettings");
 import Perfil = require("./enums/perfil");
 import Projeto = require("./models/projeto");
+import safeStringify = require("./utils/safeStringify");
 
 app.run({
 	root: appsettings.root,
@@ -13,6 +14,14 @@ app.run({
 		app.express.locals.Perfil = Perfil;
 		app.express.locals.PrefixoAbsolutoIcone = Projeto.PrefixoAbsolutoIcone;
 		app.express.locals.PrefixoAbsolutoImagem = Projeto.PrefixoAbsolutoImagem;
+		app.express.locals.safeStringify = safeStringify;
+	},
+
+	onBeforeRoute: function () {
+		app.express.use(function (req: app.Request, res: app.Response, next: app.NextFunction) {
+			res.locals["darkMode"] = (parseInt(req.cookies["darkMode"]) ? "-d" : "");
+			next();
+		});
 	},
 
 	htmlErrorHandler: function (err: any, req: app.Request, res: app.Response, next: app.NextFunction) {

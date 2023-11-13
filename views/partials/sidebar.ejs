@@ -1,9 +1,9 @@
-﻿<!-- <ul class="navbar-nav bg-dark-primary sidebar sidebar-dark accordion d-none d-md-flex" id="accordionSidebar"> -->
+﻿<!-- <ul class="navbar-nav bg-dark-primary sidebar sidebar-dark accordion d-none d-md-flex" id="accordionSidebar"> <%- darkMode %> -->
 <ul class="navbar-nav sidebar accordion d-none d-md-flex" id="accordionSidebar">
 
 	<li class="nav-item text-center p-3 mb-3">
 		<a href="<%- root %>/">
-			<img src="<%- staticRoot %>/img/logo.png" style="max-width: 100%;">
+			<img src="<%- staticRoot %>/img/logo<%- darkMode %>.png" style="max-width: 100%;">
 		</a>
 	</li>
 
@@ -27,7 +27,7 @@
 		<a class="nav-link" target="_blank" href="https://agora.fiocruz.br/blog/">
 			<i class="fas fa-fw fa-newspaper"></i>
 			<span>Notícias</span>
-			<!-- <i class="fa fa14 fa-external-link-alt"></i> -->
+			<!-- <i class="fa fa-fw fa-external-link-alt"></i> -->
 		</a>
 	</li>
 

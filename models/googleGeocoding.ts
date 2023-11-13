@@ -7,6 +7,15 @@ class Geolocalizacao {
 
         return response.result;
     }
+
+	public static async obterCep(cep: string): Promise<any> {
+        const response = await app.request.json.get(`https://viacep.com.br/ws/${encodeURIComponent(cep)}/json/`);
+
+		if (!response.success)
+			throw new Error("Erro na comunicação com o servidor de busca de CEP");
+
+		return response.result;
+    }
 }
 
 export = Geolocalizacao;

@@ -119,6 +119,19 @@ class ProjetoApiRoute {
 
 		res.json(await Geolocalizacao.obter(req.query.endereco as string));
 	}
+
+	public static async obterCep(req: app.Request, res: app.Response) {
+		const u = await Usuario.cookie(req, res);
+		if (!u)
+			return;
+
+		if (!req.query.cep) {
+			res.status(400).json("CEP inválido");
+			return;
+		}
+
+		res.json(await Geolocalizacao.obterCep(req.query.cep as string));
+	}
 }
 
 export = ProjetoApiRoute;

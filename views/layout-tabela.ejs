@@ -22,7 +22,11 @@
 
 					<%- defineContent("topcontent") %>
 
-					<div class="card shadow mb-4" id="form">
+					<% if (typeof textoSubmit !== "undefined" && textoSubmit) { %>
+					<form class="card shadow mb-4" id="form">
+					<% } else { %>
+					<div class="card shadow mb-4">
+					<% } %>
 						<%- defineContent("cardheader") %>
 						<div class="card-body px-0">
 
@@ -32,12 +36,25 @@
 
 						<div class="card-footer">
 							<div class="row align-items-center">
+								<% if (typeof textoSubmit !== "undefined" && textoSubmit) { %>
+								<div class="col-md-6 text-center text-md-left pb-3 pb-md-0">
+									<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> <%=textoSubmit %></button>
+								</div>
+								<div class="col-md-6 text-center text-md-right">
+								<% } else { %>
 								<div class="col-md-6 offset-md-6 text-center text-md-right">
+								<% } %>
 									<button type="button" class="btn btn-light" onclick="if (window.history.length > 1) { window.history.back(); } else { window.close() }">Voltar</button>
 								</div>
 							</div>
 						</div>
+					<% if (typeof textoSubmit !== "undefined" && textoSubmit) { %>
+					</form>
+					<% } else { %>
 					</div>
+					<% } %>
+
+					<%- defineContent("bottomcontent") %>
 
 				</div>
 

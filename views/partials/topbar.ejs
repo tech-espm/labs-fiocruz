@@ -11,10 +11,17 @@
 		<!-- include("topbar-extra") -->
 
 		<li class="nav-item dropdown no-arrow">
+			<a class="nav-link dropdown-toggle" href="<%- root %>/modo">
+				<span class="mr-2 d-none d-md-inline text-gray-600 small"><%- (darkMode ? "Cores Claras" : "Cores Escuras") %></span>
+				<img class="img-profile rounded-circle" src="<%- staticRoot %>/img/contraste.svg">
+			</a>
+		</li>
+
+		<li class="nav-item dropdown no-arrow">
 			<% if (!usuario) { %>
 
 			<a class="nav-link dropdown-toggle" href="<%- root %>/login" id="userDropdown">
-				<span class="mr-2 text-gray-600 small">Meus projetos</span>
+				<span class="mr-2 d-none d-md-inline text-gray-600 small">Meus projetos</span>
 				<img class="img-profile rounded-circle" src="<%- staticRoot %>/img/undraw_profile_pic.svg">
 			</a>
 

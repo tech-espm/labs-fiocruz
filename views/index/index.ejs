@@ -105,8 +105,8 @@
 	</div>
 
 	<div class="text-center mt-2">
-		<button type="button" class="btn btn-outline-danger mb-2" onclick="$('#form')[0].reset(); filtrar()"><i class="fa fa14 fa-fw fa-times"></i> Limpar Filtros</button>
-		<button type="submit" class="btn btn-secondary mb-2"><i class="fa fa14 fa-fw fa-filter"></i> Filtrar Projetos</button>
+		<button type="button" class="btn btn-outline-danger mb-2" onclick="$('#form')[0].reset(); filtrar()"><i class="fa fa-times"></i> Limpar Filtros</button>
+		<button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-filter"></i> Filtrar Projetos</button>
 	</div>
 </form>
 
@@ -363,7 +363,7 @@
 		caracteristicas = <%- caracteristicasJSON %>,
 		macroCategorias = <%- macroCategoriasJSON %>,
 		statusProj = <%- statusJSON %>,
-		lista = <%- JSON.stringify(lista) %>,
+		lista = <%- safeStringify(lista) %>,
 		listaFiltrada = (lista || []).slice(),
 		projetoId = '<%= projetoId %>',
 		modalProjetoURL = null,
@@ -715,7 +715,7 @@
 
 	function compartilharFallback() {
 		Swal.success({
-			html: 'Para compartilhar o projeto, basta copiar o endereço abaixo e enviar a quem quiser! ' + emoji.happy + '<br/><br/><a target="_blank" href="' + modalProjetoURL + '">' + modalProjetoURL + '</a><br/><br/><button type="button" class="btn btn-copyjs btn-secondary" data-clipboard-title="Copiar Endereço" data-clipboard-text="' + modalProjetoURL + '"><i class="fa fa14 fa-fw fa-copy"></i> Copiar Endereço</button>',
+			html: 'Para compartilhar o projeto, basta copiar o endereço abaixo e enviar a quem quiser! ' + emoji.happy + '<br/><br/><a target="_blank" href="' + modalProjetoURL + '">' + modalProjetoURL + '</a><br/><br/><button type="button" class="btn btn-copyjs btn-secondary" data-clipboard-title="Copiar Endereço" data-clipboard-text="' + modalProjetoURL + '"><i class="fa fa-copy"></i> Copiar Endereço</button>',
 			title: "Compartilhar Projeto",
 			confirmButtonText: "Fechar",
 			didOpen: function () {

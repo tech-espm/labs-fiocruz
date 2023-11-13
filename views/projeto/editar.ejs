@@ -75,16 +75,21 @@
 	<input id="link" name="link" maxlength="200" class="form-control" type="url" spellcheck="false" onblur="ajustarLink(this)" value="<%=(item ? (item.link || '') : '') %>" />
 </div>
 
-<div class="form-row">
-	<div class="col-md-6 form-group">
-		<label for="email">E-mail de contato <b>*</b></label>
-		<input id="email" name="email" maxlength="100" class="form-control" type="email" spellcheck="false" value="<%=(item ? item.email : '') %>" />
-	</div>
+<div class="form-group">
+	<label for="email">E-mail de contato <b>*</b></label>
+	<input id="email" name="email" maxlength="100" class="form-control" type="email" spellcheck="false" value="<%=(item ? item.email : '') %>" />
+</div>
 
-	<div class="col-md-6 form-group">
-		<label for="logradouro">Logradouro <b>*</b></label>
-		<input id="logradouro" name="logradouro" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.logradouro : '') %>" />
+<div class="form-row">
+	<div class="col-md-3 form-group">
+		<label for="cep">CEP</label>
+		<input id="cep" name="cep" maxlength="9" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.cep : '') %>" />
 	</div>
+</div>
+
+<div class="form-group">
+	<label for="logradouro">Logradouro <b>*</b></label>
+	<input id="logradouro" name="logradouro" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.logradouro : '') %>" />
 </div>
 
 <div class="form-row">
@@ -98,16 +103,9 @@
 		<input id="complemento" name="complemento" maxlength="50" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.complemento : '') %>" />
 	</div>
 
-	<div class="col-md-3 form-group">
+	<div class="col-md-6 form-group">
 		<label for="bairro">Bairro <b>*</b></label>
 		<input id="bairro" name="bairro" maxlength="100" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.bairro : '') %>" />
-	</div>
-
-	<div class="col-md-3 form-group">
-		<!-- @@@ TEMP -->
-		<!-- <label for="cep">CEP <b>*</b></label> -->
-		<label for="cep">CEP</label>
-		<input id="cep" name="cep" maxlength="9" class="form-control" type="text" spellcheck="false" value="<%=(item ? item.cep : '') %>" />
 	</div>
 </div>
 
@@ -118,7 +116,7 @@
 			<select id="idestado" name="idestado" class="form-control">
 				<option value="">Selecione...</option>
 				<% for (let i = 1, idestado = (item && item.idestado) || 0; i <= estados.length; i++) { %>
-					<option value="<%- i %>" <%- (idestado === i ? 'selected="selected"' : '') %>><%- estados[i - 1].nome %></option>
+					<option data-uf="<%- estados[i - 1].sigla %>" value="<%- i %>" <%- (idestado === i ? 'selected="selected"' : '') %>><%- estados[i - 1].nome %></option>
 				<% } %>
 			</select>
 		</div>
@@ -152,17 +150,17 @@
 <div id="mapa"></div>
 
 <div class="text-center my-3" id="divObterLocalizacao">
-	<button type="button" onclick="obterLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização Atual</button>
+	<button type="button" onclick="obterLocalizacao()" class="btn btn-secondary"><i class="fa fa-map-marker-alt"></i> Obter Localização Atual</button>
 </div>
 
 <% if (temGoogleKey) { %>
 <div class="text-center my-3">
-	<button type="button" onclick="obterLocalizacaoEndereco()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-map-marker-alt"></i> Obter Localização do Endereço</button>
+	<button type="button" onclick="obterLocalizacaoEndereco()" class="btn btn-secondary"><i class="fa fa-map-marker-alt"></i> Obter Localização do Endereço</button>
 </div>
 <% } %>
 
 <div class="text-center mt-3">
-	<button type="button" onclick="limparLocalizacao()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-times"></i> Limpar Localização</button>
+	<button type="button" onclick="limparLocalizacao()" class="btn btn-secondary"><i class="fa fa-times"></i> Limpar Localização</button>
 </div>
 
 <hr class="my-5" />
@@ -359,7 +357,7 @@
 			<% if (info && info.links && info.links.length) { for (let i = 0; i < info.links.length; i++) { %>
 				<tr>
 					<td class="col-min">
-						<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
+						<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa-fw fa-times"></i></button>
 					</td>
 					<td>
 						<input type="url" maxlength="100" spellcheck="false" name="links" class="form-control" value="<%- info.links[i] %>" onblur="ajustarLink(this)" />
@@ -371,7 +369,7 @@
 </div>
 
 <div class="text-center">
-	<button type="button" onclick="adicionarLink()" class="btn btn-secondary"><i class="fa fa14 fa-fw fa-plus"></i> Adicionar Link</button>
+	<button type="button" onclick="adicionarLink()" class="btn btn-secondary"><i class="fa fa-plus"></i> Adicionar Link</button>
 </div>
 
 <hr class="my-5" />
@@ -442,7 +440,55 @@
 		TamanhoMaximoImagemEmBytes = parseInt("<%- TamanhoMaximoImagemEmBytes %>");
 
 	maskMobilePhone("#telefone");
-	$("#cep").mask("00000-000");
+
+	let ultimaBuscaCep = "<%= ((item && item.cep) || '').replace('-', '') %>";
+
+	$("#cep").mask("00000-000").blur(function() {
+		//buscaCep(this, "#bairro", "#logradouro", "#complemento", "#idestado", "#idcidade");
+		if (JsonWebApi.active)
+			return;
+
+		let cep = (this.value || "").normalize().replace("-", "").trim();
+
+		if (cep.length !== 8)
+			return;
+
+		if (ultimaBuscaCep === cep)
+			return;
+
+		Swal.wait();
+
+		JsonWebApi.get("<%- root %>/api/projeto/obterCep?cep=" + encodeURIComponent(cep), function (response) {
+			Swal.close();
+
+			$("#logradouro").focus();
+
+			if (response.success) {
+				ultimaBuscaCep = cep;
+
+				$("#bairro").val(response.value.bairro || "");
+				$("#logradouro").val(response.value.logradouro || "");
+
+				setCbSearch(_("idestado"), "");
+				if (response.value.uf) {
+					setCbSearch(_("idestado"), $('#idestado > option[data-uf="' + response.value.uf + '"]').val());
+
+					if (response.value.localidade) {
+						const localidade = response.value.localidade.normalize().trim().toUpperCase().replace("'", "");
+						const cidades = $("#idcidade > option");
+
+						for (let i = cidades.length - 1; i >= 0; i--) {
+							if (cidades[i].textContent.replace("'", "") === localidade) {
+								setCbSearch(_("idcidade"), cidades[i].value);
+								break;
+							}
+						}
+					}
+				}
+			}
+		});
+	});
+
 	prepareCbState(_("idestado"), _("idcidade"));
 	//<% if (item) { %>
 	setCbSearch(_("idcidade"), "<%- item.idcidade %>");
@@ -657,7 +703,7 @@
 
 		$("#tbodyLinks").append(`<tr>
 			<td class="col-min">
-				<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa14 fa-times"></i></button>
+				<button title="Excluir" type="button" data-excluir="1" class="btn btn-sm btn-outline-danger"><i class="fa fa-fw fa-times"></i></button>
 			</td>
 			<td>
 				<input type="url" maxlength="100" spellcheck="false" name="links" class="form-control" value="" onblur="ajustarLink(this)" />

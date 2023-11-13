@@ -8,6 +8,10 @@
     --#{$color}: #{$value};
   }
 
+  @each $color, $value in $theme-colors {
+    --#{$color}-text: #{color-yiq($value)};
+  }
+
   @each $bp, $value in $grid-breakpoints {
     --breakpoint-#{$bp}: #{$value};
   }
