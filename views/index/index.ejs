@@ -246,11 +246,6 @@
 
 	.main-slider-img {
 		width: 100%;
-		min-height: 300px;
-		height: 10000px;
-		max-height: 55vh;
-		object-fit: cover;
-		object-position: center center;
 	}
 
 	.main-slider-caption {
@@ -317,6 +312,16 @@
 	}
 
 	/* RESPONSIVENESS */
+
+	@media (max-width: 768px) {
+		.main-slider-img {
+			min-height: 300px;
+			height: 10000px;
+			max-height: 55vh;
+			object-fit: cover;
+			object-position: center center;
+		}
+	}
 
 	/*@media (max-width: 1280px) {
 		.main-slider-img {
@@ -582,14 +587,14 @@
 
 			html += `
 <div class="col mb-4">
-	<div class="card card-projeto h-100" onclick="exibirProjeto(${item.id})">
+	<a style="color: inherit !important;" class="card card-projeto h-100" href="#" onclick="exibirProjeto(${item.id}); return false;">
 		<img src="<%- staticRoot %><%- PrefixoAbsolutoIcone %>/${item.id}.jpg?${item.versaoimagem}" class="card-img-top" alt="Ícone do projeto" />
 		<div class="card-body">
 			<h5 class="card-title mb-3">${item.nome}</h5>
 			<p class="card-text mb-3"><small><b><i class="fas fa-map-marker-alt mr-1"></i> ${item.cidade} - ${item.estado}</b></small></p>
 			<p class="card-text"><small class="text-ods"><b>ODS</b></small> ${item.resumoods}</p>
 		</div>
-	</div>
+	</a>
 </div>
 			`;
 		}

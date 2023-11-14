@@ -6,6 +6,8 @@
 	<%- defineContent("styles") %>
 </head>
 <body>
+	<a class="sr-only" href="#content-main-body">Ir para conteúdo</a>
+
 	<div id="wrapper">
 
 		<%- include("partials/sidebar") %>
@@ -16,7 +18,7 @@
 
 				<%- include("partials/topbar") %>
 
-				<div class="container-fluid">
+				<div class="container-fluid" id="content-main-body">
 
 					<% if (typeof titulo !== "undefined" && titulo) { %>
 					<h1 class="mb-4 text-gray-800"><%= titulo %></h1>

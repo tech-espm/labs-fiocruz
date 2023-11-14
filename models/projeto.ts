@@ -190,7 +190,7 @@ class Projeto {
 		if (tmp.publico.length > 100)
 			return "Público-alvo inválido";
 
-		if (!info.descricao || !(tmp.descricao = info.descricao.normalize().trim()) || tmp.descricao.length > 1000)
+		if (!info.descricao || !(tmp.descricao = info.descricao.normalize().trim()) || tmp.descricao.length > 30000)
 			return "Descrição inválida";
 
 		if (!Array.isArray(info.macrocategoria) && info.macrocategoria !== undefined)
@@ -301,8 +301,8 @@ class Projeto {
 
 		projeto.info = JSON.stringify(tmp);
 
-		if (projeto.info.length > 64000)
-			return "O tamanho das informações extras do projeto excede o limite de 64000 bytes";
+		if (projeto.info.length > 100000)
+			return "O tamanho das informações extras do projeto excede o limite de 100000 bytes";
 
 		if (projeto.link)
 			projeto.link = projeto.link.normalize().trim();
@@ -410,13 +410,20 @@ class Projeto {
 			projeto.destaque = destaqueOriginal;
 		}
 
+		let res: string | null;
+		if ((res = Projeto.validar(projeto, true)))
+			return res;
+
 		const buffers: Buffer[] = [];
 
-		let res: string | null;
-		if ((res = (Projeto.validar(projeto, true) ||
-			Projeto.validarImagem(projeto.arquivoIcone, buffers, Projeto.TamanhoMaximoIconeEmBytes) ||
-			Projeto.validarImagem(projeto.arquivoImagem, buffers, Projeto.TamanhoMaximoImagemEmBytes))))
-			return res;
+		if (projeto.arquivoIcone || projeto.arquivoImagem) {
+			if ((res = (Projeto.validarImagem(projeto.arquivoIcone, buffers, Projeto.TamanhoMaximoIconeEmBytes) ||
+				Projeto.validarImagem(projeto.arquivoImagem, buffers, Projeto.TamanhoMaximoImagemEmBytes))))
+				return res;
+		} else {
+			buffers.push(await app.fileSystem.readBufferFromExistingFile("public/img/terra2030-pequeno.png"));
+			buffers.push(await app.fileSystem.readBufferFromExistingFile("public/img/terra2030.png"));
+		}
 
 		await app.sql.connect(async (sql) => {
 			let excluirIcone = false;

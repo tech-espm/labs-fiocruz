@@ -97,7 +97,7 @@ CREATE TABLE projeto (
   exposicao tinyint NOT NULL,
   destaque tinyint NOT NULL,
   versaoimagem int NOT NULL,
-  info text NOT NULL,
+  info mediumtext NOT NULL,
   link varchar(200) NULL,
   exclusao datetime NULL,
   criacao datetime NOT NULL,

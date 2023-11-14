@@ -38,7 +38,7 @@
 </div>
 
 <h2 class="mt-5">Informações de Contato</h2>
-<p class="mb-5 aviso">* informações obrigatórias</p>
+<p class="mb-5 aviso">* Informações Obrigatórias</p>
 
 <div class="form-row">
 	<div class="col-md-4 form-group">
@@ -166,7 +166,7 @@
 <hr class="my-5" />
 
 <h2 class="mt-5">Informações sobre o Projeto</h2>
-<p class="mb-5 aviso">* informações obrigatórias</p>
+<p class="mb-5 aviso">* Informações Obrigatórias</p>
 
 <div class="form-row">
 	<div class="col-md-6 form-group">
@@ -182,7 +182,7 @@
 
 <div class="form-group">
 	<label for="descricao">Descrição do projeto <b>*</b></label>
-	<textarea id="descricao" name="descricao" maxlength="1000" class="form-control" type="text" spellcheck="true" rows="8" style="resize: none;"><%=(info ? info.descricao : '') %></textarea>
+	<textarea id="descricao" name="descricao" maxlength="30000" class="form-control" type="text" spellcheck="true" rows="8" style="resize: none;"><%=(info ? info.descricao : '') %></textarea>
 </div>
 
 <label>Macro categorias relacionadas ao projeto <b>*</b></label>
@@ -302,7 +302,7 @@
 <hr class="my-5" />
 
 <h2 class="mt-5">Informações Adicionais sobre o Projeto</h2>
-<p class="mb-5 aviso">* informações obrigatórias</p>
+<p class="mb-5 aviso">* Informações Obrigatórias</p>
 
 <label>Divulgação do projeto (anterior, presente ou futura)</label>
 <div class="row mb-3">
@@ -375,7 +375,7 @@
 <hr class="my-5" />
 
 <h2 class="mt-5">Exposição Pública do Projeto</h2>
-<p class="mb-5 aviso">* informações obrigatórias</p>
+<p class="mb-5 aviso">* Informações Obrigatórias</p>
 
 <% if (item) { %>
 <label>Foto atual do projeto (pequena)</label>
@@ -392,7 +392,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<div class="form-group">
-			<label for="imagem"><%- (item ? "Nova foto" : "Foto") %> do projeto (de preferência em paisagem 16:9) <%- (item ? '' : '<b>*</b>') %></label>
+			<label for="imagem"><%- (item ? "Nova foto" : "Foto") %> do projeto (de preferência em paisagem 16:9)</label>
 			<input id="imagem" name="imagem" class="form-control" type="file" accept="image/*" />
 		</div>
 		<div class="form-check">
@@ -423,6 +423,21 @@
 		width: 10%;
 		display: inline;
 		vertical-align: middle;
+	}
+
+	.leaflet-touch .leaflet-bar a {
+		color: #000 !important;
+		text-decoration: none !important;
+	}
+
+	.leaflet-bar a.leaflet-disabled {
+		color: #bbb !important;
+		text-decoration: none !important;
+	}
+
+	.leaflet-container a {
+		color: #0078A8 !important;
+		text-decoration: none !important;
 	}
 </style>
 
@@ -766,9 +781,6 @@
 				required: true
 			},
 			imagem: {
-				// <% if (!item) { %>
-				required: true,
-				// <% } %>
 				//tamanhoArquivoMaximoKiB: 2048,
 				suporteArquivoAvancado: true
 			},
