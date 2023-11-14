@@ -32,11 +32,11 @@ body, .navbar.bg-white {
 	background-color: #333;
 }
 
-hr {
+hr, .dropdown-divider {
 	border-top: 1px solid #919191;
 }
 
-h1.text-gray-800 {
+h1.text-gray-900, h1.text-gray-800 {
 	color: #fff !important;
 }
 
@@ -171,9 +171,9 @@ table.dataTable {
 	box-shadow: 0 0 0 0.2rem rgba(220, 221, 225, .75);
 }
 
-.card {
+.card, .dropdown-menu, .login-card {
 	border: 1px solid #555;
-	background-color: #222;
+	background-color: #222 !important;
 }
 
 .card-header {
