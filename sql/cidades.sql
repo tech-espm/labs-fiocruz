@@ -5078,7 +5078,7 @@ INSERT INTO cidade (nome, idestado) VALUES ('MIRASSOLÂNDIA', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MOCOCA', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MOGI DAS CRUZES', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MOGI GUAÇU', 25);
-INSERT INTO cidade (nome, idestado) VALUES ('MOJI MIRIM', 25);
+INSERT INTO cidade (nome, idestado) VALUES ('MOGI MIRIM', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MOMBUCA', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MONÇÕES', 25);
 INSERT INTO cidade (nome, idestado) VALUES ('MONGAGUÁ', 25);
