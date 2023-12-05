@@ -5,6 +5,7 @@ import Projeto = require("./models/projeto");
 import safeStringify = require("./utils/safeStringify");
 
 app.run({
+	localIp: appsettings.localIp,
 	root: appsettings.root,
 	port: appsettings.port,
 	sqlConfig: appsettings.sqlConfig,
